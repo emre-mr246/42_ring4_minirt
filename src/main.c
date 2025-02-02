@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:28:30 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 15:41:25 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:34:49 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "minirt.h"
 #include "libft.h"
 #include "mlx.h"
-#include <X11/keysym.h>
-#include <X11/X.h>
 
 #include "stdlib.h"
 
@@ -52,7 +50,7 @@ int main(int ac, char **av)
     parse_input(av[1], minirt);
     draw(minirt);
     //mlx_loop_hook(fdf->mlx_ptr, &, fdf);
-	mlx_hook(minirt->win, KeyPress, KeyPressMask, handle_keypress, minirt);
-	mlx_hook(minirt->win, DestroyNotify, KeyReleaseMask, exit_mlx, minirt);
+	mlx_hook(minirt->win, 2, 0, handle_keypress, minirt);
+	mlx_hook(minirt->win, 17, 0, exit_mlx, minirt);
 	mlx_loop(minirt->mlx);
 }

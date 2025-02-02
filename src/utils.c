@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:00:22 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:59 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/18 12:24:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,6 @@
 int is_whitespace(char c)
 {
     return ((c >= 8 && c <= 13) || c == ' ');
-}
-
-void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
-{
-	int	x;
-	int	y;
-	int	pix;
-	int	color;
-
-	x = 0;
-	while (x < size_x)
-	{
-		y = 0;
-		while (y < size_y)
-		{
-			pix = (x * (img->bits_per_pixel / 8)) + (y * img->line_len);
-			color = get_color(x, y, minirt);
-		    img->data[pix] = color & 0xFF;
-			img->data[pix + 1] = (color >> 8) & 0xFF;
-			img->data[pix + 2] = (color >> 16) & 0xFF;
-			y++;
-		}
-		x++;
-	}
-}
-void	draw(t_minirt *minirt)
-{
-	fill_image(minirt->win_width, minirt->win_height, &(minirt->img), minirt);
-	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img.ptr, 0, 0);
 }
 
 int	higher_len(char *str1, char *str2)

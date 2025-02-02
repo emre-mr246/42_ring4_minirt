@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:30 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 16:16:49 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 19:03:39 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_scene *init_scene()
     scene = (t_scene *)ft_calloc(sizeof(t_scene), 1);
     if (!scene)
         return (NULL);
+	return (scene);
 }
 
 void fill_scene(t_minirt *minirt, t_input *input)
@@ -72,8 +73,8 @@ void fill_scene(t_minirt *minirt, t_input *input)
     scene->amb_light = (t_amb_light *)ft_calloc(sizeof(t_amb_light), 1);
     scene->camera = (t_camera *)ft_calloc(sizeof(t_camera), 1);
     scene->viewport = (t_viewport *)ft_calloc(sizeof(t_viewport), 1);
-    scene->viewport->width = WIN_W;
-    scene->viewport->height = WIN_H;
+    scene->viewport->width = WIN_W / 100;
+    scene->viewport->height = WIN_H / 100;
     scene->objects = (void **)ft_calloc(sizeof(void *), input->obj_count + 1);
     scene->obj_tags = (int *)ft_calloc(sizeof(int), input->obj_count + 1);
     if (!scene->amb_light || !scene->camera || !scene->viewport

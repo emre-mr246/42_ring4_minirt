@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:27:39 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 16:03:05 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 19:24:36 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int	dot_product(t_vector v, t_vector u)
+float	dot_product(t_vector v, t_vector u)
 {
     return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
@@ -35,7 +35,7 @@ t_vector *cross_product(t_vector v, t_vector u)
     return (vector);
 }
 
-int	norm(t_vector v)
+float	norm(t_vector v)
 {
 	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
 }
@@ -66,24 +66,33 @@ t_vector *subtract_vector(t_vector v, t_vector u)
     return (vector);
 }
 
-t_vector	*scale_vector(t_vector v, float s)
+t_vector	*copy_vector(t_vector v)
 {
-	t_vector *vector;
+    t_vector *vector;
 
     vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
     if (!vector)
         return (NULL);
-	vector->x = s * v.x;
-	vector->y = s * v.y;
-	vector->z = s * v.z;
-	return (vector);
+	vector->x = v.x;
+    vector->y = v.y;
+    vector->z = v.z;
+    return (vector);
+}
+
+void	scale_vector(t_vector *v, float s)
+{
+	v->x *= s;
+	v->y *= s;
+	v->z *= s;
 }
 
 t_vector	*get_point_on_ray(t_ray ray, float t)
 {
 	t_vector *v;
 	t_vector *td;
-	td = scale_vector(*ray.direction, t);
+	
+	td = copy_vector(*ray.direction);
+	scale_vector(td, t);
 	v = sum_vector(*ray.origin, *td);
 	free(td);
 	return (v);
@@ -156,9 +165,10 @@ t_vector    *intersect_sphere(t_ray ray, t_sphere sphere)
     b = 2 * (ray.origin->x - sphere.origin->x) * ray.direction->x
         + 2 * (ray.origin->y - sphere.origin->y) * ray.direction->y
         + 2 * (ray.origin->z - sphere.origin->z) * ray.direction->z;
-    c = sq(ray.origin->x - sphere.origin->x) 
-        + sq(ray.origin->x - sphere.origin->x) 
-        + sq(ray.origin->x - sphere.origin->x);
+    c = sq(ray.origin->x - sphere.origin->x)
+        + sq(ray.origin->y - sphere.origin->y) 
+        + sq(ray.origin->z - sphere.origin->z)
+		- sq(sphere.radius);
     if (discriminant(a, b, c) < 0)
         return (NULL);
     return (get_point_on_ray(ray, solve_eq(a, b, c, ray)));

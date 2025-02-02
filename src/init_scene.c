@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:25:11 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 16:18:36 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 19:31:36 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int parse_line(char *line, t_scene *scene)
 		scene->obj_tags[i] = LIGHT;
 	}
 	fill_objects(scene, split);
-	scene->viewport->d = (scene->viewport->width / 2) / tanf((float)scene->camera->fov / 2);
+	scene->viewport->d = (scene->viewport->width / 2) / tanf((float)scene->camera->fov / 360 * M_PI);
 	free_array(split);
 	return (0);
 }

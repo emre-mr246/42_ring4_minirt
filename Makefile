@@ -3,7 +3,7 @@ FILES		= main init utils keypress parse ft_split_charset parse_control init_scen
 
 NAME		= minirt
 CC			= gcc
-CCFLAGS		= -I ./lib/libft/inc/ -I ./inc/ -I ./lib/minilibx -lXext -lX11 -lm -lbsd #-Wall -Wextra -Werror
+CCFLAGS		= -I ./lib/libft/inc/ -I ./inc/ -I ./lib/minilibx -I ./lib/libft -framework openGL -framework AppKit #-Wall -Wextra -Werror
 MAKEFLAGS	= --no-print-directory
 RM			= rm -rf
 

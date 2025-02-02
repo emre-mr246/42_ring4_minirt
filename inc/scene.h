@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:08:54 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/03 15:12:14 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 19:01:44 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_camera
 typedef struct s_viewport
 {
 	float	d;
-	int width;
-	int height;
+	float width;
+	float height;
 }	t_viewport;
 
 typedef struct s_amb_light

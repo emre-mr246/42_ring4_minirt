@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:08:16 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 16:06:07 by emgul            ###   ########.fr       */
+/*   Updated: 2024/10/17 19:44:02 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,58 @@ float	dist_cam_viewport(int x, int y, t_minirt *minirt)
 	return (hypotenuse_len);
 }
 
+void	normalize(t_vector *v)
+{
+	t_vector	*normalized;
+	
+	scale_vector(v, 1/norm(*v));
+}
+
+void	print_vector(char *name, t_vector v)
+{
+	printf("%s- x: %f, y: %f, z: %f\n", name, v.x, v.y, v.z);
+}
+
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt)
 {
-	t_vector *point_on_viewport;
 	float	t;
+	t_vector *point_on_viewport;
 	t_ray	*ray;
 	t_vector	*dir;
-
+	t_vector	*world_up;
+	t_vector	*up;
+	t_vector	*right;
+	t_vector	*cam_vec;
+	t_vector	*viewport_origin_to_point;
+	float	normalized_x;
+	float	normalized_y;
+	float	viewport_x;
+	float	viewport_y;
+	
+	normalized_x = ((float)x + 0.5) / WIN_W; //we add 0.5 to cast the ray from the middle of the pixel and not the top left corner, this helps avoiding aliasing artifacts
+	normalized_y = ((float)y + 0.5) / WIN_H;
+	viewport_x = (normalized_x - 0.5) * minirt->scene->viewport->width;
+	viewport_y = (0.5 - normalized_y) * minirt->scene->viewport->height;
 	t = dist_cam_viewport(x, y, minirt);
-	point_on_viewport = get_point_on_ray(*ray, t);
-	dir = subtract_vector(*point_on_viewport, *minirt->scene->camera->pos);
+	if (fabs(dot_product(*minirt->scene->camera->orientation, *world_up)) == 1.0)
+		world_up = init_vector(0, 1, 0);
+	else
+		world_up = init_vector(0, 0, 1);
+	right = cross_product(*minirt->scene->camera->orientation, *world_up);
+	free(world_up);
+	up = cross_product(*right, *minirt->scene->camera->orientation);
+	scale_vector(right, viewport_x);
+	scale_vector(up, viewport_y);
+	cam_vec = copy_vector(*minirt->scene->camera->orientation);
+	scale_vector(cam_vec, minirt->scene->viewport->d);
+	viewport_origin_to_point = sum_vector(*right, *up);
+    free(right);
+    free(up);
+	dir = sum_vector(*cam_vec, *viewport_origin_to_point);
+    free(cam_vec);
+	normalize(dir);
+	free(viewport_origin_to_point);
 	ray = init_ray(*minirt->scene->camera->pos, *dir);
-	printf("px: %f, py: %f, pz: %f\n", point_on_viewport->x, point_on_viewport->y, point_on_viewport->z);
+    free(dir);
 	return (ray);
 }
