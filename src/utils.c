@@ -19,13 +19,13 @@
 
 int is_whitespace(char c)
 {
-    return ((c >= 8 && c <= 13) || c == ' ');
+	return ((c >= 8 && c <= 13) || c == ' ');
 }
 
-int	higher_len(char *str1, char *str2)
+int higher_len(char *str1, char *str2)
 {
-	int	len1;
-	int	len2;
+	int len1;
+	int len2;
 
 	if (!str1 || !str2)
 		return (-1);
@@ -37,13 +37,13 @@ int	higher_len(char *str1, char *str2)
 		return (len2);
 }
 
-void	free_array(char **arr)
+void free_array(char **arr)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!arr)
-		return ;
+		return;
 	while (arr[i])
 	{
 		free(arr[i]);
@@ -53,7 +53,7 @@ void	free_array(char **arr)
 		free(arr);
 }
 
-int	count_elements(char **arr)
+int count_elements(char **arr)
 {
 	int i;
 	i = 0;
@@ -65,39 +65,39 @@ int	count_elements(char **arr)
 void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), void *ptr)
 {
 	char *line;
-    int fd;
-    
-    fd = open(input_file, O_RDONLY, 0644);
-    if (fd == -1)
-        ft_exit(input_file, -1, minirt);
-    line = get_next_line(fd);
-    if (!line)
-    {
-        close(fd);
-        ft_exit("Get next line error", -1, minirt);
-    }
-    while (line)
-    {
-        if (f(line, ptr) == -1)
+	int fd;
+
+	fd = open(input_file, O_RDONLY, 0644);
+	if (fd == -1)
+		ft_exit(input_file, -1, minirt);
+	line = get_next_line(fd);
+	if (!line)
+	{
+		close(fd);
+		ft_exit("Get next line error", -1, minirt);
+	}
+	while (line)
+	{
+		if (f(line, ptr) == -1)
 			ft_exit("iter_lines error", -1, minirt);
 		free(line);
 		line = get_next_line(fd);
-    }
-    free(line);
-    close(fd);
+	}
+	free(line);
+	close(fd);
 }
 
-int	strs_equal(char *a, char *b)
+int strs_equal(char *a, char *b)
 {
 	return (ft_strncmp(a, b, higher_len(a, b)) == 0);
 }
 
-int	create_rgb(int red, int green, int blue)
+int create_rgb(int red, int green, int blue)
 {
 	return ((red << 16) | (green << 8) | blue);
 }
 
-int	parse_color(char *str)
+int parse_color(char *str)
 {
 	char **split;
 	int color;

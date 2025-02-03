@@ -62,8 +62,6 @@ typedef struct s_minirt
 	int win_height;
 	t_img img;
 	t_scene *scene;
-	float last_y; // taşınacak
-	float last_x; // taşınacak
 }	t_minirt;
 
 t_minirt *init_minirt();
@@ -97,7 +95,7 @@ t_ray *init_ray(t_vector o, t_vector dir);
 
 //math
 float	dot_product(t_vector v, t_vector u);
-t_vector *cross_product(t_vector v, t_vector u);
+t_vector *cross_product(const t_vector *v, const t_vector *u);
 t_vector *sum_vector(t_vector v, t_vector u);
 void	scale_vector(t_vector *v, float s);
 t_vector	*get_point_on_ray(t_ray ray, float t);

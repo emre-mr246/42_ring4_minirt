@@ -22,17 +22,20 @@ float	dot_product(t_vector v, t_vector u)
     return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
 
-t_vector *cross_product(t_vector v, t_vector u)
+t_vector *cross_product(const t_vector *v, const t_vector *u)
 {
-    t_vector *vector;
+    if (!v || !u)
+        return NULL;
 
-    vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+    t_vector *vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
     if (!vector)
-        return (NULL);
-    vector->x = (u.y * v.z) - (u.z * v.y);
-    vector->y = (u.z * v.x) - (u.x * v.z);
-    vector->z = (u.x * v.y) - (u.y * v.x);
-    return (vector);
+        return NULL;
+
+    vector->x = (u->y * v->z) - (u->z * v->y);
+    vector->y = (u->z * v->x) - (u->x * v->z);
+    vector->z = (u->x * v->y) - (u->y * v->x);
+
+    return vector;
 }
 
 float	norm(t_vector v)

@@ -38,23 +38,27 @@ int	handle_keypress(int key, t_minirt *minirt)
 	return (0);
 }
 
+// doğru değerlerle değiştirilecek test amaçlı ekledim
 int	handle_mouse(int x, int y, t_minirt *minirt)
 {
-	if (y != minirt->last_y)
+	static unsigned int last_y;
+	static unsigned int last_x;
+
+	if (y != last_y)
 	{
-		if (y > minirt->last_y)
+		if (y > last_y)
 			minirt->scene->camera->pos->y -= 0.01;
 		else
 			minirt->scene->camera->pos->y += 0.01;
 	}
-	if (x != minirt->last_x)
+	if (x != last_x)
 	{
-		if (x > minirt->last_x)
+		if (x > last_x)
 			minirt->scene->camera->pos->z -= 0.01;
 		else
 			minirt->scene->camera->pos->z += 0.01;
 	}
-	minirt->last_y = y;
-	minirt->last_x = x;
+	last_y = y;
+	last_x = x;
     return (0);
 }
