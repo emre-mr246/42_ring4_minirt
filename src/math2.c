@@ -58,14 +58,18 @@ void print_vector(char *name, t_vector v)
 
 t_vector *scale_and_normalize(t_vector *v, float scalar)
 {
-	t_vector *scaled_vector = copy_vector(*v);
+	t_vector *scaled_vector;
+
+	scaled_vector = copy_vector(*v);
 	scale_vector(scaled_vector, scalar);
 	return scaled_vector;
 }
 
 void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vector **up)
 {
-	t_vector *world_up = init_vector(0, 1, 0);
+	t_vector *world_up;
+
+	world_up = init_vector(0, 1, 0);
 	*right = cross_product(orientation, world_up);
 	*up = cross_product(*right, orientation);
 	free(world_up);
@@ -78,12 +82,17 @@ t_vector *get_viewport_origin_to_point(t_vector *right, t_vector *up)
 
 t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_orientation, t_vector *right, t_vector *up)
 {
-	t_vector *scaled_right = scale_and_normalize(right, viewport_x);
-	t_vector *scaled_up = scale_and_normalize(up, viewport_y);
-	t_vector *cam_vec = scale_and_normalize(cam_orientation, 4.0f);
-	t_vector *viewport_origin_to_point = sum_vector(*scaled_right, *scaled_up);
-	t_vector *dir = sum_vector(*cam_vec, *viewport_origin_to_point);
+	t_vector *scaled_right;
+	t_vector *scaled_up;
+	t_vector *cam_vec;
+	t_vector *viewport_origin_to_point;
+	t_vector *dir;
 
+	scaled_right = scale_and_normalize(right, viewport_x);
+	scaled_up = scale_and_normalize(up, viewport_y);
+	cam_vec = scale_and_normalize(cam_orientation, 4.0f);
+	viewport_origin_to_point = sum_vector(*scaled_right, *scaled_up);
+	dir = sum_vector(*cam_vec, *viewport_origin_to_point);
 	normalize(dir);
 	free(scaled_right);
 	free(scaled_up);
@@ -92,29 +101,38 @@ t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_or
 	return (dir);
 }
 
+void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, float *viewport_x, float *viewport_y)
+{
+	float normalized_x = ((float)x + 0.5f) / WIN_W;
+	float normalized_y = ((float)y + 0.5f) / WIN_H;
+
+	*viewport_x = (normalized_x - 0.5f) * minirt->scene->viewport->width;
+	*viewport_y = (0.5f - normalized_y) * minirt->scene->viewport->height;
+}
+
 t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
 {
-	float normalized_x;
-	float normalized_y;
 	float viewport_x;
 	float viewport_y;
-	t_vector *right, *up, *dir;
+	t_vector *right;
+	t_vector *up;
+	t_vector *dir;
 
-	normalized_x = ((float)x + 0.5f) / WIN_W;
-	normalized_y = ((float)y + 0.5f) / WIN_H;
-	viewport_x = (normalized_x - 0.5f) * minirt->scene->viewport->width;
-	viewport_y = (0.5f - normalized_y) * minirt->scene->viewport->height;
+	calculate_viewport_coordinates(x, y, minirt, &viewport_x, &viewport_y);
 	calculate_right_up_vectors(minirt->scene->camera->orientation, &right, &up);
 	dir = get_ray_direction(viewport_x, viewport_y, minirt->scene->camera->orientation, right, up);
 	free(right);
 	free(up);
-	return dir;
+	return (dir);
 }
 
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt)
 {
-	t_vector *dir = calculate_ray_direction(x, y, minirt);
-	t_ray *ray = init_ray(*minirt->scene->camera->pos, *dir);
+	t_vector *dir;
+	t_ray *ray;
+
+	dir = calculate_ray_direction(x, y, minirt);
+	ray = init_ray(*minirt->scene->camera->pos, *dir);
 	free(dir);
 	return (ray);
 }
