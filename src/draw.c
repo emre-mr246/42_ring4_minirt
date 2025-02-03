@@ -41,10 +41,12 @@ void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 		x++;
 	}
 }
-void	draw(t_minirt *minirt)
+int	draw(t_minirt *minirt)
 {
 	fill_image(minirt->win_width, minirt->win_height, &(minirt->img), minirt);
+
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img.ptr, 0, 0);
+	return (1);
 }
 
 

@@ -16,6 +16,9 @@
 # define WIN_W 1200
 # define WIN_H 800
 
+#define M_PI 3.14159265358979323846
+
+
 #include <stdio.h>
 
 typedef struct s_vector
@@ -64,7 +67,7 @@ typedef struct s_minirt
 t_minirt *init_minirt();
 int ft_exit(char *err, int exit_code, t_minirt *minirt);
 int	handle_keypress(int key, t_minirt *minirt);
-void	draw(t_minirt *minirt);
+int	draw(t_minirt *minirt);
 int is_whitespace(char c);
 void	parse_input(char *input_file, t_minirt *minirt);
 char	**ft_split_charset(char const *s, char *charset);

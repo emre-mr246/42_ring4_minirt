@@ -14,7 +14,7 @@
 #include "minirt.h"
 #include "libft.h"
 #include "mlx.h"
-
+#include <X11/X.h>
 #include "stdlib.h"
 
 int ft_exit(char *err, int exit_code, t_minirt *minirt)
@@ -48,9 +48,10 @@ int main(int ac, char **av)
     if (!minirt)
         return (1);
     parse_input(av[1], minirt);
-    draw(minirt);
-    //mlx_loop_hook(fdf->mlx_ptr, &, fdf);
-	mlx_hook(minirt->win, 2, 0, handle_keypress, minirt);
-	mlx_hook(minirt->win, 17, 0, exit_mlx, minirt);
+
+	mlx_loop_hook(minirt->mlx, &draw, minirt);
+	mlx_hook(minirt->win, KeyPress, KeyPressMask, handle_keypress, minirt);
+	mlx_hook(minirt->win, DestroyNotify, KeyReleaseMask, exit_mlx, minirt);
 	mlx_loop(minirt->mlx);
+	return (0);
 }

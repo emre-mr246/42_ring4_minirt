@@ -12,10 +12,11 @@
 
 #include "minirt.h"
 #include <unistd.h>
+#include "X11/keysym.h"
 
 int	handle_keypress(int key, t_minirt *minirt)
 {
-    if (key == 65307)
+    if (key == XK_Escape)
         ft_exit(NULL, 0, minirt);
 	return (0);
 }

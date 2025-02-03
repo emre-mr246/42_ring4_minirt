@@ -72,16 +72,20 @@ t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt)
 	float	viewport_x;
 	float	viewport_y;
 	
+
 	normalized_x = ((float)x + 0.5) / WIN_W; //we add 0.5 to cast the ray from the middle of the pixel and not the top left corner, this helps avoiding aliasing artifacts
 	normalized_y = ((float)y + 0.5) / WIN_H;
 	viewport_x = (normalized_x - 0.5) * minirt->scene->viewport->width;
 	viewport_y = (0.5 - normalized_y) * minirt->scene->viewport->height;
 	t = dist_cam_viewport(x, y, minirt);
+	world_up = init_vector(0, 1, 0);
 	if (fabs(dot_product(*minirt->scene->camera->orientation, *world_up)) == 1.0)
-		world_up = init_vector(0, 1, 0);
-	else
-		world_up = init_vector(0, 0, 1);
+	{
+		free(world_up);
+	 	world_up = init_vector(0, 1, 0);
+	}
 	right = cross_product(*minirt->scene->camera->orientation, *world_up);
+
 	free(world_up);
 	up = cross_product(*right, *minirt->scene->camera->orientation);
 	scale_vector(right, viewport_x);
