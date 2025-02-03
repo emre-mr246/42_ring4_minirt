@@ -62,11 +62,13 @@ typedef struct s_minirt
 	int win_height;
 	t_img img;
 	t_scene *scene;
+	float last_y; // taşınacak
+	float last_x; // taşınacak
 }	t_minirt;
 
 t_minirt *init_minirt();
 int ft_exit(char *err, int exit_code, t_minirt *minirt);
-int	handle_keypress(int key, t_minirt *minirt);
+
 int	draw(t_minirt *minirt);
 int is_whitespace(char c);
 void	parse_input(char *input_file, t_minirt *minirt);
@@ -109,4 +111,8 @@ t_vector	*copy_vector(t_vector v);
 int	get_color(int x, int y, t_minirt *minirt);
 
 void	print_vector(char *name, t_vector v);
+
+// KEYBOARD AND MOUSE
+int	handle_keypress(int key, t_minirt *minirt);
+int	handle_mouse(int x, int y, t_minirt *minirt);
 #endif
