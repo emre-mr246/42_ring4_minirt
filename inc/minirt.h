@@ -74,7 +74,7 @@ int	count_elements(char **arr);
 void	input_control(char *input_file);
 void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), void *ptr);
 int	strs_equal(char *a, char *b);
-int parse_line(char *line, t_scene *scene);
+int parse_line(char *line, void *scene_data);
 int	create_rgb(int red, int green, int blue);
 int	parse_color(char *str);
 float ft_atof(const char *str);

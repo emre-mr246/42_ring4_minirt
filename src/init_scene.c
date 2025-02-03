@@ -70,11 +70,13 @@ static int	fill_objects(t_scene *scene, char **split)
 	}
 }
 
-int parse_line(char *line, t_scene *scene)
+int parse_line(char *line, void *scene_data)
 {
+	t_scene *scene;
     char **split;
 	int i;
 
+	scene = (t_scene *)scene_data;
     split = ft_split_charset(line, " \t");
     if (strs_equal(split[0], "A"))
         scene->amb_light = init_amb_light(split);
