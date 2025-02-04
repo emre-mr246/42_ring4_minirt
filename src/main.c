@@ -19,11 +19,13 @@
 
 int ft_exit(char *err, int exit_code, t_minirt *minirt)
 {
-	if (exit_code != 0)
+	if (exit_code == 42)
+		free_minirt(minirt);
+	else if (exit_code != 0)
 	{
+		free_minirt(minirt);
 		ft_putendl_fd("Error", 2);
 		ft_putendl_fd(err, 2);
-		free_minirt(minirt);
 	}
 	exit(exit_code);
 }

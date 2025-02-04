@@ -49,28 +49,24 @@ int draw(t_minirt *minirt)
 	return (1);
 }
 
-void *check_sphere_intersection(t_ray *ray, t_minirt *minirt)
+int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
 {
+	t_sphere *sp;
+	t_vector intersection;
 	int i;
-	t_vector *intersection;
-	void *obj;
 
 	i = 0;
 	while (minirt->scene->objects[i])
 	{
 		if (minirt->scene->obj_tags[i] == SPHERE)
 		{
-			intersection = intersect_sphere(*ray, *(t_sphere *)minirt->scene->objects[i]);
-			obj = minirt->scene->objects[i];
+			sp = (t_sphere *)minirt->scene->objects[i];
+			if (intersect_sphere(*ray, *sp, &intersection))
+				return (sp->color);
 		}
 		i++;
 	}
-	if (intersection)
-	{
-		free(intersection);
-		return (obj);
-	}
-	return (NULL);
+	return (0);
 }
 
 void free_ray(t_ray *ray)
@@ -86,13 +82,11 @@ void free_ray(t_ray *ray)
 int get_color(int x, int y, t_minirt *minirt)
 {
 	t_ray *ray;
-	t_sphere *sp;
+	int color;
 
+	color = 0;
 	ray = send_ray_from_cam(x, y, minirt);
-	sp = (t_sphere *)check_sphere_intersection(ray, minirt);
+	color = check_sphere_intersection(ray, minirt);
 	free_ray(ray);
-	if (sp)
-		return (sp->color);
-	else
-		return (0x000000);
+	return (color);
 }

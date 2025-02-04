@@ -18,7 +18,7 @@
 int handle_keypress(int key, t_minirt *minirt)
 {
 	if (key == XK_Escape)
-		ft_exit(NULL, 1, minirt);
+		ft_exit(NULL, 42, minirt);
 	if (key == XK_w)
 		minirt->scene->camera->pos->x += 0.1;
 	if (key == XK_s)

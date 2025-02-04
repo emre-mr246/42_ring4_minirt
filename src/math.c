@@ -157,7 +157,7 @@ float solve_eq(float a, float b, float c, t_ray ray)
 	return (get_min_x(x1, x2, ray));
 }
 
-t_vector *intersect_sphere(t_ray ray, t_sphere sphere)
+t_vector *intersect_sphere(t_ray ray, t_sphere sphere, t_vector *intersection)
 {
 	float a;
 	float b;

@@ -27,13 +27,14 @@ typedef struct s_vector
 	float z;
 }	t_vector;
 
+# include "scene.h"
+
 typedef struct s_ray
 {
 	t_vector	*origin;
 	t_vector	*direction;
 } t_ray;
 
-# include "scene.h"
 
 typedef struct s_input
 {
@@ -92,15 +93,17 @@ t_cylinder	*init_cylinder(char **arr);
 t_ray *init_ray(t_vector o, t_vector dir);
 
 
+// intersect
+t_vector    *intersect_sphere(t_ray ray, t_sphere sphere, t_vector *intersection);
+t_vector    *intersect_plane(t_ray ray, t_plane plane);
+
 //math
 float	dot_product(t_vector v, t_vector u);
 t_vector *cross_product(const t_vector *v, const t_vector *u);
 t_vector *sum_vector(t_vector v, t_vector u);
 void	scale_vector(t_vector *v, float s);
-t_vector	*get_point_on_ray(t_ray ray, float t);
 t_vector *subtract_vector(t_vector v, t_vector u);
-t_vector    *intersect_sphere(t_ray ray, t_sphere sphere);
-t_vector    *intersect_plane(t_ray ray, t_plane plane);
+t_vector	*get_point_on_ray(t_ray ray, float t);
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt);
 float	norm(t_vector v);
 t_vector	*copy_vector(t_vector v);
@@ -120,5 +123,8 @@ void free_light(t_light *light);
 void free_sphere(t_sphere *sphere);
 void free_plane(t_plane *plane);
 void free_cylinder(t_cylinder *cylinder);
+
+// debug
+void print_vector(char *name, t_vector v);
 
 #endif

@@ -17,6 +17,21 @@
 #include <stdio.h>
 #include <math.h>
 
+// float dist_cam_viewport(int x, int y, t_minirt *minirt)
+// {
+// 	float dist;
+// 	float hypotenuse_len;
+
+// 	dist = dist_from_viewport_origin(x, y, minirt);
+// 	hypotenuse_len = pythagoras(dist, minirt->scene->viewport->d);
+// 	return (hypotenuse_len);
+// }
+
+// void normalize(t_vector *v)
+// {
+// 	scale_vector(v, 1 / norm(*v));
+// }
+
 float pythagoras(float a, float b)
 {
 	return sqrt(a * a + b * b);
@@ -34,27 +49,6 @@ float dist_from_viewport_origin(int x, int y, t_minirt *minirt)
 	return (pythagoras(fabsf((float)x - (float)origin_x), fabsf((float)y - (float)origin_y)));
 }
 
-float dist_cam_viewport(int x, int y, t_minirt *minirt)
-{
-	float dist;
-	float hypotenuse_len;
-
-	dist = dist_from_viewport_origin(x, y, minirt);
-	hypotenuse_len = pythagoras(dist, minirt->scene->viewport->d);
-	return (hypotenuse_len);
-}
-
-void normalize(t_vector *v)
-{
-	t_vector *normalized;
-
-	scale_vector(v, 1 / norm(*v));
-}
-
-void print_vector(char *name, t_vector v)
-{
-	printf("%s- x: %f, y: %f, z: %f\n", name, v.x, v.y, v.z);
-}
 
 t_vector *scale_and_normalize(t_vector *v, float scalar)
 {
@@ -75,11 +69,6 @@ void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vecto
 	free(world_up);
 }
 
-t_vector *get_viewport_origin_to_point(t_vector *right, t_vector *up)
-{
-	return sum_vector(*right, *up);
-}
-
 t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_orientation, t_vector *right, t_vector *up)
 {
 	t_vector *scaled_right;
@@ -93,7 +82,7 @@ t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_or
 	cam_vec = scale_and_normalize(cam_orientation, 4.0f);
 	viewport_origin_to_point = sum_vector(*scaled_right, *scaled_up);
 	dir = sum_vector(*cam_vec, *viewport_origin_to_point);
-	normalize(dir);
+	// normalize(dir);
 	free(scaled_right);
 	free(scaled_up);
 	free(cam_vec);
