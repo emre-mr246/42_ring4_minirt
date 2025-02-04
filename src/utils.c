@@ -64,27 +64,24 @@ int count_elements(char **arr)
 
 void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), void *ptr)
 {
-	char *line;
-	int fd;
+    char *line;
+    int fd;
 
-	fd = open(input_file, O_RDONLY, 0644);
-	if (fd == -1)
-		ft_exit(input_file, -1, minirt);
-	line = get_next_line(fd);
-	if (!line)
-	{
-		close(fd);
-		ft_exit("Get next line error", -1, minirt);
-	}
-	while (line)
-	{
-		if (f(line, ptr) == -1)
-			ft_exit("iter_lines error", -1, minirt);
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
+    fd = open(input_file, O_RDONLY, 0644);
+    if (fd == -1)
+        ft_exit(input_file, -1, minirt);
+    line = get_next_line(fd);
+    while (line)
+    {
+        if (f(line, ptr) == -1)
+        {
+            free(line);
+            ft_exit("iter_lines error", -1, minirt);
+        }
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
 }
 
 int strs_equal(char *a, char *b)

@@ -38,8 +38,8 @@ t_camera	*init_camera(char **arr)
         return (NULL);
     camera->pos = init_vector_str(arr[1]);
     camera->orientation = init_vector_str(arr[2]);
-	camera->fov = ft_atoi(arr[3]);
     return (camera);
+	camera->fov = ft_atoi(arr[3]);
 }
 
 static int	fill_objects(t_scene *scene, char **split)

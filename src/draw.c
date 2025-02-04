@@ -18,12 +18,12 @@
 #include <math.h>
 #include "mlx.h"
 
-void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
+void fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 {
-	int	x;
-	int	y;
-	int	pix;
-	int	color;
+	int x;
+	int y;
+	int pix;
+	int color;
 
 	x = 0;
 	while (x < size_x)
@@ -33,7 +33,7 @@ void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 		{
 			pix = (x * (img->bits_per_pixel / 8)) + (y * img->line_len);
 			color = get_color(x, y, minirt);
-		    img->data[pix] = color & 0xFF;
+			img->data[pix] = color & 0xFF;
 			img->data[pix + 1] = (color >> 8) & 0xFF;
 			img->data[pix + 2] = (color >> 16) & 0xFF;
 			y++;
@@ -41,16 +41,15 @@ void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 		x++;
 	}
 }
-int	draw(t_minirt *minirt)
+
+int draw(t_minirt *minirt)
 {
 	fill_image(minirt->win_width, minirt->win_height, &(minirt->img), minirt);
-
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img.ptr, 0, 0);
 	return (1);
 }
 
-
-void	*check_sphere_intersection(t_ray *ray, t_minirt *minirt)
+void *check_sphere_intersection(t_ray *ray, t_minirt *minirt)
 {
 	int i;
 	t_vector *intersection;
@@ -67,17 +66,31 @@ void	*check_sphere_intersection(t_ray *ray, t_minirt *minirt)
 		i++;
 	}
 	if (intersection)
+	{
+		free(intersection);
 		return (obj);
+	}
 	return (NULL);
 }
 
-int	get_color(int x, int y, t_minirt *minirt)
+void free_ray(t_ray *ray)
+{
+	if (ray->direction)
+		free(ray->direction);
+	if (ray->origin)
+		free(ray->origin);
+	if (ray)
+		free(ray);
+}
+
+int get_color(int x, int y, t_minirt *minirt)
 {
 	t_ray *ray;
-    t_sphere *sp;
+	t_sphere *sp;
 
 	ray = send_ray_from_cam(x, y, minirt);
-    sp = (t_sphere *)check_sphere_intersection(ray, minirt);
+	sp = (t_sphere *)check_sphere_intersection(ray, minirt);
+	free_ray(ray);
 	if (sp)
 		return (sp->color);
 	else

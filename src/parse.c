@@ -64,5 +64,4 @@ void	parse_input(char *input_file, t_minirt *minirt)
     fill_scene(minirt, input);
     iter_lines(minirt, input_file, parse_line, minirt->scene);
     free(input);
-
 }

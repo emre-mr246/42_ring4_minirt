@@ -121,6 +121,7 @@ int line_checker(char *line, void *ptr)
         free_array(split);
         return (-1);
     }
+    free_array(split);
     return (0);
 }
 

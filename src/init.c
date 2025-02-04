@@ -70,15 +70,14 @@ void fill_scene(t_minirt *minirt, t_input *input)
     t_scene *scene;
     
     scene = minirt->scene;
-    scene->amb_light = (t_amb_light *)ft_calloc(sizeof(t_amb_light), 1);
-    scene->camera = (t_camera *)ft_calloc(sizeof(t_camera), 1);
+    scene->amb_light = NULL;
+    scene->camera = NULL;
     scene->viewport = (t_viewport *)ft_calloc(sizeof(t_viewport), 1);
     scene->viewport->width = WIN_W / 100;
     scene->viewport->height = WIN_H / 100;
     scene->objects = (void **)ft_calloc(sizeof(void *), input->obj_count + 1);
     scene->obj_tags = (int *)ft_calloc(sizeof(int), input->obj_count + 1);
-    if (!scene->amb_light || !scene->camera || !scene->viewport
-             || !scene->objects || !scene->obj_tags)
+    if (!scene->viewport || !scene->objects || !scene->obj_tags)
         ft_exit("scene_malloc", -1, minirt);
 }
 
