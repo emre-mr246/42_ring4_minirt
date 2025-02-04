@@ -16,54 +16,54 @@
 #include <unistd.h>
 #include <stdio.h>
 
-t_light	*init_light(char **arr)
+t_light *init_light(char **arr)
 {
 	t_light *light;
-	
-    light = (t_light *)ft_calloc(sizeof(t_light), 1);
-    if (!light)
-        return (NULL);
-    light->pos = init_vector_str(arr[1]);
-    light->intensity = ft_atof(arr[2]);
-    return (light);
+
+	light = (t_light *)ft_calloc(sizeof(t_light), 1);
+	if (!light)
+		return (NULL);
+	light->pos = init_vector_str(arr[1]);
+	light->intensity = ft_atof(arr[2]);
+	return (light);
 }
 
-t_plane	*init_plane(char **arr)
+t_plane *init_plane(char **arr)
 {
 	t_plane *plane;
-	
-    plane = (t_plane *)ft_calloc(sizeof(t_plane), 1);
-    if (!plane)
-        return (NULL);
-    plane->point = init_vector_str(arr[1]);
-    plane->normal = init_vector_str(arr[2]);
-    plane->color = parse_color(arr[3]);
-    return (plane);
+
+	plane = (t_plane *)ft_calloc(sizeof(t_plane), 1);
+	if (!plane)
+		return (NULL);
+	plane->point = init_vector_str(arr[1]);
+	plane->normal = init_vector_str(arr[2]);
+	plane->color = parse_color(arr[3]);
+	return (plane);
 }
 
-t_sphere	*init_sphere(char **arr)
+t_sphere *init_sphere(char **arr)
 {
 	t_sphere *sphere;
-	
-    sphere = (t_sphere *)ft_calloc(sizeof(t_sphere), 1);
-    if (!sphere)
-        return (NULL);
-    sphere->origin = init_vector_str(arr[1]);
-    sphere->radius = ft_atof(arr[2]);
-    sphere->color = parse_color(arr[3]);
-    return (sphere);
+
+	sphere = (t_sphere *)ft_calloc(sizeof(t_sphere), 1);
+	if (!sphere)
+		return (NULL);
+	sphere->origin = init_vector_str(arr[1]);
+	sphere->radius = ft_atof(arr[2]);
+	sphere->color = parse_color(arr[3]);
+	return (sphere);
 }
 
-t_cylinder	*init_cylinder(char **arr)
+t_cylinder *init_cylinder(char **arr)
 {
 	t_cylinder *cylinder;
-	
-    cylinder = (t_cylinder *)ft_calloc(sizeof(t_cylinder), 1);
-    if (!cylinder)
-        return (NULL);
-    cylinder->origin = init_vector_str(arr[1]);
-    cylinder->axis = init_vector_str(arr[2]);
-    cylinder->radius = atof(arr[3]);
-    cylinder->height = atoi(arr[4]);
-    return (cylinder);
+
+	cylinder = (t_cylinder *)ft_calloc(sizeof(t_cylinder), 1);
+	if (!cylinder)
+		return (NULL);
+	cylinder->origin = init_vector_str(arr[1]);
+	cylinder->axis = init_vector_str(arr[2]);
+	cylinder->radius = atof(arr[3]);
+	cylinder->height = atoi(arr[4]);
+	return (cylinder);
 }

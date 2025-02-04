@@ -1,5 +1,5 @@
 
-FILES		= main init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw
+FILES		= main init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
 
 NAME		= minirt
 CC			= gcc

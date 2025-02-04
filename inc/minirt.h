@@ -18,7 +18,6 @@
 
 #define M_PI 3.14159265358979323846
 
-
 #include <stdio.h>
 
 typedef struct s_vector
@@ -113,4 +112,13 @@ void	print_vector(char *name, t_vector v);
 // KEYBOARD AND MOUSE
 int	handle_keypress(int key, t_minirt *minirt);
 int	handle_mouse(int x, int y, t_minirt *minirt);
+
+// FREE
+void free_minirt(t_minirt *minirt);
+void free_camera(t_camera *camera);
+void free_light(t_light *light);
+void free_sphere(t_sphere *sphere);
+void free_plane(t_plane *plane);
+void free_cylinder(t_cylinder *cylinder);
+
 #endif

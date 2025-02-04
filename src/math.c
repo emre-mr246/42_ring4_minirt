@@ -17,83 +17,83 @@
 #include <stdio.h>
 #include <math.h>
 
-float	dot_product(t_vector v, t_vector u)
+float dot_product(t_vector v, t_vector u)
 {
-    return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
+	return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
 
 t_vector *cross_product(const t_vector *v, const t_vector *u)
 {
-    if (!v || !u)
-        return NULL;
+	if (!v || !u)
+		return NULL;
 
-    t_vector *vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-    if (!vector)
-        return NULL;
+	t_vector *vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+	if (!vector)
+		return NULL;
 
-    vector->x = (u->y * v->z) - (u->z * v->y);
-    vector->y = (u->z * v->x) - (u->x * v->z);
-    vector->z = (u->x * v->y) - (u->y * v->x);
+	vector->x = (u->y * v->z) - (u->z * v->y);
+	vector->y = (u->z * v->x) - (u->x * v->z);
+	vector->z = (u->x * v->y) - (u->y * v->x);
 
-    return vector;
+	return vector;
 }
 
-float	norm(t_vector v)
+float norm(t_vector v)
 {
 	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
 }
 
 t_vector *sum_vector(t_vector v, t_vector u)
 {
-    t_vector *vector;
+	t_vector *vector;
 
-    vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-    if (!vector)
-        return (NULL);
-    vector->x = v.x + u.x;
-    vector->y = v.y + u.y;
-    vector->z = v.z + u.z;
-    return (vector);
+	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+	if (!vector)
+		return (NULL);
+	vector->x = v.x + u.x;
+	vector->y = v.y + u.y;
+	vector->z = v.z + u.z;
+	return (vector);
 }
 
 t_vector *subtract_vector(t_vector v, t_vector u)
 {
-    t_vector *vector;
+	t_vector *vector;
 
-    vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-    if (!vector)
-        return (NULL);
-    vector->x = v.x - u.x;
-    vector->y = v.y - u.y;
-    vector->z = v.z - u.z;
-    return (vector);
+	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+	if (!vector)
+		return (NULL);
+	vector->x = v.x - u.x;
+	vector->y = v.y - u.y;
+	vector->z = v.z - u.z;
+	return (vector);
 }
 
-t_vector	*copy_vector(t_vector v)
+t_vector *copy_vector(t_vector v)
 {
-    t_vector *vector;
+	t_vector *vector;
 
-    vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-    if (!vector)
-        return (NULL);
+	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+	if (!vector)
+		return (NULL);
 	vector->x = v.x;
-    vector->y = v.y;
-    vector->z = v.z;
-    return (vector);
+	vector->y = v.y;
+	vector->z = v.z;
+	return (vector);
 }
 
-void	scale_vector(t_vector *v, float s)
+void scale_vector(t_vector *v, float s)
 {
 	v->x *= s;
 	v->y *= s;
 	v->z *= s;
 }
 
-t_vector	*get_point_on_ray(t_ray ray, float t)
+t_vector *get_point_on_ray(t_ray ray, float t)
 {
 	t_vector *v;
 	t_vector *td;
-	
+
 	td = copy_vector(*ray.direction);
 	scale_vector(td, t);
 	v = sum_vector(*ray.origin, *td);
@@ -101,78 +101,72 @@ t_vector	*get_point_on_ray(t_ray ray, float t)
 	return (v);
 }
 
-t_vector    *intersect_plane(t_ray ray, t_plane plane)
+t_vector *intersect_plane(t_ray ray, t_plane plane)
 {
-    float t;
+	float t;
 
-    // ışın denklemi : pr = o + tD
-    // plane denklemi : (pp - pr) . n = 0
-    // (pp - (o + tD)) . n = 0
-    // (pp - o - tD) . n = 0
-    // pp . n - o . n - tD . n = 0
-    // pp . n - o . n = t (D . n)
-    // t = (pp . n - o . n) / (D . n ) 
-    t = (dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin, *plane.normal)) 
-            / dot_product(*ray.direction, *plane.normal);
-    return (get_point_on_ray(ray, t));
+	// ışın denklemi : pr = o + tD
+	// plane denklemi : (pp - pr) . n = 0
+	// (pp - (o + tD)) . n = 0
+	// (pp - o - tD) . n = 0
+	// pp . n - o . n - tD . n = 0
+	// pp . n - o . n = t (D . n)
+	// t = (pp . n - o . n) / (D . n )
+	t = (dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin, *plane.normal)) / dot_product(*ray.direction, *plane.normal);
+	return (get_point_on_ray(ray, t));
 }
 
 float sq(float a)
 {
-    return (a * a);
+	return (a * a);
 }
 
-float   discriminant(float a, float b, float c)
+float discriminant(float a, float b, float c)
 {
-    return (sq(b) - (4 * a * c));
+	return (sq(b) - (4 * a * c));
 }
 
-float   get_min_x(float x1, float x2, t_ray ray)
+float get_min_x(float x1, float x2, t_ray ray)
 {
-    t_vector *v1;
-    t_vector *v2;
+	t_vector *v1;
+	t_vector *v2;
 
-    v1 = get_point_on_ray(ray, x1);
-    v2 = get_point_on_ray(ray, x2);
-    if (norm(*v1) < norm(*v2))
-    {
-        free(v1);
-        free(v2);
-        return (x1);
-    }
-    free(v1);
-    free(v2);
-    return (x2);
+	v1 = get_point_on_ray(ray, x1);
+	v2 = get_point_on_ray(ray, x2);
+	if (norm(*v1) < norm(*v2))
+	{
+		free(v1);
+		free(v2);
+		return (x1);
+	}
+	free(v1);
+	free(v2);
+	return (x2);
 }
 
-float   solve_eq(float a, float b, float c, t_ray ray)
+float solve_eq(float a, float b, float c, t_ray ray)
 {
-    //x = (-b + sqrt(disc)) / 2a
-    float disc;
-    float   x1;
-    float   x2;
+	// x = (-b + sqrt(disc)) / 2a
+	float disc;
+	float x1;
+	float x2;
 
-    disc = discriminant(a, b, c);
-    x1 = (-b + sqrtf(disc)) / (2 * a);
-    x2 = (-b - sqrtf(disc)) / (2 * a);
-    return (get_min_x(x1, x2, ray));
+	disc = discriminant(a, b, c);
+	x1 = (-b + sqrtf(disc)) / (2 * a);
+	x2 = (-b - sqrtf(disc)) / (2 * a);
+	return (get_min_x(x1, x2, ray));
 }
 
-t_vector    *intersect_sphere(t_ray ray, t_sphere sphere)
+t_vector *intersect_sphere(t_ray ray, t_sphere sphere)
 {
-    float a;
-    float b;
-    float c;
+	float a;
+	float b;
+	float c;
 
-    a = sq(ray.direction->x) + sq(ray.direction->y) + sq(ray.direction->z);
-    b = 2 * (ray.origin->x - sphere.origin->x) * ray.direction->x
-        + 2 * (ray.origin->y - sphere.origin->y) * ray.direction->y
-        + 2 * (ray.origin->z - sphere.origin->z) * ray.direction->z;
-    c = sq(ray.origin->x - sphere.origin->x)
-        + sq(ray.origin->y - sphere.origin->y) 
-        + sq(ray.origin->z - sphere.origin->z)
-		- sq(sphere.radius);
-    if (discriminant(a, b, c) < 0)
-        return (NULL);
-    return (get_point_on_ray(ray, solve_eq(a, b, c, ray)));
+	a = sq(ray.direction->x) + sq(ray.direction->y) + sq(ray.direction->z);
+	b = 2 * (ray.origin->x - sphere.origin->x) * ray.direction->x + 2 * (ray.origin->y - sphere.origin->y) * ray.direction->y + 2 * (ray.origin->z - sphere.origin->z) * ray.direction->z;
+	c = sq(ray.origin->x - sphere.origin->x) + sq(ray.origin->y - sphere.origin->y) + sq(ray.origin->z - sphere.origin->z) - sq(sphere.radius);
+	if (discriminant(a, b, c) < 0)
+		return (NULL);
+	return (get_point_on_ray(ray, solve_eq(a, b, c, ray)));
 }

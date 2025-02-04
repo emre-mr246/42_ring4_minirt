@@ -15,10 +15,10 @@
 #include "X11/keysym.h"
 #include <X11/X.h>
 
-int	handle_keypress(int key, t_minirt *minirt)
+int handle_keypress(int key, t_minirt *minirt)
 {
-    if (key == XK_Escape)
-        ft_exit(NULL, 0, minirt);
+	if (key == XK_Escape)
+		ft_exit(NULL, 1, minirt);
 	if (key == XK_w)
 		minirt->scene->camera->pos->x += 0.1;
 	if (key == XK_s)
@@ -39,7 +39,7 @@ int	handle_keypress(int key, t_minirt *minirt)
 }
 
 // doğru değerlerle değiştirilecek test amaçlı ekledim
-int	handle_mouse(int x, int y, t_minirt *minirt)
+int handle_mouse(int x, int y, t_minirt *minirt)
 {
 	static unsigned int last_y;
 	static unsigned int last_x;
@@ -60,5 +60,5 @@ int	handle_mouse(int x, int y, t_minirt *minirt)
 	}
 	last_y = y;
 	last_x = x;
-    return (0);
+	return (0);
 }

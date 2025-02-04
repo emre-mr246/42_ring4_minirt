@@ -16,7 +16,7 @@
 
 static int in_charset(char c, char *charset)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (charset[i])
@@ -28,11 +28,11 @@ static int in_charset(char c, char *charset)
 	return (0);
 }
 
-static int	count_words(const char *s, char *charset)
+static int count_words(const char *s, char *charset)
 {
-	int	i;
-	int	j;
-	int	res;
+	int i;
+	int j;
+	int res;
 
 	if (!s[0])
 		return (0);
@@ -42,7 +42,7 @@ static int	count_words(const char *s, char *charset)
 		if (in_charset(s[i], charset))
 			i++;
 		else
-			break ;
+			break;
 	}
 	res = 0;
 	while (s[i])
@@ -54,9 +54,9 @@ static int	count_words(const char *s, char *charset)
 	return (res);
 }
 
-static int	count_letters(const char *s, char *charset)
+static int count_letters(const char *s, char *charset)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (!in_charset(s[i], charset) && s[i] != '\0')
@@ -64,10 +64,10 @@ static int	count_letters(const char *s, char *charset)
 	return (i);
 }
 
-static char	*write_word(const char *s, char *charset)
+static char *write_word(const char *s, char *charset)
 {
-	char	*str;
-	int	i;
+	char *str;
+	int i;
 
 	str = (char *)malloc(count_letters(s, charset) + 1);
 	if (!str)
@@ -82,11 +82,11 @@ static char	*write_word(const char *s, char *charset)
 	return (str);
 }
 
-char	**ft_split_charset(char const *s, char *charset)
+char **ft_split_charset(char const *s, char *charset)
 {
-	char	**arr;
-	int	i;
-	int	word;
+	char **arr;
+	int i;
+	int word;
 
 	arr = (char **)malloc((count_words(s, charset) + 1) * sizeof(char *));
 	if (!arr)
@@ -102,4 +102,3 @@ char	**ft_split_charset(char const *s, char *charset)
 	arr[word] = 0;
 	return (arr);
 }
-
