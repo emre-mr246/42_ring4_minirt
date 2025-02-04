@@ -92,9 +92,11 @@ t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_or
 
 void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, float *viewport_x, float *viewport_y)
 {
-	float normalized_x = ((float)x + 0.5f) / WIN_W;
-	float normalized_y = ((float)y + 0.5f) / WIN_H;
+	float normalized_x;
+	float normalized_y;
 
+ 	normalized_x = ((float)x + 0.5f) / WIN_W;
+	normalized_y = ((float)y + 0.5f) / WIN_H;
 	*viewport_x = (normalized_x - 0.5f) * minirt->scene->viewport->width;
 	*viewport_y = (0.5f - normalized_y) * minirt->scene->viewport->height;
 }
@@ -117,11 +119,11 @@ t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
 
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt)
 {
-	t_vector *dir;
+	t_vector *direction;
 	t_ray *ray;
 
-	dir = calculate_ray_direction(x, y, minirt);
-	ray = init_ray(*minirt->scene->camera->pos, *dir);
-	free(dir);
+	direction = calculate_ray_direction(x, y, minirt);
+	ray = init_ray(*minirt->scene->camera->pos, *direction);
+	free(direction);
 	return (ray);
 }

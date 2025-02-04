@@ -56,6 +56,9 @@ libre:
 	@make $(MAKEFLAGS) -C $(LIBFT_PATH) re
 	@echo "$(BLUE)-== all object files recreated in libft! ==-$(DEFAULT)"
 
+leak:
+	@make && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) misra.rt
+
 re: fclean all
 
 .PHONY: all clean fclean libre re

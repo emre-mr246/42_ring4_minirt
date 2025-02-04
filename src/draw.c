@@ -51,22 +51,26 @@ int draw(t_minirt *minirt)
 
 int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
 {
-	t_sphere *sp;
-	t_vector intersection;
-	int i;
+    int i;
+    t_sphere *sp;
+    t_vector *intersection;
 
-	i = 0;
-	while (minirt->scene->objects[i])
-	{
-		if (minirt->scene->obj_tags[i] == SPHERE)
-		{
-			sp = (t_sphere *)minirt->scene->objects[i];
-			if (intersect_sphere(*ray, *sp, &intersection))
-				return (sp->color);
-		}
-		i++;
-	}
-	return (0);
+    i = 0;
+    while (minirt->scene->objects[i])
+    {
+        if (minirt->scene->obj_tags[i] == SPHERE)
+        {
+            sp = (t_sphere *)minirt->scene->objects[i];
+			intersection = intersect_sphere(*ray, *sp);
+            if (intersection)
+            {
+				free(intersection);
+                return (sp->color);
+            }
+        }
+        i++;
+    }
+    return 0;
 }
 
 void free_ray(t_ray *ray)
