@@ -27,18 +27,13 @@ int handle_keypress(int key, t_minirt *minirt)
 		minirt->scene->camera->pos->z += 0.1;
 	if (key == XK_d)
 		minirt->scene->camera->pos->z -= 0.1;
-	if (key == XK_Up)
-		minirt->scene->camera->orientation->x += 0.005f;
-	if (key == XK_Down)
-		minirt->scene->camera->orientation->x -= 0.005f;
-	if (key == XK_Left)
-		minirt->scene->camera->orientation->z += 0.005f;
-	if (key == XK_Right)
-		minirt->scene->camera->orientation->z -= 0.005f;
+	if (key == XK_space)
+		minirt->scene->camera->pos->y += 0.1;
+	if (key == XK_Control_L)
+		minirt->scene->camera->pos->y -= 0.1;
 	return (0);
 }
 
-// doğru değerlerle değiştirilecek test amaçlı ekledim
 int handle_mouse(int x, int y, t_minirt *minirt)
 {
 	static unsigned int last_y;
@@ -47,16 +42,16 @@ int handle_mouse(int x, int y, t_minirt *minirt)
 	if (y != last_y)
 	{
 		if (y > last_y)
-			minirt->scene->camera->pos->y -= 0.01;
+			minirt->scene->camera->orientation->x -= 0.001f;
 		else
-			minirt->scene->camera->pos->y += 0.01;
+			minirt->scene->camera->orientation->x += 0.001f;
 	}
 	if (x != last_x)
 	{
 		if (x > last_x)
-			minirt->scene->camera->pos->z -= 0.01;
+			minirt->scene->camera->orientation->z -= 0.001f;
 		else
-			minirt->scene->camera->pos->z += 0.01;
+			minirt->scene->camera->orientation->z += 0.001f;
 	}
 	last_y = y;
 	last_x = x;

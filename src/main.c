@@ -53,7 +53,7 @@ int main(int ac, char **av)
 	parse_input(av[1], minirt);
 	mlx_loop_hook(minirt->mlx, &draw, minirt);
 	mlx_hook(minirt->win, KeyPress, KeyPressMask, handle_keypress, minirt);
-	mlx_hook(minirt->win, 06, 1L << 6, handle_mouse, minirt);
+	mlx_hook(minirt->win, MotionNotify, PointerMotionMask, handle_mouse, minirt);
 	mlx_hook(minirt->win, DestroyNotify, KeyReleaseMask, exit_mlx, minirt);
 	mlx_loop(minirt->mlx);
 	return (0);
