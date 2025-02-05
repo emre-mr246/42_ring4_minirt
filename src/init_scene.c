@@ -24,7 +24,7 @@ t_amb_light *init_amb_light(char **arr)
 	amb_light = (t_amb_light *)ft_calloc(sizeof(t_amb_light), 1);
 	if (!amb_light)
 		return (NULL);
-	amb_light->intensity = ft_atof(arr[1]);
+	amb_light->intensity = fmin(fmax(ft_atof(arr[1]), 0.0), 1.0);
 	amb_light->color = parse_color(arr[2]);
 	return (amb_light);
 }

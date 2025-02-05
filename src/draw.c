@@ -83,6 +83,32 @@ void free_ray(t_ray *ray)
 		free(ray);
 }
 
+int clamp_color_value(int value)
+{
+	if (value > 255)
+		return (255);
+	if (value < 0)
+		return (0);
+	return (value);
+}
+
+int calculate_ambient_light(int color, t_amb_light *amb_light)
+{
+	int r;
+	int g;
+	int b;
+
+	if (!amb_light)
+		return (color);
+	r = ((color >> 16) & 0xFF) * amb_light->intensity;
+	g = ((color >> 8) & 0xFF) * amb_light->intensity;
+	b = (color & 0xFF) * amb_light->intensity;
+	r = clamp_color_value(r);
+	g = clamp_color_value(g);
+	b = clamp_color_value(b);
+	return ((r << 16) | (g << 8) | b);
+}
+
 int get_color(int x, int y, t_minirt *minirt)
 {
 	t_ray *ray;
@@ -91,6 +117,7 @@ int get_color(int x, int y, t_minirt *minirt)
 	color = 0;
 	ray = send_ray_from_cam(x, y, minirt);
 	color = check_sphere_intersection(ray, minirt);
+	color = calculate_ambient_light(color, minirt->scene->amb_light);
 	free_ray(ray);
 	return (color);
 }
