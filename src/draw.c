@@ -73,25 +73,6 @@ int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
     return 0;
 }
 
-void free_ray(t_ray *ray)
-{
-	if (ray->direction)
-		free(ray->direction);
-	if (ray->origin)
-		free(ray->origin);
-	if (ray)
-		free(ray);
-}
-
-int clamp_color_value(int value)
-{
-	if (value > 255)
-		return (255);
-	if (value < 0)
-		return (0);
-	return (value);
-}
-
 int calculate_ambient_light(int color, t_amb_light *amb_light)
 {
 	int r;
@@ -106,7 +87,7 @@ int calculate_ambient_light(int color, t_amb_light *amb_light)
 	r = clamp_color_value(r);
 	g = clamp_color_value(g);
 	b = clamp_color_value(b);
-	return ((r << 16) | (g << 8) | b);
+	return (create_rgb(r, g, b));
 }
 
 int get_color(int x, int y, t_minirt *minirt)

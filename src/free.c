@@ -75,3 +75,29 @@ void free_minirt(t_minirt *minirt)
 	}
 	free(minirt);
 }
+
+void free_ray(t_ray *ray)
+{
+	if (ray->direction)
+		free(ray->direction);
+	if (ray->origin)
+		free(ray->origin);
+	if (ray)
+		free(ray);
+}
+
+void free_array(char **arr)
+{
+	int i;
+
+	i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	if (arr)
+		free(arr);
+}

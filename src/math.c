@@ -38,57 +38,6 @@ t_vector *cross_product(const t_vector *v, const t_vector *u)
 	return vector;
 }
 
-float vector_magnitude(t_vector v)
-{
-	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
-}
-
-t_vector *sum_vector(t_vector v, t_vector u)
-{
-	t_vector *vector;
-
-	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-	if (!vector)
-		return (NULL);
-	vector->x = v.x + u.x;
-	vector->y = v.y + u.y;
-	vector->z = v.z + u.z;
-	return (vector);
-}
-
-t_vector *subtract_vector(t_vector v, t_vector u)
-{
-	t_vector *vector;
-
-	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-	if (!vector)
-		return (NULL);
-	vector->x = v.x - u.x;
-	vector->y = v.y - u.y;
-	vector->z = v.z - u.z;
-	return (vector);
-}
-
-t_vector *copy_vector(t_vector v)
-{
-	t_vector *vector;
-
-	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
-	if (!vector)
-		return (NULL);
-	vector->x = v.x;
-	vector->y = v.y;
-	vector->z = v.z;
-	return (vector);
-}
-
-void scale_vector(t_vector *v, float s)
-{
-	v->x *= s;
-	v->y *= s;
-	v->z *= s;
-}
-
 t_vector *get_point_on_ray(t_ray ray, float t)
 {
 	t_vector *v;

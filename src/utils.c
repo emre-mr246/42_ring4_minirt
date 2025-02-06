@@ -37,22 +37,6 @@ int higher_len(char *str1, char *str2)
 		return (len2);
 }
 
-void free_array(char **arr)
-{
-	int i;
-
-	i = 0;
-	if (!arr)
-		return;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	if (arr)
-		free(arr);
-}
-
 int count_elements(char **arr)
 {
 	int i;
@@ -89,18 +73,3 @@ int strs_equal(char *a, char *b)
 	return (ft_strncmp(a, b, higher_len(a, b)) == 0);
 }
 
-int create_rgb(int red, int green, int blue)
-{
-	return ((red << 16) | (green << 8) | blue);
-}
-
-int parse_color(char *str)
-{
-	char **split;
-	int color;
-
-	split = ft_split(str, ',');
-	color = create_rgb(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]));
-	free_array(split);
-	return (color);
-}

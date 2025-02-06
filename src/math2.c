@@ -27,10 +27,7 @@
 // 	return (hypotenuse_len);
 // }
 
-// void normalize(t_vector *v)
-// {
-// 	scale_vector(v, 1 / norm(*v));
-// }
+
 
 float pythagoras(float a, float b)
 {
@@ -48,7 +45,6 @@ float dist_from_viewport_origin(int x, int y, t_minirt *minirt)
 	origin_y = viewport->height / 2;
 	return (pythagoras(fabsf((float)x - (float)origin_x), fabsf((float)y - (float)origin_y)));
 }
-
 
 t_vector *scale_and_normalize(t_vector *v, float scalar)
 {
