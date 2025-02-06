@@ -105,7 +105,7 @@ void	scale_vector(t_vector *v, float s);
 t_vector *subtract_vector(t_vector v, t_vector u);
 t_vector	*get_point_on_ray(t_ray ray, float t);
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt);
-float	norm(t_vector v);
+float	vector_magnitude(t_vector v);
 t_vector	*copy_vector(t_vector v);
 
 int	get_color(int x, int y, t_minirt *minirt);

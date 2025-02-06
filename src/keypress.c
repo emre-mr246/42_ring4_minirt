@@ -14,8 +14,30 @@
 #include <unistd.h>
 #include "X11/keysym.h"
 #include <X11/X.h>
-
 #include <math.h>
+
+void reset_camera(t_minirt *minirt)
+{
+	minirt->scene->camera->pos->x = 0;
+	minirt->scene->camera->pos->y = 0;
+	minirt->scene->camera->pos->z = 0;
+	minirt->scene->camera->orientation->x = 1;
+	minirt->scene->camera->orientation->y = 0;
+	minirt->scene->camera->orientation->z = 0;
+}
+
+void move_camera_forward(t_minirt *minirt, t_vector *orientation, double move_step)
+{
+    minirt->scene->camera->pos->x += move_step * orientation->x;
+    minirt->scene->camera->pos->y += move_step * orientation->y;
+    minirt->scene->camera->pos->z += move_step * orientation->z;
+}
+
+void move_camera_sideways(t_minirt *minirt, t_vector *orientation, double move_step)
+{
+    minirt->scene->camera->pos->x -= move_step * orientation->z;
+    minirt->scene->camera->pos->z += move_step * orientation->x;
+}
 
 int handle_keypress(int key, t_minirt *minirt)
 {
@@ -27,31 +49,19 @@ int handle_keypress(int key, t_minirt *minirt)
 	if (key == XK_Escape)
 		ft_exit(NULL, 42, minirt);
 	if (key == XK_w)
-	{
-		minirt->scene->camera->pos->x += move_step * orientation->x;
-		minirt->scene->camera->pos->y += move_step * orientation->y;
-		minirt->scene->camera->pos->z += move_step * orientation->z;
-	}
+	    move_camera_forward(minirt, orientation, move_step);
 	if (key == XK_s)
-	{
-		minirt->scene->camera->pos->x -= move_step * orientation->x;
-		minirt->scene->camera->pos->y -= move_step * orientation->y;
-		minirt->scene->camera->pos->z -= move_step * orientation->z;
-	}
+		move_camera_forward(minirt, orientation, -move_step);
 	if (key == XK_a)
-	{
-		minirt->scene->camera->pos->x -= move_step * orientation->z;
-		minirt->scene->camera->pos->z += move_step * orientation->x;
-	}
+		move_camera_sideways(minirt, orientation, move_step);
 	if (key == XK_d)
-	{
-		minirt->scene->camera->pos->x += move_step * orientation->z;
-		minirt->scene->camera->pos->z -= move_step * orientation->x;
-	}
+		move_camera_sideways(minirt, orientation, -move_step);
 	if (key == XK_space)
 		minirt->scene->camera->pos->y += move_step;
 	if (key == XK_Control_L)
 		minirt->scene->camera->pos->y -= move_step;
+	if (key == XK_r)
+		reset_camera(minirt);
 	return (0);
 }
 

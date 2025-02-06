@@ -38,7 +38,7 @@ t_vector *cross_product(const t_vector *v, const t_vector *u)
 	return vector;
 }
 
-float norm(t_vector v)
+float vector_magnitude(t_vector v)
 {
 	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
 }
@@ -133,7 +133,7 @@ float get_min_x(float x1, float x2, t_ray ray)
 
 	v1 = get_point_on_ray(ray, x1);
 	v2 = get_point_on_ray(ray, x2);
-	if (norm(*v1) < norm(*v2))
+	if (vector_magnitude(*v1) < vector_magnitude(*v2))
 	{
 		free(v1);
 		free(v2);
