@@ -25,17 +25,14 @@ float dot_product(t_vector v, t_vector u)
 t_vector *cross_product(const t_vector *v, const t_vector *u)
 {
 	if (!v || !u)
-		return NULL;
-
+		return (NULL);
 	t_vector *vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
 	if (!vector)
-		return NULL;
-
+		return (NULL);
 	vector->x = (u->y * v->z) - (u->z * v->y);
 	vector->y = (u->z * v->x) - (u->x * v->z);
 	vector->z = (u->x * v->y) - (u->y * v->x);
-
-	return vector;
+	return (vector);
 }
 
 t_vector *get_point_on_ray(t_ray ray, float t)
@@ -62,31 +59,23 @@ float discriminant(float a, float b, float c)
 
 float get_min_x(float x1, float x2, t_ray ray)
 {
-	t_vector *v1;
-	t_vector *v2;
-
-	v1 = get_point_on_ray(ray, x1);
-	v2 = get_point_on_ray(ray, x2);
-	if (vector_magnitude(*v1) < vector_magnitude(*v2))
-	{
-		free(v1);
-		free(v2);
-		return (x1);
-	}
-	free(v1);
-	free(v2);
-	return (x2);
+    if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)
+        return (x1);
+    if (x2 >= RAY_T_MIN && x2 <= RAY_T_MAX)
+        return (x2);
+    return (-1);
 }
 
 float solve_eq(float a, float b, float c, t_ray ray)
 {
-	// x = (-b + sqrt(disc)) / 2a
-	float disc;
-	float x1;
-	float x2;
+    float disc;
+    float x1;
+    float x2;
 
-	disc = discriminant(a, b, c);
-	x1 = (-b + sqrtf(disc)) / (2 * a);
-	x2 = (-b - sqrtf(disc)) / (2 * a);
-	return (get_min_x(x1, x2, ray));
+    disc = discriminant(a, b, c);
+    if (disc < 0)
+        return (-1);
+    x1 = (-b + sqrtf(disc)) / (2 * a);
+    x2 = (-b - sqrtf(disc)) / (2 * a);
+    return (get_min_x(x1, x2, ray));
 }

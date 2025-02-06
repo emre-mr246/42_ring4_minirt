@@ -67,24 +67,20 @@ int handle_keypress(int key, t_minirt *minirt)
 
 int handle_mouse(int x, int y, t_minirt *minirt)
 {
-	static unsigned int last_y;
-	static unsigned int last_x;
+    static int last_x = -1;
+    static int last_y = -1;
 
-	if (y != last_y)
-	{
-		if (y > last_y)
-			minirt->scene->camera->orientation->x -= 0.0005f * (y - last_y);
-		else
-			minirt->scene->camera->orientation->x += 0.0005f * (last_y - y);
-	}
-	if (x != last_x)
-	{
-		if (x > last_x)
-			minirt->scene->camera->orientation->z -= 0.0005f * (x - last_x);
-		else
-			minirt->scene->camera->orientation->z += 0.0005f * (last_x - x);
-	}
-	last_y = y;
-	last_x = x;
-	return (0);
+    if (last_x == -1 && last_y == -1)
+    {
+        last_x = x;
+        last_y = y;
+        return (0);
+    }
+    if (y != last_y)
+        minirt->scene->camera->orientation->x += 0.0005f * (last_y - y);
+    if (x != last_x)
+        minirt->scene->camera->orientation->z += 0.0005f * (last_x - x);
+    last_y = y;
+    last_x = x;
+    return (0);
 }

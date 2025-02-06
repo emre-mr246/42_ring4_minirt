@@ -52,7 +52,7 @@ t_vector *scale_and_normalize(t_vector *v, float scalar)
 
 	scaled_vector = copy_vector(*v);
 	scale_vector(scaled_vector, scalar);
-	return scaled_vector;
+	return (scaled_vector);
 }
 
 void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vector **up)
