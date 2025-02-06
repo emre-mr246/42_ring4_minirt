@@ -49,41 +49,6 @@ int draw(t_minirt *minirt)
 	return (1);
 }
 
-int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
-{
-    int i;
-    t_sphere *sp;
-	t_plane *pl;
-    t_vector *intersection;
-
-    i = 0;
-    while (minirt->scene->objects[i])
-    {
-        if (minirt->scene->obj_tags[i] == SPHERE)
-        {
-            sp = (t_sphere *)minirt->scene->objects[i];
-			intersection = intersect_sphere(*ray, *sp);
-            if (intersection)
-            {
-				free(intersection);
-                return (sp->color);
-            }
-        }
-        if (minirt->scene->obj_tags[i] == PLANE)
-        {
-            pl = (t_plane *)minirt->scene->objects[i];
-			intersection = intersect_plane(*ray, *pl);
-            if (intersection)
-            {
-				free(intersection);
-                return (pl->color);
-            }
-        }
-        i++;
-    }
-    return 0;
-}
-
 int calculate_ambient_light(int color, t_amb_light *amb_light)
 {
 	int r;
@@ -101,6 +66,67 @@ int calculate_ambient_light(int color, t_amb_light *amb_light)
 	return (create_rgb(r, g, b));
 }
 
+int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
+{
+	int i;
+	t_sphere *sp;
+	t_vector *intersection;
+
+	i = 0;
+	while (minirt->scene->objects[i])
+	{
+		if (minirt->scene->obj_tags[i] == SPHERE)
+		{
+			sp = (t_sphere *)minirt->scene->objects[i];
+			intersection = intersect_sphere(*ray, *sp);
+			if (intersection)
+			{
+				free(intersection);
+				return (sp->color);
+			}
+		}
+		i++;
+	}
+	return 0;
+}
+
+int check_plane_intersection(t_ray *ray, t_minirt *minirt)
+{
+	int i;
+	t_plane *pl;
+	t_vector *intersection;
+
+	i = 0;
+	while (minirt->scene->objects[i])
+	{
+		if (minirt->scene->obj_tags[i] == PLANE)
+		{
+			pl = (t_plane *)minirt->scene->objects[i];
+			intersection = intersect_plane(*ray, *pl);
+			if (intersection)
+			{
+				free(intersection);
+				return (pl->color);
+			}
+		}
+		i++;
+	}
+	return 0;
+}
+
+int check_intersections(t_ray *ray, t_minirt *minirt)
+{
+	int color;
+
+	color = check_sphere_intersection(ray, minirt);
+	if (color != 0)
+		return (color);
+	color = check_plane_intersection(ray, minirt);
+	if (color != 0)
+		return (color);
+	return (0);
+}
+
 int get_color(int x, int y, t_minirt *minirt)
 {
 	t_ray *ray;
@@ -108,7 +134,7 @@ int get_color(int x, int y, t_minirt *minirt)
 
 	color = 0;
 	ray = send_ray_from_cam(x, y, minirt);
-	color = check_sphere_intersection(ray, minirt);
+	color = check_intersections(ray, minirt);
 	color = calculate_ambient_light(color, minirt->scene->amb_light);
 	free_ray(ray);
 	return (color);

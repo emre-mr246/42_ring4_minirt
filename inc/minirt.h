@@ -18,6 +18,9 @@
 
 #define M_PI 3.14159265358979323846
 
+#define RAY_T_MIN 0.0001f
+#define RAY_T_MAX 1000000.0f
+
 #include <stdio.h>
 
 typedef struct s_vector
@@ -97,6 +100,9 @@ float	dot_product(t_vector v, t_vector u);
 t_vector *cross_product(const t_vector *v, const t_vector *u);
 t_vector	*get_point_on_ray(t_ray ray, float t);
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt);
+float discriminant(float a, float b, float c);
+float sq(float a);
+float solve_eq(float a, float b, float c, t_ray ray);
 
 // vector
 t_vector *sum_vector(t_vector v, t_vector u);
