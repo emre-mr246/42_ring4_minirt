@@ -50,21 +50,6 @@ t_vector *get_point_on_ray(t_ray ray, float t)
 	return (v);
 }
 
-t_vector *intersect_plane(t_ray ray, t_plane plane)
-{
-	float t;
-
-	// ışın denklemi : pr = o + tD
-	// plane denklemi : (pp - pr) . n = 0
-	// (pp - (o + tD)) . n = 0
-	// (pp - o - tD) . n = 0
-	// pp . n - o . n - tD . n = 0
-	// pp . n - o . n = t (D . n)
-	// t = (pp . n - o . n) / (D . n )
-	t = (dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin, *plane.normal)) / dot_product(*ray.direction, *plane.normal);
-	return (get_point_on_ray(ray, t));
-}
-
 float sq(float a)
 {
 	return (a * a);
@@ -118,4 +103,19 @@ t_vector *intersect_sphere(t_ray ray, t_sphere sphere)
 	if (discriminant(a, b, c) < 0)
 		return (NULL);
 	return (get_point_on_ray(ray, solve_eq(a, b, c, ray)));
+}
+
+t_vector *intersect_plane(t_ray ray, t_plane plane)
+{
+	float dDotN;
+	float t;
+
+	dDotN = dot_product(*ray.direction, *plane.normal);
+	if (dDotN == 0)
+		return (NULL);
+	t = dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin, *plane.normal);
+	t /= dDotN;
+	if (t < 0)
+		return (NULL);
+	return (get_point_on_ray(ray, t));
 }

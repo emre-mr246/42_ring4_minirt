@@ -53,6 +53,7 @@ int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
 {
     int i;
     t_sphere *sp;
+	t_plane *pl;
     t_vector *intersection;
 
     i = 0;
@@ -66,6 +67,16 @@ int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
             {
 				free(intersection);
                 return (sp->color);
+            }
+        }
+        if (minirt->scene->obj_tags[i] == PLANE)
+        {
+            pl = (t_plane *)minirt->scene->objects[i];
+			intersection = intersect_plane(*ray, *pl);
+            if (intersection)
+            {
+				free(intersection);
+                return (pl->color);
             }
         }
         i++;
