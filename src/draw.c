@@ -114,10 +114,37 @@ int check_plane_intersection(t_ray *ray, t_minirt *minirt)
 	return 0;
 }
 
+int check_cylinder_intersection(t_ray *ray, t_minirt *minirt)
+{
+	int i;
+	t_cylinder *cylinder;
+	t_vector *intersection;
+
+	i = 0;
+	while (minirt->scene->objects[i])
+	{
+		if (minirt->scene->obj_tags[i] == CYLINDER)
+		{
+			cylinder = (t_cylinder *)minirt->scene->objects[i];
+			intersection = intersect_cylinder(*ray, *cylinder);
+			if (intersection)
+			{
+				free(intersection);
+				return (cylinder->color);
+			}
+		}
+		i++;
+	}
+	return 0;
+}
+
 int check_intersections(t_ray *ray, t_minirt *minirt)
 {
 	int color;
 
+	color = check_cylinder_intersection(ray, minirt);
+	if (color != 0)
+		return (color);
 	color = check_sphere_intersection(ray, minirt);
 	if (color != 0)
 		return (color);

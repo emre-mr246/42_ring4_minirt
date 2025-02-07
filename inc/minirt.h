@@ -94,6 +94,7 @@ t_ray *init_ray(t_vector o, t_vector dir);
 // intersect
 t_vector    *intersect_sphere(t_ray ray, t_sphere sphere);
 t_vector *intersect_plane(t_ray ray, t_plane plane);
+t_vector *intersect_cylinder(t_ray ray, t_cylinder cylinder);
 
 //math
 float	dot_product(t_vector v, t_vector u);

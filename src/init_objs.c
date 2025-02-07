@@ -64,6 +64,7 @@ t_cylinder *init_cylinder(char **arr)
 	cylinder->origin = init_vector_str(arr[1]);
 	cylinder->axis = init_vector_str(arr[2]);
 	cylinder->radius = atof(arr[3]);
-	cylinder->height = atoi(arr[4]);
+	cylinder->height = atof(arr[4]);
+	cylinder->color = parse_color(arr[5]);
 	return (cylinder);
 }

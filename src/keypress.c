@@ -77,9 +77,9 @@ int handle_mouse(int x, int y, t_minirt *minirt)
         return (0);
     }
     if (y != last_y)
-        minirt->scene->camera->orientation->x += 0.0005f * (last_y - y);
+        minirt->scene->camera->orientation->x += 0.0015f * (last_y - y);
     if (x != last_x)
-        minirt->scene->camera->orientation->z += 0.0005f * (last_x - x);
+        minirt->scene->camera->orientation->z += 0.0015f * (last_x - x);
     last_y = y;
     last_x = x;
     return (0);

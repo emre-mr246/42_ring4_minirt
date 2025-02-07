@@ -7,26 +7,24 @@
 
 t_vector *intersect_sphere(t_ray ray, t_sphere sphere)
 {
-	float a;
-	float b;
-	float c;
+	t_vector vec;
 	float discriminant_value;
 	float t1;
 	float t2;
 
-	a = sq(ray.direction->x) + sq(ray.direction->y) + sq(ray.direction->z);
-	b = 2 * ((ray.origin->x - sphere.origin->x) * ray.direction->x +
-			 (ray.origin->y - sphere.origin->y) * ray.direction->y +
-			 (ray.origin->z - sphere.origin->z) * ray.direction->z);
-	c = sq(ray.origin->x - sphere.origin->x) +
-		sq(ray.origin->y - sphere.origin->y) +
-		sq(ray.origin->z - sphere.origin->z) -
-		sq(sphere.radius);
-	discriminant_value = discriminant(a, b, c);
+	vec.x = sq(ray.direction->x) + sq(ray.direction->y) + sq(ray.direction->z);
+	vec.y = 2 * ((ray.origin->x - sphere.origin->x) * ray.direction->x +
+				 (ray.origin->y - sphere.origin->y) * ray.direction->y +
+				 (ray.origin->z - sphere.origin->z) * ray.direction->z);
+	vec.z = sq(ray.origin->x - sphere.origin->x) +
+			sq(ray.origin->y - sphere.origin->y) +
+			sq(ray.origin->z - sphere.origin->z) -
+			sq(sphere.radius);
+	discriminant_value = discriminant(vec.x, vec.y, vec.z);
 	if (discriminant_value < 0)
 		return (NULL);
-	t1 = (-b - sqrt(discriminant_value)) / (2 * a);
-	t2 = (-b + sqrt(discriminant_value)) / (2 * a);
+	t1 = (-vec.y - sqrt(discriminant_value)) / (2 * vec.x);
+	t2 = (-vec.y + sqrt(discriminant_value)) / (2 * vec.x);
 	if (t1 >= RAY_T_MIN && t1 <= RAY_T_MAX)
 		return (get_point_on_ray(ray, t1));
 	if (t2 >= RAY_T_MIN && t2 <= RAY_T_MAX)
@@ -46,4 +44,38 @@ t_vector *intersect_plane(t_ray ray, t_plane plane)
 	if (t < RAY_T_MIN || t > RAY_T_MAX)
 		return (NULL);
 	return (get_point_on_ray(ray, t));
+}
+
+t_vector *intersect_cylinder(t_ray ray, t_cylinder cylinder)
+{
+	t_vector vec;
+	float discriminant_value;
+	float t1;
+	float t2;
+	t_vector *point;
+	
+	vec.x = sq(ray.direction->x) + sq(ray.direction->z);
+	vec.y = 2 * (ray.direction->x * (ray.origin->x - cylinder.origin->x) +
+				 ray.direction->z * (ray.origin->z - cylinder.origin->z));
+	vec.z = sq(ray.origin->x - cylinder.origin->x) + sq(ray.origin->z - cylinder.origin->z) - sq(cylinder.radius);
+	discriminant_value = discriminant(vec.x, vec.y, vec.z);
+	if (discriminant_value < 0)
+		return (NULL);
+	t1 = (-vec.y - sqrt(discriminant_value)) / (2 * vec.x);
+	t2 = (-vec.y + sqrt(discriminant_value)) / (2 * vec.x);
+	if (t1 >= RAY_T_MIN && t1 <= RAY_T_MAX)
+	{
+		point = get_point_on_ray(ray, t1);
+		if (point->y >= cylinder.origin->y && point->y <= cylinder.origin->y + cylinder.height)
+			return point;
+		free(point);
+	}
+	if (t2 >= RAY_T_MIN && t2 <= RAY_T_MAX)
+	{
+		point = get_point_on_ray(ray, t2);
+		if (point->y >= cylinder.origin->y && point->y <= cylinder.origin->y + cylinder.height)
+			return point;
+		free(point);
+	}
+	return (NULL);
 }
