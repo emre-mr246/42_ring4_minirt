@@ -15,6 +15,7 @@
 #include "X11/keysym.h"
 #include <X11/X.h>
 #include <math.h>
+#include <stdlib.h>
 
 void reset_camera(t_minirt *minirt)
 {
@@ -37,6 +38,15 @@ void move_camera_sideways(t_minirt *minirt, t_vector *orientation, double move_s
 {
     minirt->scene->camera->pos->x -= move_step * orientation->z;
     minirt->scene->camera->pos->z += move_step * orientation->x;
+}
+
+void rotate_camera(t_minirt *minirt, double x, double y, double z)
+{
+    t_vector *orientation;
+
+    orientation = minirt->scene->camera->orientation;
+    orientation->x = orientation->x * cos(y) + orientation->z * sin(y);
+    orientation->z = -orientation->x * sin(y) + orientation->z * cos(y);
 }
 
 int handle_keypress(int key, t_minirt *minirt)
@@ -62,6 +72,10 @@ int handle_keypress(int key, t_minirt *minirt)
 		minirt->scene->camera->pos->y -= move_step;
 	if (key == XK_r)
 		reset_camera(minirt);
+	if (key == XK_q)
+		rotate_camera(minirt, 0, 0.1, 0);
+	if (key == XK_e)
+		rotate_camera(minirt, 0, -0.1, 0);
 	// DEBUG AMAÇLI SİLİNECEK IŞIĞI HAREKET ETTİRİYOR
 	if (key == XK_Up)
 		minirt->scene->lights[0]->pos->x += move_step * 10;
@@ -71,9 +85,9 @@ int handle_keypress(int key, t_minirt *minirt)
 		minirt->scene->lights[0]->pos->z += move_step * 10;
 	if (key == XK_Right)
 		minirt->scene->lights[0]->pos->z -= move_step * 10;
-	if (key == XK_q)
+	if (key == XK_n)
 		minirt->scene->lights[0]->pos->y += move_step * 10;
-	if (key == XK_e)
+	if (key == XK_m)
 		minirt->scene->lights[0]->pos->y -= move_step * 10;
 	return (0);
 }
@@ -81,19 +95,16 @@ int handle_keypress(int key, t_minirt *minirt)
 int handle_mouse(int x, int y, t_minirt *minirt)
 {
     static int last_x = -1;
-    static int last_y = -1;
+	t_vector *orientation;
 
-    if (last_x == -1 && last_y == -1)
+	orientation = minirt->scene->camera->orientation;
+    if (last_x == -1)
     {
         last_x = x;
-        last_y = y;
         return (0);
     }
-    // if (y != last_y)
-    //     minirt->scene->camera->orientation->x += 0.0015f * (last_y - y);
     if (x != last_x)
-        minirt->scene->camera->orientation->z += 0.01f * (last_x - x);
-    last_y = y;
+        orientation->z = (-orientation->x * sin(y) + orientation->z * cos(y) * 0.0001f);
     last_x = x;
     return (0);
 }
