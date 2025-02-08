@@ -47,6 +47,7 @@ typedef struct s_light
 {
 	t_vector *pos;
 	float intensity;
+	int color;
 }	t_light;
 
 typedef struct s_sphere
@@ -82,5 +83,12 @@ typedef struct s_scene
 	void		**objects;
 	int			*obj_tags;
 }	t_scene;
+
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
 
 #endif

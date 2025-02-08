@@ -63,12 +63,15 @@ float vector_magnitude_sq(t_vector v)
 
 void normalize_vector(t_vector *v)
 {
-	float magnitude;
+    float magnitude;
 
-	magnitude = vector_magnitude(*v);
-	v->x /= magnitude;
-	v->y /= magnitude;
-	v->z /= magnitude;
+    magnitude = vector_magnitude(*v);
+    if (magnitude > 0.0f)
+	{
+        v->x /= magnitude;
+        v->y /= magnitude;
+        v->z /= magnitude;
+    }
 }
 
 t_vector *normalized_vector(t_vector v)

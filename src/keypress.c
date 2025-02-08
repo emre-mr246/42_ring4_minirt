@@ -58,10 +58,23 @@ int handle_keypress(int key, t_minirt *minirt)
 		move_camera_sideways(minirt, orientation, -move_step);
 	if (key == XK_space)
 		minirt->scene->camera->pos->y += move_step;
-	if (key == XK_Control_L)
+	if (key == XK_c)
 		minirt->scene->camera->pos->y -= move_step;
 	if (key == XK_r)
 		reset_camera(minirt);
+	// DEBUG AMAÇLI SİLİNECEK IŞIĞI HAREKET ETTİRİYOR
+	if (key == XK_Up)
+		minirt->scene->lights[0]->pos->x += move_step * 10;
+	if (key == XK_Down)
+		minirt->scene->lights[0]->pos->x -= move_step * 10;
+	if (key == XK_Left)
+		minirt->scene->lights[0]->pos->z += move_step * 10;
+	if (key == XK_Right)
+		minirt->scene->lights[0]->pos->z -= move_step * 10;
+	if (key == XK_q)
+		minirt->scene->lights[0]->pos->y += move_step * 10;
+	if (key == XK_e)
+		minirt->scene->lights[0]->pos->y -= move_step * 10;
 	return (0);
 }
 
@@ -76,10 +89,10 @@ int handle_mouse(int x, int y, t_minirt *minirt)
         last_y = y;
         return (0);
     }
-    if (y != last_y)
-        minirt->scene->camera->orientation->x += 0.0015f * (last_y - y);
+    // if (y != last_y)
+    //     minirt->scene->camera->orientation->x += 0.0015f * (last_y - y);
     if (x != last_x)
-        minirt->scene->camera->orientation->z += 0.0015f * (last_x - x);
+        minirt->scene->camera->orientation->z += 0.01f * (last_x - x);
     last_y = y;
     last_x = x;
     return (0);

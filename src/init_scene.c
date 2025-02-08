@@ -87,8 +87,11 @@ int parse_line(char *line, void *scene_data)
 		i = 0;
 		while (scene->objects[i])
 			i++;
+		// test amaçlı buraya eklendi 1'den fazla light verilemez, değiştirilecek
 		scene->objects[i] = init_light(split);
 		scene->obj_tags[i] = LIGHT;
+		scene->lights = (t_light **)ft_calloc(sizeof(t_light *), i + 2);
+		scene->lights[0] = (t_light *)scene->objects[i];
 	}
 	fill_objects(scene, split);
 	scene->viewport->d = (scene->viewport->width / 2) / tanf((float)scene->camera->fov / 360 * M_PI);

@@ -111,6 +111,7 @@ void	scale_vector(t_vector *v, float s);
 t_vector *subtract_vector(t_vector v, t_vector u);
 float	vector_magnitude(t_vector v);
 t_vector	*copy_vector(t_vector v);
+void normalize_vector(t_vector *v);
 
 int	get_color(int x, int y, t_minirt *minirt);
 
@@ -136,5 +137,6 @@ void print_vector(char *name, t_vector v);
 int clamp_color_value(int value);
 int	create_rgb(int red, int green, int blue);
 int	parse_color(char *str);
+t_color apply_intensity(t_color color, float intensity);
 
 #endif
