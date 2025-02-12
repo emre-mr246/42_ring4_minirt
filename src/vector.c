@@ -18,6 +18,19 @@ t_vector *sum_vector(t_vector v, t_vector u)
 	return (vector);
 }
 
+t_vector *multiply_vector(t_vector vector, float scalar)
+{
+    t_vector *result;
+
+    result = (t_vector *)malloc(sizeof(t_vector));
+    if (!result)
+        return (NULL);
+    result->x = vector.x * scalar;
+    result->y = vector.y * scalar;
+    result->z = vector.z * scalar;
+    return (result);
+}
+
 t_vector *subtract_vector(t_vector v, t_vector u)
 {
 	t_vector *vector;

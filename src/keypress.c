@@ -73,9 +73,9 @@ int handle_keypress(int key, t_minirt *minirt)
 	if (key == XK_r)
 		reset_camera(minirt);
 	if (key == XK_q)
-		rotate_camera(minirt, 0, 0.1, 0);
-	if (key == XK_e)
 		rotate_camera(minirt, 0, -0.1, 0);
+	if (key == XK_e)
+		rotate_camera(minirt, 0, 0.1, 0);
 	// DEBUG AMAÇLI SİLİNECEK IŞIĞI HAREKET ETTİRİYOR
 	if (key == XK_Up)
 		minirt->scene->lights[0]->pos->x += move_step * 10;
@@ -94,17 +94,17 @@ int handle_keypress(int key, t_minirt *minirt)
 
 int handle_mouse(int x, int y, t_minirt *minirt)
 {
-    static int last_x = -1;
-	t_vector *orientation;
+    // static int last_x = -1;
+	// t_vector *orientation;
 
-	orientation = minirt->scene->camera->orientation;
-    if (last_x == -1)
-    {
-        last_x = x;
-        return (0);
-    }
-    if (x != last_x)
-        orientation->z = (-orientation->x * sin(y) + orientation->z * cos(y) * 0.0001f);
-    last_x = x;
+	// orientation = minirt->scene->camera->orientation;
+    // if (last_x == -1)
+    // {
+    //     last_x = x;
+    //     return (0);
+    // }
+    // if (x != last_x)
+    //     orientation->z = (-orientation->x * sin(y) + orientation->z * cos(y) * 0.0001f);
+    // last_x = x;
     return (0);
 }

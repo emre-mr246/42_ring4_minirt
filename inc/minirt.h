@@ -19,7 +19,12 @@
 #define M_PI 3.14159265358979323846
 
 #define RAY_T_MIN 0.0001f
-#define RAY_T_MAX 1000000.0f
+#define RAY_T_MAX 200.0f
+
+#define EPSILON 0.001f
+
+#define MAX_RENDER_DISTANCE 10.0f
+#define MIN_RENDER_DISTANCE 0.1f
 
 #include <stdio.h>
 
@@ -112,6 +117,7 @@ t_vector *subtract_vector(t_vector v, t_vector u);
 float	vector_magnitude(t_vector v);
 t_vector	*copy_vector(t_vector v);
 void normalize_vector(t_vector *v);
+t_vector *multiply_vector(t_vector vector, float scalar);
 
 int	get_color(int x, int y, t_minirt *minirt);
 
@@ -139,4 +145,20 @@ int	create_rgb(int red, int green, int blue);
 int	parse_color(char *str);
 t_color apply_intensity(t_color color, float intensity);
 
+// plane
+int check_plane_intersection(t_ray *ray, t_minirt *minirt);
+
+// sphere
+int check_sphere_intersection(t_ray *ray, t_minirt *minirt);
+
+// cylinder
+int check_cylinder_intersection(t_ray *ray, t_minirt *minirt);
+
+// light
+float calculate_light_intensity(t_vector *intersection, t_vector *normal, t_minirt *minirt, t_light *light);
+int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt);
+float check_light_contribution(t_light *light, t_vector offset_point, t_vector *normal, t_minirt *minirt);
+float calculate_illumination(t_vector offset_point, t_vector *normal, t_minirt *minirt);
+
+float vector_length(t_vector *v);
 #endif

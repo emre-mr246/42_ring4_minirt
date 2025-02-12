@@ -1,0 +1,61 @@
+#include "minirt.h"
+#include "libft.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <math.h>
+#include "mlx.h"
+
+static t_vector *calculate_sphere_normal(t_sphere *sp, t_vector *intersection, t_vector *offset_point)
+{
+    t_vector *normal;
+    
+    normal = subtract_vector(*intersection, *sp->origin);
+    normalize_vector(normal);
+    offset_point->x = intersection->x + normal->x * EPSILON;
+    offset_point->y = intersection->y + normal->y * EPSILON;
+    offset_point->z = intersection->z + normal->z * EPSILON;
+    return (normal);
+}
+
+static int calculate_sphere_shade(t_sphere *sp, t_ray *ray, t_minirt *minirt, t_vector *intersection)
+{
+    t_vector *normal;
+    t_color color;
+    float intensity;
+    t_vector offset_point;
+
+    normal = calculate_sphere_normal(sp, intersection, &offset_point);
+    intensity = calculate_illumination(offset_point, normal, minirt);
+    color.r = clamp_color_value(((sp->color >> 16) & 0xFF) * intensity);
+    color.g = clamp_color_value(((sp->color >> 8) & 0xFF) * intensity);
+    color.b = clamp_color_value((sp->color & 0xFF) * intensity);
+    free(normal);
+    return (create_rgb(color.r, color.g, color.b));
+}
+
+int check_sphere_intersection(t_ray *ray, t_minirt *minirt)
+{
+	int i;
+	t_sphere *sp;
+	t_vector *intersection;
+	int color;
+
+	i = 0;
+	while (minirt->scene->objects[i])
+	{
+		if (minirt->scene->obj_tags[i] == SPHERE)
+		{
+			sp = (t_sphere *)minirt->scene->objects[i];
+			intersection = intersect_sphere(*ray, *sp);
+			if (intersection)
+			{
+				color = calculate_sphere_shade(sp, ray, minirt, intersection);
+				free(intersection);
+				return (color);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
