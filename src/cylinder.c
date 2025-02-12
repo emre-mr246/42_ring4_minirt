@@ -9,11 +9,14 @@
 static t_vector *calculate_cylinder_normal(t_cylinder *cy, t_vector *intersection, t_vector *offset_point)
 {
     t_vector *normal;
-	t_vector *proj;
+    t_vector *temp_normal;
+    t_vector *proj;
     
-    normal = subtract_vector(*intersection, *cy->origin);
+    normal = subtract_vector(*intersection, *cy->origin);  
     proj = multiply_vector(*cy->axis, dot_product(*normal, *cy->axis));
-    normal = subtract_vector(*normal, *proj);
+    temp_normal = subtract_vector(*normal, *proj);
+    free(normal);
+    normal = temp_normal;
     normalize_vector(normal);
     free(proj);
     offset_point->x = intersection->x + normal->x * EPSILON;
@@ -21,7 +24,6 @@ static t_vector *calculate_cylinder_normal(t_cylinder *cy, t_vector *intersectio
     offset_point->z = intersection->z + normal->z * EPSILON;
     return (normal);
 }
-
 static int calculate_cylinder_shade(t_cylinder *cy, t_ray *ray, t_minirt *minirt, t_vector *intersection)
 {
     t_vector *normal;
@@ -59,16 +61,16 @@ int check_cylinder_intersection(t_ray *ray, t_minirt *minirt)
                 return (color);
             }
         }
-        // ışığı küre şeklinde görmek için debug amaçlı
-        if (minirt->scene->obj_tags[i] == LIGHT)
-        {
-            t_sphere *sp = malloc(sizeof(t_sphere));
-            sp->origin = minirt->scene->lights[0]->pos;
-            sp->radius = 0.5;
-            if (intersect_sphere(*ray, *sp))
-                return (1);
-            free(sp);
-        }
+        // // ışığı küre şeklinde görmek için debug amaçlı
+        // if (minirt->scene->obj_tags[i] == LIGHT)
+        // {
+        //     t_sphere *sp = malloc(sizeof(t_sphere));
+        //     sp->origin = minirt->scene->lights[0]->pos;
+        //     sp->radius = 0.5;
+        //     if (intersect_sphere(*ray, *sp))
+        //         return (1);
+        //     free(sp);z
+        // }
         i++;
     }
     return (0);

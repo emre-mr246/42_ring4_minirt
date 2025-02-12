@@ -8,24 +8,27 @@
 
 static int check_object_shadow(t_ray shadow_ray, void *object, int obj_type, float light_distance)
 {
-	t_vector *hit;
-	float hit_distance;
+	t_vector *hit_point;
+	t_vector *hit_vector;
+	float distance_to_hit;
 
 	if (obj_type == SPHERE)
-		hit = intersect_sphere(shadow_ray, *(t_sphere *)object);
+		hit_point = intersect_sphere(shadow_ray, *(t_sphere *)object);
 	else if (obj_type == CYLINDER)
-		hit = intersect_cylinder(shadow_ray, *(t_cylinder *)object);
+		hit_point = intersect_cylinder(shadow_ray, *(t_cylinder *)object);
 	else
 		return (0);
-	if (hit)
+	if (hit_point)
 	{
-		hit_distance = vector_length(subtract_vector(*hit, *shadow_ray.origin));
-		if (hit_distance > EPSILON && hit_distance < light_distance)
+		hit_vector = subtract_vector(*hit_point, *shadow_ray.origin);
+		distance_to_hit = vector_length(hit_vector);
+		free(hit_vector);
+		if (distance_to_hit > EPSILON && distance_to_hit < light_distance)
 		{
-			free(hit);
+			free(hit_point);
 			return (1);
 		}
-		free(hit);
+		free(hit_point);
 	}
 	return (0);
 }
