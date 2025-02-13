@@ -109,6 +109,7 @@ t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt);
 float discriminant(float a, float b, float c);
 float sq(float a);
 float solve_eq(float a, float b, float c, t_ray ray);
+float calculate_distance(t_vector *a, t_vector *b);
 
 // vector
 t_vector *sum_vector(t_vector v, t_vector u);
@@ -118,8 +119,6 @@ float	vector_magnitude(t_vector v);
 t_vector	*copy_vector(t_vector v);
 void normalize_vector(t_vector *v);
 t_vector *multiply_vector(t_vector vector, float scalar);
-
-int	get_color(int x, int y, t_minirt *minirt);
 
 // KEYBOARD AND MOUSE
 int	handle_keypress(int key, t_minirt *minirt);
@@ -135,24 +134,11 @@ void free_cylinder(t_cylinder *cylinder);
 void	free_array(char **arr);
 void free_ray(t_ray *ray);
 
-
-// debug
-void print_vector(char *name, t_vector v);
-
 // color
 int clamp_color_value(int value);
 int	create_rgb(int red, int green, int blue);
 int	parse_color(char *str);
 t_color apply_intensity(t_color color, float intensity);
-
-// plane
-int check_plane_intersection(t_ray *ray, t_minirt *minirt);
-
-// sphere
-int check_sphere_intersection(t_ray *ray, t_minirt *minirt);
-
-// cylinder
-int check_cylinder_intersection(t_ray *ray, t_minirt *minirt);
 
 // light
 float calculate_light_intensity(t_vector *intersection, t_vector *normal, t_minirt *minirt, t_light *light);
@@ -160,5 +146,23 @@ int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt);
 float check_light_contribution(t_light *light, t_vector offset_point, t_vector *normal, t_minirt *minirt);
 float calculate_illumination(t_vector offset_point, t_vector *normal, t_minirt *minirt);
 
+// ambient light
+int calculate_ambient_light(int color, t_amb_light *amb_light);
+
 float vector_length(t_vector *v);
+
+int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_vector *intersection);
+int calculate_cylinder_shade(t_cylinder *cy, t_ray *ray, t_minirt *minirt, t_vector *intersection);
+int calculate_sphere_shade(t_sphere *sp, t_ray *ray, t_minirt *minirt, t_vector *intersection);
+
+// exit
+int ft_exit(char *err, int exit_code, t_minirt *minirt);
+int exit_mlx(t_minirt *minirt);
+
+// sort_objects
+void sort_objects_by_distance(t_minirt *minirt);
+
+// check_intersections
+int check_intersections(t_ray *ray, t_minirt *minirt);
+
 #endif

@@ -1,5 +1,5 @@
 
-FILES		= main sphere cylinder plane color light intersect debug vector init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
+FILES		= main sphere cylinder plane ambient_light check_intersections exit sort_objects color light intersect vector init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
 
 NAME		= minirt
 CC			= gcc
@@ -10,8 +10,8 @@ RM			= rm -rf
 LIBFT_PATH	= lib/libft/
 LIBFT		= $(LIBFT_PATH)libft.a
 
-MLX_PATH			= lib/minilibx/
-MLX					= $(MLX_PATH)libmlx.a
+MLX_PATH	= lib/minilibx/
+MLX			= $(MLX_PATH)libmlx.a
 
 FILES_PATH	= src/
 OBJ_DIR		= .obj/
@@ -20,7 +20,7 @@ SRCS		= $(addprefix $(FILES_PATH), $(addsuffix .c, $(FILES)))
 OBJS		= $(addprefix $(OBJ_DIR), $(notdir $(SRCS:.c=.o)))
 DIR			= $(shell echo $(PWD))
 
-vpath %.c $(FILES_PATH)
+vpath %.c $(FILES_PATH) src/objects/ src/math src/utils src/init src/parse src/draw src/free
 
 all: $(NAME)
 

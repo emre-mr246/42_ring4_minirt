@@ -54,7 +54,7 @@ int handle_keypress(int key, t_minirt *minirt)
 	double move_step;;
 	t_vector *orientation;
 
-	move_step = 0.1;
+	move_step = 0.5;
 	orientation = minirt->scene->camera->orientation;
 	if (key == XK_Escape)
 		ft_exit(NULL, 42, minirt);

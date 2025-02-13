@@ -18,7 +18,7 @@ static t_vector *calculate_plane_normal(t_plane *pl, t_vector *intersection, t_v
     return (normal);
 }
 
-static int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_vector *intersection)
+int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_vector *intersection)
 {
     t_vector *normal;
     t_color color;
@@ -32,30 +32,4 @@ static int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_ve
     color.b = clamp_color_value((pl->color & 0xFF) * intensity);
     free(normal);
     return (create_rgb(color.r, color.g, color.b));
-}
-
-int check_plane_intersection(t_ray *ray, t_minirt *minirt)
-{
-    int i;
-    t_plane *plane;
-    t_vector *intersection;
-    int color;
-
-    i = 0;
-    while (minirt->scene->objects[i])
-    {
-        if (minirt->scene->obj_tags[i] == PLANE)
-        {
-            plane = (t_plane *)minirt->scene->objects[i];
-            intersection = intersect_plane(*ray, *plane);
-            if (intersection)
-            {
-                color = calculate_plane_shade(plane, ray, minirt, intersection);
-                free(intersection);
-                return (color);
-            }
-        }
-        i++;
-    }
-    return (0);
 }

@@ -27,6 +27,11 @@ float vector_length(t_vector *v)
     return (sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
 }
 
+float calculate_distance(t_vector *a, t_vector *b)
+{
+    return sqrt(sq(a->x - b->x) + sq(a->y - b->y) + sq(a->z - b->z));
+}
+
 float dist_from_viewport_origin(int x, int y, t_minirt *minirt)
 {
 	t_viewport *viewport;

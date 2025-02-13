@@ -55,6 +55,7 @@ typedef struct s_sphere
 	t_vector	*origin;
 	float		radius;
 	int			color;
+	float distance;
 }				t_sphere;
 
 typedef struct s_plane
@@ -62,7 +63,7 @@ typedef struct s_plane
 	t_vector	*point;
 	t_vector	*normal;
 	int			color;
-
+	float distance;
 }				t_plane;
 
 typedef struct s_cylinder
@@ -72,6 +73,7 @@ typedef struct s_cylinder
 	float		radius;
 	float		height;
 	int			color;
+	float distance;
 }				t_cylinder;
 
 typedef struct s_scene
@@ -82,6 +84,7 @@ typedef struct s_scene
 	t_light		**lights;
 	void		**objects;
 	int			*obj_tags;
+	int object_count;
 }	t_scene;
 
 typedef struct s_color
