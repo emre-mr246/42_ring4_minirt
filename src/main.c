@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	input_control(av[1]);
 	minirt = init_minirt();
 	if (!minirt)
-		return (1);
+	return (1);
 	parse_input(av[1], minirt);
 	mlx_loop_hook(minirt->mlx, &draw, minirt);
 	mlx_hook(minirt->win, KeyPress, KeyPressMask, handle_keypress, minirt);

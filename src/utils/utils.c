@@ -70,6 +70,8 @@ void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), vo
 
 int strs_equal(char *a, char *b)
 {
-	return (ft_strncmp(a, b, higher_len(a, b)) == 0);
+	if (ft_strncmp(a, b, higher_len(a, b)) == 0)
+		return (1);
+	return (0);
 }
 

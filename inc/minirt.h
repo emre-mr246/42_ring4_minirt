@@ -13,8 +13,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIN_W 1200
-# define WIN_H 800
+# define WIN_W 900
+# define WIN_H 600
 
 #define M_PI 3.14159265358979323846
 
@@ -164,5 +164,7 @@ void sort_objects_by_distance(t_minirt *minirt);
 
 // check_intersections
 int check_intersections(t_ray *ray, t_minirt *minirt);
+
+int init_lights(t_scene *scene);
 
 #endif

@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <math.h>
 
 t_input *init_input()
 {
@@ -58,10 +59,11 @@ void parse_input(char *input_file, t_minirt *minirt)
 {
 	t_input *input;
 	char *line;
-
 	input = init_input();
 	count_objects(input, input_file);
 	fill_scene(minirt, input);
 	iter_lines(minirt, input_file, parse_line, minirt->scene);
+	minirt->scene->viewport->d = (minirt->scene->viewport->width / 2) / tanf((float)minirt->scene->camera->fov / 360 * M_PI);
+	init_lights(minirt->scene);
 	free(input);
 }

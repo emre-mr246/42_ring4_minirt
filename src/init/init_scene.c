@@ -38,8 +38,9 @@ t_camera *init_camera(char **arr)
 		return (NULL);
 	camera->pos = init_vector_str(arr[1]);
 	camera->orientation = init_vector_str(arr[2]);
-	return (camera);
+	printf("arr3: %i\n", ft_atoi(arr[3]));
 	camera->fov = ft_atoi(arr[3]);
+	return (camera);
 }
 
 static int fill_objects(t_scene *scene, char **split)
@@ -68,6 +69,31 @@ static int fill_objects(t_scene *scene, char **split)
 		scene->objects[i] = init_cylinder(split);
 		scene->obj_tags[i] = CYLINDER;
 	}
+	if (strs_equal(split[0], "L"))
+	{
+		while (scene->objects[i])
+			i++;
+		scene->objects[i] = init_light(split);
+		scene->obj_tags[i] = LIGHT;
+	}
+}
+
+int init_lights(t_scene *scene)
+{
+	int i;
+	int k;
+
+	i = 0;
+	k = 0;
+	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), i + 2);
+	if (!scene->lights)
+		return (0);
+	while (scene->objects[i])
+	{
+		if (scene->obj_tags[i] == LIGHT)
+			scene->lights[k++] = (t_light *)scene->objects[i];
+		i++;
+	}
 }
 
 int parse_line(char *line, void *scene_data)
@@ -82,19 +108,8 @@ int parse_line(char *line, void *scene_data)
 		scene->amb_light = init_amb_light(split);
 	if (strs_equal(split[0], "C"))
 		scene->camera = init_camera(split);
-	if (strs_equal(split[0], "L"))
-	{
-		i = 0;
-		while (scene->objects[i])
-			i++;
-		// test amaçlı buraya eklendi 1'den fazla light verilemez, değiştirilecek
-		scene->objects[i] = init_light(split);
-		scene->obj_tags[i] = LIGHT;
-		scene->lights = (t_light **)ft_calloc(sizeof(t_light *), i + 2);
-		scene->lights[0] = (t_light *)scene->objects[i];
-	}
 	fill_objects(scene, split);
-	scene->viewport->d = (scene->viewport->width / 2) / tanf((float)scene->camera->fov / 360 * M_PI);
+	// TODO camera için değişen bir şey yok. fov vs. güncellenmeli
 	free_array(split);
 	return (0);
 }
