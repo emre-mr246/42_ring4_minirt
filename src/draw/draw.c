@@ -25,7 +25,6 @@ static int get_color(int x, int y, t_minirt *minirt)
 
 	ray = send_ray_from_cam(x, y, minirt);
 	color = check_intersections(ray, minirt);
-	color = calculate_ambient_light(color, minirt->scene->amb_light);
 	free_ray(ray);
 	return (color);
 }

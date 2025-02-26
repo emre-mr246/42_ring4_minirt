@@ -146,9 +146,6 @@ int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt);
 float check_light_contribution(t_light *light, t_vector offset_point, t_vector *normal, t_minirt *minirt);
 float calculate_illumination(t_vector offset_point, t_vector *normal, t_minirt *minirt);
 
-// ambient light
-int calculate_ambient_light(int color, t_amb_light *amb_light);
-
 float vector_length(t_vector *v);
 
 int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_vector *intersection);

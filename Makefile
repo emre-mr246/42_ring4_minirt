@@ -1,5 +1,5 @@
 
-FILES		= main sphere cylinder plane ambient_light check_intersections exit sort_objects color light intersect vector init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
+FILES		= main sphere cylinder plane check_intersections exit sort_objects color light intersect vector init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
 
 NAME		= minirt
 CC			= gcc
