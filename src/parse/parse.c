@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
 
 t_input *init_input()
@@ -59,6 +56,7 @@ void parse_input(char *input_file, t_minirt *minirt)
 {
 	t_input *input;
 	char *line;
+	
 	input = init_input();
 	count_objects(input, input_file);
 	fill_scene(minirt, input);

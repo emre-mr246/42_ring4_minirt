@@ -11,11 +11,8 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <unistd.h>
 #include "X11/keysym.h"
-#include <X11/X.h>
 #include <math.h>
-#include <stdlib.h>
 
 void reset_camera(t_minirt *minirt)
 {
@@ -29,29 +26,30 @@ void reset_camera(t_minirt *minirt)
 
 void move_camera_forward(t_minirt *minirt, t_vector *orientation, double move_step)
 {
-    minirt->scene->camera->pos->x += move_step * orientation->x;
-    minirt->scene->camera->pos->y += move_step * orientation->y;
-    minirt->scene->camera->pos->z += move_step * orientation->z;
+	minirt->scene->camera->pos->x += move_step * orientation->x;
+	minirt->scene->camera->pos->y += move_step * orientation->y;
+	minirt->scene->camera->pos->z += move_step * orientation->z;
 }
 
 void move_camera_sideways(t_minirt *minirt, t_vector *orientation, double move_step)
 {
-    minirt->scene->camera->pos->x -= move_step * orientation->z;
-    minirt->scene->camera->pos->z += move_step * orientation->x;
+	minirt->scene->camera->pos->x -= move_step * orientation->z;
+	minirt->scene->camera->pos->z += move_step * orientation->x;
 }
 
 void rotate_camera(t_minirt *minirt, double x, double y, double z)
 {
-    t_vector *orientation;
+	t_vector *orientation;
 
-    orientation = minirt->scene->camera->orientation;
-    orientation->x = orientation->x * cos(y) + orientation->z * sin(y);
-    orientation->z = -orientation->x * sin(y) + orientation->z * cos(y);
+	orientation = minirt->scene->camera->orientation;
+	orientation->x = orientation->x * cos(y) + orientation->z * sin(y);
+	orientation->z = -orientation->x * sin(y) + orientation->z * cos(y);
 }
 
 int handle_keypress(int key, t_minirt *minirt)
 {
-	double move_step;;
+	double move_step;
+	;
 	t_vector *orientation;
 
 	move_step = 0.5;
@@ -59,7 +57,7 @@ int handle_keypress(int key, t_minirt *minirt)
 	if (key == XK_Escape)
 		ft_exit(NULL, 42, minirt);
 	if (key == XK_w)
-	    move_camera_forward(minirt, orientation, move_step);
+		move_camera_forward(minirt, orientation, move_step);
 	if (key == XK_s)
 		move_camera_forward(minirt, orientation, -move_step);
 	if (key == XK_a)
@@ -76,7 +74,7 @@ int handle_keypress(int key, t_minirt *minirt)
 		rotate_camera(minirt, 0, -0.1, 0);
 	if (key == XK_e)
 		rotate_camera(minirt, 0, 0.1, 0);
-	// DEBUG AMAÇLI SİLİNECEK IŞIĞI HAREKET ETTİRİYOR
+	// TODO - DEBUG AMAÇLI, IŞIĞI HAREKET ETTİRİYOR
 	if (key == XK_Up)
 		minirt->scene->lights[0]->pos->x += move_step * 10;
 	if (key == XK_Down)
@@ -89,22 +87,7 @@ int handle_keypress(int key, t_minirt *minirt)
 		minirt->scene->lights[0]->pos->y += move_step * 10;
 	if (key == XK_m)
 		minirt->scene->lights[0]->pos->y -= move_step * 10;
+	if (key == XK_k)
+		((t_plane *)minirt->scene->objects[1])->point->y += move_step;
 	return (0);
-}
-
-int handle_mouse(int x, int y, t_minirt *minirt)
-{
-    // static int last_x = -1;
-	// t_vector *orientation;
-
-	// orientation = minirt->scene->camera->orientation;
-    // if (last_x == -1)
-    // {
-    //     last_x = x;
-    //     return (0);
-    // }
-    // if (x != last_x)
-    //     orientation->z = (-orientation->x * sin(y) + orientation->z * cos(y) * 0.0001f);
-    // last_x = x;
-    return (0);
 }

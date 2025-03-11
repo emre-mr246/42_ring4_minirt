@@ -11,11 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <math.h>
 #include "mlx.h"
 
 static int get_color(int x, int y, t_minirt *minirt)

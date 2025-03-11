@@ -1,9 +1,5 @@
-#include <stdio.h>
 #include "minirt.h"
 #include "libft.h"
-#include "mlx.h"
-#include <X11/X.h>
-#include "stdlib.h"
 
 int ft_exit(char *err, int exit_code, t_minirt *minirt)
 {

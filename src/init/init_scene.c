@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
 
 t_amb_light *init_amb_light(char **arr)

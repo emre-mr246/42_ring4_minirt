@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
 
 float vector_length_2d(float a, float b)
@@ -24,12 +21,12 @@ float vector_length_2d(float a, float b)
 
 float vector_length(t_vector *v)
 {
-    return (sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
+	return (sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
 }
 
 float calculate_distance(t_vector *a, t_vector *b)
 {
-    return sqrt(sq(a->x - b->x) + sq(a->y - b->y) + sq(a->z - b->z));
+	return sqrt(sq(a->x - b->x) + sq(a->y - b->y) + sq(a->z - b->z));
 }
 
 float dist_from_viewport_origin(int x, int y, t_minirt *minirt)
@@ -97,7 +94,7 @@ void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, float *viewp
 	{
 		*viewport_x = 0.0f;
 		*viewport_y = 0.0f;
-		return ;
+		return;
 	}
 	*viewport_x = (normalized_x - 0.5f) * minirt->scene->viewport->width * aspect_ratio;
 	*viewport_y = (0.5f - normalized_y) * minirt->scene->viewport->height;

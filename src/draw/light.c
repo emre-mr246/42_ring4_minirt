@@ -1,34 +1,46 @@
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
-#include "mlx.h"
 
-static int check_object_shadow(t_ray shadow_ray, void *object, int obj_type, float light_distance)
+t_ray create_shadow_ray(t_vector *point, t_light *light)
 {
-	t_vector *hit_point;
-	t_vector *hit_vector;
-	float distance_to_hit;
+	t_ray shadow_ray;
+	t_vector *direction;
+	t_vector *tmp;
 
-	if (obj_type == SPHERE)
-		hit_point = intersect_sphere(shadow_ray, *(t_sphere *)object);
-	else if (obj_type == CYLINDER)
-		hit_point = intersect_cylinder(shadow_ray, *(t_cylinder *)object);
-	else
-		return (0);
-	if (hit_point)
+	tmp = subtract_vector(*light->pos, *point);
+	direction = copy_vector(*tmp);
+	free(tmp);
+	normalize_vector(direction);
+	shadow_ray.origin = copy_vector(*point);
+	shadow_ray.direction = direction;
+	return (shadow_ray);
+}
+
+int check_shadow_intersections(t_ray shadow_ray, float light_dist, t_minirt *minirt)
+{
+	t_vector *intersection;
+	int i;
+	float obj_dist;
+
+	i = 0;
+	while (minirt->scene->objects[i])
 	{
-		hit_vector = subtract_vector(*hit_point, *shadow_ray.origin);
-		distance_to_hit = vector_length(hit_vector);
-		free(hit_vector);
-		if (distance_to_hit > EPSILON && distance_to_hit < light_distance)
+		intersection = NULL;
+		if (minirt->scene->obj_tags[i] == SPHERE)
+			intersection = intersect_sphere(shadow_ray, *(t_sphere *)minirt->scene->objects[i]);
+		else if (minirt->scene->obj_tags[i] == CYLINDER)
+			intersection = intersect_cylinder(shadow_ray, *(t_cylinder *)minirt->scene->objects[i]);
+		else if (minirt->scene->obj_tags[i] == PLANE)
+			intersection = intersect_plane(shadow_ray, *(t_plane *)minirt->scene->objects[i]);
+		if (intersection)
 		{
-			free(hit_point);
-			return (1);
+			obj_dist = calculate_distance(shadow_ray.origin, intersection);
+			free(intersection);
+			if (obj_dist < light_dist - EPSILON)
+				return (1);
 		}
-		free(hit_point);
+		i++;
 	}
 	return (0);
 }
@@ -36,88 +48,53 @@ static int check_object_shadow(t_ray shadow_ray, void *object, int obj_type, flo
 int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt)
 {
 	t_ray shadow_ray;
-	t_vector direction;
-	float light_distance;
-	int i;
+	float light_dist;
+	int result;
 
-	direction.x = light->pos->x - point->x;
-	direction.y = light->pos->y - point->y;
-	direction.z = light->pos->z - point->z;
-	light_distance = vector_length(&direction);
-	normalize_vector(&direction);
-	shadow_ray.origin = point;
-	shadow_ray.direction = &direction;
-	i = 0;
-	while (minirt->scene->objects[i])
-	{
-		if (check_object_shadow(shadow_ray, minirt->scene->objects[i], minirt->scene->obj_tags[i], light_distance))
-			return (1);
-		i++;
-	}
-	return (0);
+	shadow_ray = create_shadow_ray(point, light);
+	light_dist = calculate_distance(point, light->pos);
+	result = check_shadow_intersections(shadow_ray, light_dist, minirt);
+	free(shadow_ray.origin);
+	free(shadow_ray.direction);
+	return (result);
 }
 
-float calculate_light_intensity(t_vector *intersection, t_vector *normal, t_minirt *minirt, t_light *light)
+float check_light_contribution(t_light *light, t_vector point, t_vector *normal, t_minirt *minirt)
 {
 	t_vector *light_dir;
-	float distance;
-	float attenuation;
-	float dot;
+	t_vector *tmp;
+	float contribution;
 	float intensity;
 
-	intensity = 0;
-	light_dir = subtract_vector(*light->pos, *intersection);
+	if (is_in_shadow(&point, light, minirt))
+		return (0);
+	tmp = subtract_vector(*light->pos, point);
+	light_dir = copy_vector(*tmp);
+	free(tmp);
 	normalize_vector(light_dir);
-	dot = dot_product(*normal, *light_dir);
-	if (dot > 0)
-	{
-		if (is_in_shadow(intersection, light, minirt))
-		{
-			distance = vector_length(light_dir);
-			attenuation = 1 / (distance * distance);
-			intensity += light->intensity * dot * attenuation;
-		}
-	}
+	contribution = dot_product(*normal, *light_dir);
 	free(light_dir);
-	return (fmin(fmax(intensity, minirt->scene->amb_light->intensity), 1.0));
-}
-
-float check_light_contribution(t_light *light, t_vector offset_point, t_vector *normal, t_minirt *minirt)
-{
-	float intensity;
-	t_vector *light_dir;
-	float distance;
-	float attenuation;
-	float dot;
-
-	intensity = 0;
-	light_dir = subtract_vector(*light->pos, offset_point);
-	normalize_vector(light_dir);
-	dot = dot_product(*normal, *light_dir);
-	if (dot > 0)
-	{
-		if (!is_in_shadow(&offset_point, light, minirt))
-		{
-			distance = vector_length(light_dir);
-			attenuation = 1.0f / (1.0f + distance * 0.05f);
-			intensity = light->intensity * dot * attenuation;
-		}
-	}
-	free(light_dir);
+	if (contribution < 0)
+		contribution = 0;
+	intensity = contribution * light->intensity;
 	return (intensity);
 }
 
-float calculate_illumination(t_vector offset_point, t_vector *normal, t_minirt *minirt)
+float calculate_illumination(t_vector point, t_vector *normal, t_minirt *minirt)
 {
-	float intensity;
 	int i;
+	float total_light;
+	float ambient;
 
-	intensity = minirt->scene->amb_light->intensity;
+	ambient = minirt->scene->amb_light->intensity;
+	total_light = ambient;
 	i = 0;
 	while (minirt->scene->lights[i])
 	{
-		intensity += check_light_contribution(minirt->scene->lights[i], offset_point, normal, minirt);
+		total_light += check_light_contribution(minirt->scene->lights[i], point, normal, minirt);
 		i++;
 	}
-	return (fmin(fmax(intensity, minirt->scene->amb_light->intensity), 1.0));
+	if (total_light > 1.0f)
+		total_light = 1.0f;
+	return (total_light);
 }

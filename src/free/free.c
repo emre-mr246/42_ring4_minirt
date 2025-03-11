@@ -1,15 +1,13 @@
-#include <stdio.h>
 #include "minirt.h"
 #include "libft.h"
-#include "mlx.h"
-#include <X11/X.h>
-#include "stdlib.h"
+#include <mlx.h>
 
 static void free_objects(t_scene *scene)
 {
+	int i;
 	if (scene->objects)
 	{
-		int i = 0;
+		i = 0;
 		while (scene->objects[i])
 		{
 			if (scene->obj_tags[i] == LIGHT)

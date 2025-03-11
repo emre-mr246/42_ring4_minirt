@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
 
 float dot_product(t_vector v, t_vector u)
@@ -24,9 +21,11 @@ float dot_product(t_vector v, t_vector u)
 
 t_vector *cross_product(const t_vector *v, const t_vector *u)
 {
+	t_vector *vector;
+
 	if (!v || !u)
 		return (NULL);
-	t_vector *vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
+	vector = (t_vector *)ft_calloc(sizeof(t_vector), 1);
 	if (!vector)
 		return (NULL);
 	vector->x = (u->y * v->z) - (u->z * v->y);
@@ -59,23 +58,23 @@ float discriminant(float a, float b, float c)
 
 float get_min_x(float x1, float x2, t_ray ray)
 {
-    if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)
-        return (x1);
-    if (x2 >= RAY_T_MIN && x2 <= RAY_T_MAX)
-        return (x2);
-    return (-1);
+	if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)
+		return (x1);
+	if (x2 >= RAY_T_MIN && x2 <= RAY_T_MAX)
+		return (x2);
+	return (-1);
 }
 
 float solve_eq(float a, float b, float c, t_ray ray)
 {
-    float disc;
-    float x1;
-    float x2;
+	float disc;
+	float x1;
+	float x2;
 
-    disc = discriminant(a, b, c);
-    if (disc < 0)
-        return (-1);
-    x1 = (-b + sqrtf(disc)) / (2 * a);
-    x2 = (-b - sqrtf(disc)) / (2 * a);
-    return (get_min_x(x1, x2, ray));
+	disc = discriminant(a, b, c);
+	if (disc < 0)
+		return (-1);
+	x1 = (-b + sqrtf(disc)) / (2 * a);
+	x2 = (-b - sqrtf(disc)) / (2 * a);
+	return (get_min_x(x1, x2, ray));
 }

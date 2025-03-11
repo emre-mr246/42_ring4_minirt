@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 
 t_light *init_light(char **arr)
 {

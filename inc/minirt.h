@@ -122,7 +122,6 @@ t_vector *multiply_vector(t_vector vector, float scalar);
 
 // KEYBOARD AND MOUSE
 int	handle_keypress(int key, t_minirt *minirt);
-int	handle_mouse(int x, int y, t_minirt *minirt);
 
 // FREE
 void free_minirt(t_minirt *minirt);
@@ -149,8 +148,8 @@ float calculate_illumination(t_vector offset_point, t_vector *normal, t_minirt *
 float vector_length(t_vector *v);
 
 int calculate_plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt, t_vector *intersection);
-int calculate_cylinder_shade(t_cylinder *cy, t_ray *ray, t_minirt *minirt, t_vector *intersection);
-int calculate_sphere_shade(t_sphere *sp, t_ray *ray, t_minirt *minirt, t_vector *intersection);
+int calculate_cylinder_shade(t_cylinder *cy, t_minirt *minirt, t_vector *intersection);
+int calculate_sphere_shade(t_sphere *sp, t_minirt *minirt, t_vector *intersection);
 
 // exit
 int ft_exit(char *err, int exit_code, t_minirt *minirt);
@@ -163,5 +162,7 @@ void sort_objects_by_distance(t_minirt *minirt);
 int check_intersections(t_ray *ray, t_minirt *minirt);
 
 int init_lights(t_scene *scene);
+
+int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection);
 
 #endif

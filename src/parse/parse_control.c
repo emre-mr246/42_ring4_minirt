@@ -12,9 +12,6 @@
 
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 
 static int object_valid(char *str)
 {
@@ -49,6 +46,7 @@ static int arg_count_valid(char **arr)
 		return (count_elements(arr) == 6);
 	return (0);
 }
+
 static int consecutive_chars(char x, char y)
 {
 	if (x == '.' && (y == '.' || y == ',' || y == '-'))

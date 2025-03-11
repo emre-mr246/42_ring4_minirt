@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "mlx.h"
-#include <stdlib.h>
 #include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>

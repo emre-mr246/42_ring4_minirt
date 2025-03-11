@@ -10,17 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "minirt.h"
 #include "libft.h"
 #include "mlx.h"
 #include <X11/X.h>
-#include "stdlib.h"
 
 int main(int ac, char **av)
 {
 	t_minirt *minirt;
 
+	minirt = NULL;
 	if (ac != 2)
 	{
 		ft_putendl_fd("Wrong number of arguments!", 2);
@@ -29,11 +28,10 @@ int main(int ac, char **av)
 	input_control(av[1]);
 	minirt = init_minirt();
 	if (!minirt)
-	return (1);
+		return (1);
 	parse_input(av[1], minirt);
 	mlx_loop_hook(minirt->mlx, &draw, minirt);
 	mlx_hook(minirt->win, KeyPress, KeyPressMask, handle_keypress, minirt);
-	mlx_hook(minirt->win, MotionNotify, PointerMotionMask, handle_mouse, minirt);
 	mlx_hook(minirt->win, DestroyNotify, KeyReleaseMask, exit_mlx, minirt);
 	mlx_loop(minirt->mlx);
 	return (0);

@@ -1,8 +1,5 @@
 #include "minirt.h"
 #include "libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <math.h>
 
 t_vector *sum_vector(t_vector v, t_vector u)
