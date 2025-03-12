@@ -35,6 +35,8 @@ t_camera *init_camera(char **arr)
 		return (NULL);
 	camera->pos = init_vector_str(arr[1]);
 	camera->orientation = init_vector_str(arr[2]);
+	if (camera->orientation->x == 0 && camera->orientation->y == 0 && camera->orientation->z == 0)
+		camera->orientation->x = EPSILON;
 	camera->fov = ft_atoi(arr[3]);
 	if (camera->fov <= 0 || camera->fov > 180)
 		ft_exit("Invalid fov value", -1, NULL);
