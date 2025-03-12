@@ -76,35 +76,6 @@ static int numbers_valid(char **arr)
 	return (1);
 }
 
-static int color_valid(char **arr)
-{
-	char *col;
-	char **split;
-	int i;
-
-	if (strs_equal(arr[0], "A"))
-		col = arr[2];
-	else if (strs_equal(arr[0], "L") || strs_equal(arr[0], "pl") || strs_equal(arr[0], "sp"))
-		col = arr[3];
-	else if (strs_equal(arr[0], "cy"))
-		col = arr[5];
-	else
-		return (1);
-	split = ft_split(col, ',');
-	i = 0;
-	while (split && split[i])
-	{
-		if (ft_atoi(split[i]) < 0 || ft_atoi(split[i]) > 255)
-		{
-			write(2, "color is not valid\n", 19);
-			return (0);
-		}
-		i++;
-	}
-	free_array(split);
-	return (1);
-}
-
 int line_checker(char *line, void *ptr)
 {
 	char **split;
@@ -113,7 +84,7 @@ int line_checker(char *line, void *ptr)
 	split = ft_split_charset(line, " \t\n");
 	if (!split)
 		return (-1);
-	if (!object_valid(split[0]) || !arg_count_valid(split) || !numbers_valid(split) || !color_valid(split))
+	if (!object_valid(split[0]) || !arg_count_valid(split) || !numbers_valid(split))
 	{
 		free_array(split);
 		return (-1);

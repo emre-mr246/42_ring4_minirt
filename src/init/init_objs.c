@@ -22,8 +22,8 @@ t_light *init_light(char **arr)
 	if (!light)
 		return (NULL);
 	light->pos = init_vector_str(arr[1]);
-	light->intensity = ft_atof(arr[2]);
-	light->color = ft_atof(arr[3]);
+	light->intensity = fmax(fmin(ft_atof(arr[2]), 0.0), 1.0);
+	light->color = parse_color(arr[3]);
 	return (light);
 }
 

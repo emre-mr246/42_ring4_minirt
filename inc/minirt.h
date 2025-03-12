@@ -161,6 +161,9 @@ void sort_objects_by_distance(t_minirt *minirt);
 // check_intersections
 int check_intersections(t_ray *ray, t_minirt *minirt);
 
+// math3
+int clamp(int number, int min, int max);
+
 void init_lights(t_scene *scene);
 
 int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection);

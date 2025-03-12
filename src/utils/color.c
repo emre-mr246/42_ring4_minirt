@@ -29,12 +29,10 @@ int parse_color(char *str)
             free_array(colors);
         return (0);
     }
-    r = ft_atoi(colors[0]);
-    g = ft_atoi(colors[1]);
-    b = ft_atoi(colors[2]);
+    r = clamp(ft_atoi(colors[0]), 0, 255);
+	g = clamp(ft_atoi(colors[1]), 0, 255);
+	b = clamp(ft_atoi(colors[2]), 0, 255);
     free_array(colors);
-    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-        return (0);
     return (create_rgb(r, g, b));
 }
 

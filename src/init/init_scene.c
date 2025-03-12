@@ -23,8 +23,6 @@ t_amb_light *init_amb_light(char **arr)
 		return (NULL);
 	amb_light->intensity = fmin(fmax(ft_atof(arr[1]), 0.0), 1.0);
 	amb_light->color = parse_color(arr[2]);
-	if (amb_light->color < 0 || amb_light->color > 0xFFFFFF)
-		ft_exit("Invalid color value", -1, NULL);
 	return (amb_light);
 }
 
@@ -39,9 +37,10 @@ t_camera *init_camera(char **arr)
 	camera->orientation = init_vector_str(arr[2]);
 	if (camera->orientation->x == 0 && camera->orientation->y == 0 && camera->orientation->z == 0)
 		camera->orientation->x = EPSILON;
-	camera->fov = ft_atoi(arr[3]);
-	if (camera->fov <= 0 || camera->fov > 180)
-		ft_exit("Invalid fov value", -1, NULL);
+	camera->orientation->x = fmin(fmax(camera->orientation->x, -1.0), 1.0);
+	camera->orientation->y = fmin(fmax(camera->orientation->y, -1.0), 1.0);
+	camera->orientation->z = fmin(fmax(camera->orientation->z, -1.0), 1.0);
+	camera->fov = clamp(ft_atoi(arr[3]), 0, 180);
 	return (camera);
 }
 
