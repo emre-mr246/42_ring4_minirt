@@ -36,6 +36,8 @@ t_camera *init_camera(char **arr)
 	camera->pos = init_vector_str(arr[1]);
 	camera->orientation = init_vector_str(arr[2]);
 	camera->fov = ft_atoi(arr[3]);
+	if (camera->fov <= 0 || camera->fov > 180)
+		ft_exit("Invalid fov value", -1, NULL);
 	return (camera);
 }
 
@@ -102,6 +104,19 @@ void init_lights(t_scene *scene)
 	scene->lights[k] = NULL;
 }
 
+void update_viewport_with_fov(t_scene *scene)
+{
+    double fov_rad;
+    double aspect_ratio;
+    
+    if (!scene->camera || !scene->viewport)
+        return ;
+    fov_rad = scene->camera->fov * M_PI / 180.0;
+    aspect_ratio = (double)WIN_W / WIN_H;
+    scene->viewport->height = 2.0 * tan(fov_rad / 2.0);
+    scene->viewport->width = scene->viewport->height * aspect_ratio;
+}
+
 int parse_line(char *line, void *scene_data)
 {
 	t_scene *scene;
@@ -112,9 +127,11 @@ int parse_line(char *line, void *scene_data)
 	if (strs_equal(split[0], "A"))
 		scene->amb_light = init_amb_light(split);
 	if (strs_equal(split[0], "C"))
+	{
 		scene->camera = init_camera(split);
+		update_viewport_with_fov(scene);
+	}
 	fill_objects(scene, split);
-	// TODO camera için değişen bir şey yok. fov vs. güncellenmeli
 	free_array(split);
 	return (0);
 }

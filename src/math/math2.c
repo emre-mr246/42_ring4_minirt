@@ -60,50 +60,36 @@ void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vecto
 	free(world_up);
 }
 
-t_vector *get_ray_direction(float viewport_x, float viewport_y, t_vector *cam_orientation, t_vector *right, t_vector *up)
+t_vector *get_ray_direction(double viewport_x, double viewport_y, t_vector *forward, t_vector right, t_vector up)
 {
-	t_vector *scaled_right;
-	t_vector *scaled_up;
-	t_vector *cam_vec;
-	t_vector *viewport_origin_to_point;
 	t_vector *dir;
 
-	scaled_right = scale_and_normalize(right, viewport_x);
-	scaled_up = scale_and_normalize(up, viewport_y);
-	cam_vec = scale_and_normalize(cam_orientation, 4.0f);
-	viewport_origin_to_point = sum_vector(*scaled_right, *scaled_up);
-	dir = sum_vector(*cam_vec, *viewport_origin_to_point);
-	normalize_vector(dir);
-	free(scaled_right);
-	free(scaled_up);
-	free(cam_vec);
-	free(viewport_origin_to_point);
+	dir = init_vector(0, 0, 0);
+	if (!dir)
+		return (NULL);
+	dir->x = forward->x + (right.x * viewport_x) + (up.x * viewport_y);
+	dir->y = forward->y + (right.y * viewport_x) + (up.y * viewport_y);
+	dir->z = forward->z + (right.z * viewport_x) + (up.z * viewport_y);
 	return (dir);
 }
 
-void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, float *viewport_x, float *viewport_y)
+void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, double *viewport_x, double *viewport_y)
 {
-	float normalized_x;
-	float normalized_y;
-	float aspect_ratio;
+	t_viewport *viewport;
+	double u;
+	double v;
 
-	aspect_ratio = ((float)WIN_W / (float)WIN_H) * 0.7;
-	normalized_x = ((float)x + 0.5f) / WIN_W;
-	normalized_y = ((float)y + 0.5f) / WIN_H;
-	if (normalized_x < 0.0f || normalized_x > 1.0f || normalized_y < 0.0f || normalized_y > 1.0f)
-	{
-		*viewport_x = 0.0f;
-		*viewport_y = 0.0f;
-		return;
-	}
-	*viewport_x = (normalized_x - 0.5f) * minirt->scene->viewport->width * aspect_ratio;
-	*viewport_y = (0.5f - normalized_y) * minirt->scene->viewport->height;
+	viewport = minirt->scene->viewport;
+	u = (double)x / (WIN_W - 1);
+	v = 1.0 - (double)y / (WIN_H - 1);
+	*viewport_x = viewport->width * (u - 0.5);
+	*viewport_y = viewport->height * (v - 0.5);
 }
 
 t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
 {
-	float viewport_x;
-	float viewport_y;
+	double viewport_x;
+	double viewport_y;
 	t_vector *right;
 	t_vector *up;
 	t_vector *dir;
@@ -112,7 +98,7 @@ t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
 		return (NULL);
 	calculate_viewport_coordinates(x, y, minirt, &viewport_x, &viewport_y);
 	calculate_right_up_vectors(minirt->scene->camera->orientation, &right, &up);
-	dir = get_ray_direction(viewport_x, viewport_y, minirt->scene->camera->orientation, right, up);
+	dir = get_ray_direction(viewport_x, viewport_y, minirt->scene->camera->orientation, *right, *up);
 	normalize_vector(dir);
 	if (vector_length(dir) < MIN_RENDER_DISTANCE || vector_length(dir) > MAX_RENDER_DISTANCE)
 	{

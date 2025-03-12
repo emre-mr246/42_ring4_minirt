@@ -76,7 +76,7 @@ int *check_object_colors(t_ray *ray, t_minirt *minirt, float *distances)
 	int color;
 	int *colors;
 
-	colors = ft_calloc(minirt->scene->object_count + 1, sizeof(int));
+	colors = ft_calloc(minirt->scene->object_count, sizeof(int));
 	if (!colors)
 		return (NULL);
 	i = 0;
@@ -107,7 +107,7 @@ int check_intersections(t_ray *ray, t_minirt *minirt)
 	float *distances;
 	int result;
 
-	distances = ft_calloc(minirt->scene->object_count + 1, sizeof(float));
+	distances = ft_calloc(minirt->scene->object_count, sizeof(float));
 	if (!distances)
 		return (0);
 	colors = check_object_colors(ray, minirt, distances);
