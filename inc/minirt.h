@@ -35,7 +35,7 @@ typedef struct s_vector
 	float z;
 }	t_vector;
 
-# include "scene.h"
+#include "scene.h"
 
 typedef struct s_ray
 {

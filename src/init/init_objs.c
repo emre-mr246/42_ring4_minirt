@@ -12,6 +12,7 @@
 
 #include "minirt.h"
 #include "libft.h"
+#include <math.h>
 
 t_light *init_light(char **arr)
 {
@@ -23,8 +24,6 @@ t_light *init_light(char **arr)
 	light->pos = init_vector_str(arr[1]);
 	light->intensity = ft_atof(arr[2]);
 	light->color = ft_atof(arr[3]);
-	if (light->color < 0 || light->color > 255)
-		light->color = 0;
 	return (light);
 }
 

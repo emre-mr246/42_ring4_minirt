@@ -23,6 +23,8 @@ t_amb_light *init_amb_light(char **arr)
 		return (NULL);
 	amb_light->intensity = fmin(fmax(ft_atof(arr[1]), 0.0), 1.0);
 	amb_light->color = parse_color(arr[2]);
+	if (amb_light->color < 0 || amb_light->color > 0xFFFFFF)
+		ft_exit("Invalid color value", -1, NULL);
 	return (amb_light);
 }
 
