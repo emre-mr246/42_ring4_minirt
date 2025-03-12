@@ -37,7 +37,7 @@ void move_camera_sideways(t_minirt *minirt, t_vector *orientation, double move_s
 	minirt->scene->camera->pos->z += move_step * orientation->x;
 }
 
-void rotate_camera(t_minirt *minirt, double x, double y, double z)
+void rotate_camera(t_minirt *minirt, double y)
 {
 	t_vector *orientation;
 
@@ -71,9 +71,9 @@ int handle_keypress(int key, t_minirt *minirt)
 	if (key == XK_r)
 		reset_camera(minirt);
 	if (key == XK_q)
-		rotate_camera(minirt, 0, -0.1, 0);
+		rotate_camera(minirt, -0.1);
 	if (key == XK_e)
-		rotate_camera(minirt, 0, 0.1, 0);
+		rotate_camera(minirt, 0.1);
 	// TODO - DEBUG AMAÇLI, IŞIĞI HAREKET ETTİRİYOR
 	if (key == XK_Up)
 		minirt->scene->lights[0]->pos->x += move_step * 10;

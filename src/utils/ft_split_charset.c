@@ -29,7 +29,6 @@ static int in_charset(char c, char *charset)
 static int count_words(const char *s, char *charset)
 {
 	int i;
-	int j;
 	int res;
 
 	if (!s[0])

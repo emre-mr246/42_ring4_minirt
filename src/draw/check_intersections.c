@@ -44,7 +44,7 @@ static int check_object_intersection(t_ray *ray, void *object, int obj_type, t_m
 	return (color);
 }
 
-static int find_closest_intersection(t_ray *ray, t_minirt *minirt, int *colors, float *distances)
+static int find_closest_intersection(t_minirt *minirt, int *colors, float *distances)
 {
 	int i;
 	int closest_index;
@@ -116,7 +116,7 @@ int check_intersections(t_ray *ray, t_minirt *minirt)
 		free(distances);
 		return (0);
 	}
-	result = find_closest_intersection(ray, minirt, colors, distances);
+	result = find_closest_intersection(minirt, colors, distances);
 	free(colors);
 	free(distances);
 	return (result);

@@ -55,8 +55,7 @@ void count_objects(t_input *input, char *input_file)
 void parse_input(char *input_file, t_minirt *minirt)
 {
 	t_input *input;
-	char *line;
-	
+
 	input = init_input();
 	count_objects(input, input_file);
 	fill_scene(minirt, input);

@@ -69,7 +69,7 @@ static int numbers_valid(char **arr)
 		j = 0;
 		while (arr[i][j])
 		{
-			if (!ft_isdigit(arr[i][j]) && !arr[i][j] == '-' && !arr[i][j] == '.' && !arr[i][j] == ',')
+			if (!ft_isdigit(arr[i][j]) && arr[i][j] != '-' && arr[i][j] != '.' && arr[i][j] != ',')
 				return (0);
 			if (consecutive_chars(arr[i][j], arr[i][j + 1]))
 				return (0);
@@ -106,7 +106,7 @@ static int color_valid(char **arr)
 	return (1);
 }
 
-int line_checker(char *line, void *ptr)
+int line_checker(char *line)
 {
 	char **split;
 
