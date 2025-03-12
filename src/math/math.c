@@ -56,7 +56,7 @@ float discriminant(float a, float b, float c)
 	return (sq(b) - (4 * a * c));
 }
 
-float get_min_x(float x1, float x2, t_ray ray)
+float get_min_x(float x1, float x2)
 {
 	if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)
 		return (x1);
@@ -65,7 +65,7 @@ float get_min_x(float x1, float x2, t_ray ray)
 	return (-1);
 }
 
-float solve_eq(float a, float b, float c, t_ray ray)
+float solve_eq(float a, float b, float c)
 {
 	float disc;
 	float x1;
@@ -76,5 +76,5 @@ float solve_eq(float a, float b, float c, t_ray ray)
 		return (-1);
 	x1 = (-b + sqrtf(disc)) / (2 * a);
 	x2 = (-b - sqrtf(disc)) / (2 * a);
-	return (get_min_x(x1, x2, ray));
+	return (get_min_x(x1, x2));
 }

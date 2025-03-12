@@ -39,7 +39,7 @@ t_camera *init_camera(char **arr)
 	return (camera);
 }
 
-static int fill_objects(t_scene *scene, char **split)
+void fill_objects(t_scene *scene, char **split)
 {
 	int i;
 
@@ -74,7 +74,7 @@ static int fill_objects(t_scene *scene, char **split)
 	}
 }
 
-int init_lights(t_scene *scene)
+void init_lights(t_scene *scene)
 {
 	int i;
 	int k;
@@ -83,7 +83,7 @@ int init_lights(t_scene *scene)
 	k = 0;
 	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), i + 2);
 	if (!scene->lights)
-		return (0);
+		return ;
 	while (scene->objects[i])
 	{
 		if (scene->obj_tags[i] == LIGHT)
@@ -96,7 +96,6 @@ int parse_line(char *line, void *scene_data)
 {
 	t_scene *scene;
 	char **split;
-	int i;
 
 	scene = (t_scene *)scene_data;
 	split = ft_split_charset(line, " \t");

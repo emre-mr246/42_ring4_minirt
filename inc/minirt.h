@@ -108,7 +108,7 @@ t_vector	*get_point_on_ray(t_ray ray, float t);
 t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt);
 float discriminant(float a, float b, float c);
 float sq(float a);
-float solve_eq(float a, float b, float c, t_ray ray);
+float solve_eq(float a, float b, float c);
 float calculate_distance(t_vector *a, t_vector *b);
 
 // vector
@@ -161,7 +161,7 @@ void sort_objects_by_distance(t_minirt *minirt);
 // check_intersections
 int check_intersections(t_ray *ray, t_minirt *minirt);
 
-int init_lights(t_scene *scene);
+void init_lights(t_scene *scene);
 
 int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection);
 
