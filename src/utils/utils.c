@@ -55,6 +55,13 @@ void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), vo
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0 ||
+			ft_strncmp(line, "\0", 1) == 0 || ft_strncmp(line, "\t", 1) == 0)
+		{
+			free(line);
+			line = get_next_line(fd);
+			continue;
+		}
 		if (f(line, ptr) == -1)
 		{
 			free(line);

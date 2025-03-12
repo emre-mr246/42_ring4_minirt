@@ -12,21 +12,17 @@
 
 #include "minirt.h"
 #include "libft.h"
+#include <unistd.h>
 
 static int object_valid(char *str)
 {
-	if (strs_equal(str, "A"))
+	if (strs_equal(str, "A") || strs_equal(str, "C") ||
+		strs_equal(str, "L") || strs_equal(str, "sp") ||
+		strs_equal(str, "cy") || strs_equal(str, "pl"))
 		return (1);
-	if (strs_equal(str, "C"))
-		return (1);
-	if (strs_equal(str, "L"))
-		return (1);
-	if (strs_equal(str, "sp"))
-		return (1);
-	if (strs_equal(str, "cy"))
-		return (1);
-	if (strs_equal(str, "pl"))
-		return (1);
+	write(2, "Object is not valid: ", 20);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
 	return (0);
 }
 
@@ -34,27 +30,24 @@ static int arg_count_valid(char **arr)
 {
 	if (strs_equal(arr[0], "A"))
 		return (count_elements(arr) == 3);
-	if (strs_equal(arr[0], "C"))
-		return (count_elements(arr) == 4);
-	if (strs_equal(arr[0], "L"))
-		return (count_elements(arr) == 4);
-	if (strs_equal(arr[0], "sp"))
-		return (count_elements(arr) == 4);
-	if (strs_equal(arr[0], "pl"))
+	if (strs_equal(arr[0], "C") || strs_equal(arr[0], "L") ||
+		strs_equal(arr[0], "sp") || strs_equal(arr[0], "pl"))
 		return (count_elements(arr) == 4);
 	if (strs_equal(arr[0], "cy"))
 		return (count_elements(arr) == 6);
+	write(2, "arg count is not valid\n", 23);	
 	return (0);
 }
 
 static int consecutive_chars(char x, char y)
 {
-	if (x == '.' && (y == '.' || y == ',' || y == '-'))
+	if ((x == '.' && (y == '.' || y == ',' || y == '-')) ||
+		(x == ',' && (y == '.' || y == ',')) ||
+		(x == '-' && (y == '.' || y == ',' || y == '-')))
+	{
+		write(2, "consecutive chars are not valid\n", 32);
 		return (1);
-	if (x == ',' && (y == '.' || y == ','))
-		return (1);
-	if (x == '-' && (y == '.' || y == ',' || y == '-'))
-		return (1);
+	}
 	return (0);
 }
 
@@ -69,8 +62,11 @@ static int numbers_valid(char **arr)
 		j = 0;
 		while (arr[i][j])
 		{
-			if (ft_isdigit(arr[i][j]) && arr[i][j] == '-' && arr[i][j] == '.' && arr[i][j] == ',')
+			if (!ft_isdigit(arr[i][j]) && arr[i][j] != '-' && arr[i][j] != '.' && arr[i][j] != ',')
+			{
+				write(2, "numbers are not valid\n", 22);
 				return (0);
+			}
 			if (consecutive_chars(arr[i][j], arr[i][j + 1]))
 				return (0);
 			j++;
@@ -99,22 +95,24 @@ static int color_valid(char **arr)
 	while (split && split[i])
 	{
 		if (ft_atoi(split[i]) < 0 || ft_atoi(split[i]) > 255)
+		{
+			write(2, "color is not valid\n", 19);
 			return (0);
+		}
 		i++;
 	}
 	free_array(split);
 	return (1);
 }
-#include <stdio.h>
+
 int line_checker(char *line, void *ptr)
 {
 	char **split;
 	(void)ptr;
 
-	split = ft_split_charset(line, " \t");
+	split = ft_split_charset(line, " \t\n");
 	if (!split)
 		return (-1);
-	
 	if (!object_valid(split[0]) || !arg_count_valid(split) || !numbers_valid(split) || !color_valid(split))
 	{
 		free_array(split);

@@ -60,6 +60,8 @@ void parse_input(char *input_file, t_minirt *minirt)
 	count_objects(input, input_file);
 	fill_scene(minirt, input);
 	iter_lines(minirt, input_file, parse_line, minirt->scene);
+	if (!minirt->scene->camera)
+		ft_exit("No camera", -1, minirt);
 	minirt->scene->viewport->d = (minirt->scene->viewport->width / 2) / tanf((float)minirt->scene->camera->fov / 360 * M_PI);
 	init_lights(minirt->scene);
 	free(input);

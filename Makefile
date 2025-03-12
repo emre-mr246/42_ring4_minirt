@@ -1,7 +1,7 @@
 
 FILES		= main sphere cylinder plane check_intersections exit sort_objects color light intersect vector init utils keypress parse ft_split_charset parse_control init_scene ft_atof init_objs math math2 draw free free_objs
 
-NAME		= minirt
+NAME		= miniRT
 CC			= gcc
 CCFLAGS		= -I ./lib/libft/inc/ -I ./inc/ -I ./lib/minilibx -I ./lib/libft -lXext -lX11 -lm -lbsd -Wall -Wextra -Werror
 MAKEFLAGS	= --no-print-directory

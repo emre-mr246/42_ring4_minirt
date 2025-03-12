@@ -19,6 +19,8 @@ t_vector *init_vector_str(char *str)
 	char **split;
 	t_vector *v;
 
+	if (!str)
+		return (NULL);
 	v = (t_vector *)ft_calloc(sizeof(t_vector), 1);
 	if (!v)
 		return (NULL);
