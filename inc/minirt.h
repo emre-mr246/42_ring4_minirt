@@ -168,4 +168,6 @@ void init_lights(t_scene *scene);
 
 int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection);
 
+t_vector *get_intersection(t_ray *ray, void *object, int obj_type);
+int check_intersection_and_distance(t_ray *ray, t_minirt *minirt, int i, float *distance);
 #endif

@@ -49,7 +49,6 @@ void rotate_camera(t_minirt *minirt, double y)
 int handle_keypress(int key, t_minirt *minirt)
 {
 	double move_step;
-	;
 	t_vector *orientation;
 
 	move_step = 0.5;
@@ -74,20 +73,5 @@ int handle_keypress(int key, t_minirt *minirt)
 		rotate_camera(minirt, -0.1);
 	if (key == XK_e)
 		rotate_camera(minirt, 0.1);
-	// TODO - DEBUG AMAÇLI, IŞIĞI HAREKET ETTİRİYOR
-	if (key == XK_Up)
-		minirt->scene->lights[0]->pos->x += move_step * 10;
-	if (key == XK_Down)
-		minirt->scene->lights[0]->pos->x -= move_step * 10;
-	if (key == XK_Left)
-		minirt->scene->lights[0]->pos->z += move_step * 10;
-	if (key == XK_Right)
-		minirt->scene->lights[0]->pos->z -= move_step * 10;
-	if (key == XK_n)
-		minirt->scene->lights[0]->pos->y += move_step * 10;
-	if (key == XK_m)
-		minirt->scene->lights[0]->pos->y -= move_step * 10;
-	if (key == XK_k)
-		((t_plane *)minirt->scene->objects[1])->point->y += move_step;
 	return (0);
 }

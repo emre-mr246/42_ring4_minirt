@@ -79,45 +79,17 @@ void fill_objects(t_scene *scene, char **split)
 	}
 }
 
-void init_lights(t_scene *scene)
-{
-	int i;
-	int k;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (scene->objects[i])
-	{
-		if (scene->obj_tags[i] == LIGHT)
-			count++;
-		i++;
-	}
-	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), count + 1);
-	if (!scene->lights)
-		return ;
-	i = 0;
-	k = 0;
-	while (scene->objects[i])
-	{
-		if (scene->obj_tags[i] == LIGHT)
-			scene->lights[k++] = (t_light *)scene->objects[i];
-		i++;
-	}
-	scene->lights[k] = NULL;
-}
-
 void update_viewport_with_fov(t_scene *scene)
 {
-    double fov_rad;
-    double aspect_ratio;
-    
-    if (!scene->camera || !scene->viewport)
-        return ;
-    fov_rad = scene->camera->fov * M_PI / 180.0;
-    aspect_ratio = (double)WIN_W / WIN_H;
-    scene->viewport->height = 2.0 * tan(fov_rad / 2.0);
-    scene->viewport->width = scene->viewport->height * aspect_ratio;
+	double fov_rad;
+	double aspect_ratio;
+
+	if (!scene->camera || !scene->viewport)
+		return;
+	fov_rad = scene->camera->fov * M_PI / 180.0;
+	aspect_ratio = (double)WIN_W / WIN_H;
+	scene->viewport->height = 2.0 * tan(fov_rad / 2.0);
+	scene->viewport->width = scene->viewport->height * aspect_ratio;
 }
 
 int parse_line(char *line, void *scene_data)

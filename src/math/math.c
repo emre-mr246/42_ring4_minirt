@@ -46,16 +46,6 @@ t_vector *get_point_on_ray(t_ray ray, float t)
 	return (v);
 }
 
-float sq(float a)
-{
-	return (a * a);
-}
-
-float discriminant(float a, float b, float c)
-{
-	return (sq(b) - (4 * a * c));
-}
-
 float get_min_x(float x1, float x2)
 {
 	if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)

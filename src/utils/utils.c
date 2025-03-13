@@ -60,7 +60,7 @@ void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), vo
 		{
 			free(line);
 			line = get_next_line(fd);
-			continue;
+			continue ;
 		}
 		if (f(line, ptr) == -1)
 		{
@@ -79,4 +79,3 @@ int strs_equal(char *a, char *b)
 		return (1);
 	return (0);
 }
-

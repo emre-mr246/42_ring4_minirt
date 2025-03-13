@@ -14,6 +14,34 @@
 #include "libft.h"
 #include <math.h>
 
+void init_lights(t_scene *scene)
+{
+	int i;
+	int k;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (scene->objects[i])
+	{
+		if (scene->obj_tags[i] == LIGHT)
+			count++;
+		i++;
+	}
+	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), count + 1);
+	if (!scene->lights)
+		return ;
+	i = 0;
+	k = 0;
+	while (scene->objects[i])
+	{
+		if (scene->obj_tags[i] == LIGHT)
+			scene->lights[k++] = (t_light *)scene->objects[i];
+		i++;
+	}
+	scene->lights[k] = NULL;
+}
+
 t_light *init_light(char **arr)
 {
 	t_light *light;
