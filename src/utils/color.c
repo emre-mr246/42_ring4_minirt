@@ -1,47 +1,59 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:09 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:47:36 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "minirt.h"
 
-int clamp_color_value(int value)
+int	clamp_color_value(int value)
 {
-    if (value < 0)
-        return (0);
-    if (value > 255)
-        return (255);
-    return (value);
+	if (value < 0)
+		return (0);
+	if (value > 255)
+		return (255);
+	return (value);
 }
 
-int create_rgb(int red, int green, int blue)
+int	create_rgb(int red, int green, int blue)
 {
-    return ((red << 16) | (green << 8) | blue);
+	return ((red << 16) | (green << 8) | blue);
 }
 
-int parse_color(char *str)
+int	parse_color(char *str)
 {
-    char **colors;
-    int r;
-    int g;
-    int b;
+	char	**colors;
+	int		r;
+	int		g;
+	int		b;
 
-    colors = ft_split_charset(str, ",");
-    if (!colors || !colors[0] || !colors[1] || !colors[2] || colors[3])
-    {
-        if (colors)
-            free_array(colors);
-        return (0);
-    }
-    r = clamp(ft_atoi(colors[0]), 0, 255);
+	colors = ft_split_charset(str, ",");
+	if (!colors || !colors[0] || !colors[1] || !colors[2] || colors[3])
+	{
+		if (colors)
+			free_array(colors);
+		return (0);
+	}
+	r = clamp(ft_atoi(colors[0]), 0, 255);
 	g = clamp(ft_atoi(colors[1]), 0, 255);
 	b = clamp(ft_atoi(colors[2]), 0, 255);
-    free_array(colors);
-    return (create_rgb(r, g, b));
+	free_array(colors);
+	return (create_rgb(r, g, b));
 }
 
-t_color apply_intensity(t_color color, float intensity)
+t_color	apply_intensity(t_color color, float intensity)
 {
-    t_color result;
-    
-    result.r = clamp_color_value((int)(color.r * intensity));
-    result.g = clamp_color_value((int)(color.g * intensity));
-    result.b = clamp_color_value((int)(color.b * intensity));
-    return (result);
+	t_color	result;
+
+	result.r = clamp_color_value((int)(color.r * intensity));
+	result.g = clamp_color_value((int)(color.g * intensity));
+	result.b = clamp_color_value((int)(color.b * intensity));
+	return (result);
 }

@@ -1,7 +1,19 @@
-#include "minirt.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_objs.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:28 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:29 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void free_camera(t_camera *camera)
+#include "libft.h"
+#include "minirt.h"
+
+void	free_camera(t_camera *camera)
 {
 	if (camera)
 	{
@@ -13,7 +25,7 @@ void free_camera(t_camera *camera)
 	}
 }
 
-void free_light(t_light *light)
+void	free_light(t_light *light)
 {
 	if (light)
 	{
@@ -23,7 +35,7 @@ void free_light(t_light *light)
 	}
 }
 
-void free_sphere(t_sphere *sphere)
+void	free_sphere(t_sphere *sphere)
 {
 	if (sphere)
 	{
@@ -33,7 +45,7 @@ void free_sphere(t_sphere *sphere)
 	}
 }
 
-void free_plane(t_plane *plane)
+void	free_plane(t_plane *plane)
 {
 	if (plane)
 	{
@@ -45,7 +57,7 @@ void free_plane(t_plane *plane)
 	}
 }
 
-void free_cylinder(t_cylinder *cylinder)
+void	free_cylinder(t_cylinder *cylinder)
 {
 	if (cylinder)
 	{

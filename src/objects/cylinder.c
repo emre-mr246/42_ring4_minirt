@@ -1,11 +1,24 @@
-#include "minirt.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:17 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:18 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static t_vector *calculate_cylinder_normal(t_cylinder *cy, t_vector *intersection, t_vector *offset_point)
+#include "libft.h"
+#include "minirt.h"
+
+static t_vector	*calculate_cylinder_normal(t_cylinder *cy,
+		t_vector *intersection, t_vector *offset_point)
 {
-	t_vector *normal;
-	t_vector *temp_normal;
-	t_vector *proj;
+	t_vector	*normal;
+	t_vector	*temp_normal;
+	t_vector	*proj;
 
 	normal = subtract_vector(*intersection, *cy->origin);
 	proj = multiply_vector(*cy->axis, dot_product(*normal, *cy->axis));
@@ -19,12 +32,13 @@ static t_vector *calculate_cylinder_normal(t_cylinder *cy, t_vector *intersectio
 	offset_point->z = intersection->z + normal->z * EPSILON;
 	return (normal);
 }
-int calculate_cylinder_shade(t_cylinder *cy, t_minirt *minirt, t_vector *intersection)
+int	calculate_cylinder_shade(t_cylinder *cy, t_minirt *minirt,
+		t_vector *intersection)
 {
-	t_vector *normal;
-	t_color color;
-	t_vector offset_point;
-	float intensity;
+	t_vector	*normal;
+	t_color		color;
+	t_vector	offset_point;
+	float		intensity;
 
 	normal = calculate_cylinder_normal(cy, intersection, &offset_point);
 	intensity = calculate_illumination(offset_point, normal, minirt);

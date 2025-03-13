@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minirt.h"
 #include "mlx.h"
-#include "libft.h"
 
-t_vector *init_vector(float x, float y, float z)
+t_vector	*init_vector(float x, float y, float z)
 {
-	t_vector *v;
+	t_vector	*v;
 
 	v = (t_vector *)ft_calloc(sizeof(t_vector), 1);
 	if (!v)
@@ -27,9 +27,9 @@ t_vector *init_vector(float x, float y, float z)
 	return (v);
 }
 
-t_ray *init_ray(t_vector o, t_vector dir)
+t_ray	*init_ray(t_vector o, t_vector dir)
 {
-	t_ray *ray;
+	t_ray	*ray;
 
 	ray = (t_ray *)ft_calloc(sizeof(t_ray), 1);
 	if (!ray)
@@ -39,9 +39,9 @@ t_ray *init_ray(t_vector o, t_vector dir)
 	return (ray);
 }
 
-t_scene *init_scene()
+t_scene	*init_scene(void)
 {
-	t_scene *scene;
+	t_scene	*scene;
 
 	scene = (t_scene *)ft_calloc(sizeof(t_scene), 1);
 	if (!scene)
@@ -49,9 +49,9 @@ t_scene *init_scene()
 	return (scene);
 }
 
-void fill_scene(t_minirt *minirt, t_input *input)
+void	fill_scene(t_minirt *minirt, t_input *input)
 {
-	t_scene *scene;
+	t_scene	*scene;
 
 	scene = minirt->scene;
 	scene->amb_light = NULL;
@@ -64,9 +64,9 @@ void fill_scene(t_minirt *minirt, t_input *input)
 		ft_exit("scene_malloc", -1, minirt);
 }
 
-t_minirt *init_minirt()
+t_minirt	*init_minirt(void)
 {
-	t_minirt *minirt;
+	t_minirt	*minirt;
 
 	minirt = (t_minirt *)ft_calloc(sizeof(t_minirt), 1);
 	if (!minirt)
@@ -75,10 +75,12 @@ t_minirt *init_minirt()
 	minirt->win_height = WIN_H;
 	minirt->win_width = WIN_W;
 	minirt->win = mlx_new_window(minirt->mlx, minirt->win_width,
-								 minirt->win_height, "RaRe Tracer");
-	minirt->img.ptr = mlx_new_image(minirt->mlx, minirt->win_width, minirt->win_height);
-	minirt->img.data = mlx_get_data_addr(minirt->img.ptr, &minirt->img.bits_per_pixel,
-										 &minirt->img.line_len, &minirt->img.endian);
+			minirt->win_height, "RaRe Tracer");
+	minirt->img.ptr = mlx_new_image(minirt->mlx, minirt->win_width,
+			minirt->win_height);
+	minirt->img.data = mlx_get_data_addr(minirt->img.ptr,
+			&minirt->img.bits_per_pixel, &minirt->img.line_len,
+			&minirt->img.endian);
 	minirt->scene = init_scene();
 	if (!minirt->scene)
 		ft_exit("init_scene", -1, minirt);

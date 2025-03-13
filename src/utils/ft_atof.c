@@ -6,13 +6,13 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:39:00 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/03 14:39:24 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 08:46:08 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static float process_integer(const char **str)
+static float	process_integer(const char **str)
 {
-	float result;
+	float	result;
 
 	result = 0.0f;
 	while (**str >= '0' && **str <= '9')
@@ -23,10 +23,10 @@ static float process_integer(const char **str)
 	return (result);
 }
 
-static float process_fractional(const char **str)
+static float	process_fractional(const char **str)
 {
-	float result;
-	float decimal_place;
+	float	result;
+	float	decimal_place;
 
 	result = 0.0f;
 	decimal_place = 0.1f;
@@ -43,10 +43,10 @@ static float process_fractional(const char **str)
 	return (result);
 }
 
-float ft_atof(const char *str)
+float	ft_atof(const char *str)
 {
-	float result;
-	float sign;
+	float	result;
+	float	sign;
 
 	result = 0.0f;
 	sign = 1.0f;

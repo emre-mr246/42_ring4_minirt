@@ -1,12 +1,24 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:31 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:31 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "minirt.h"
 #include <math.h>
 
-t_ray create_shadow_ray(t_vector *point, t_light *light)
+t_ray	create_shadow_ray(t_vector *point, t_light *light)
 {
-	t_ray shadow_ray;
-	t_vector *direction;
-	t_vector *tmp;
+	t_ray		shadow_ray;
+	t_vector	*direction;
+	t_vector	*tmp;
 
 	tmp = subtract_vector(*light->pos, *point);
 	direction = copy_vector(*tmp);
@@ -17,22 +29,26 @@ t_ray create_shadow_ray(t_vector *point, t_light *light)
 	return (shadow_ray);
 }
 
-int check_shadow_intersections(t_ray shadow_ray, float light_dist, t_minirt *minirt)
+int	check_shadow_intersections(t_ray shadow_ray, float light_dist,
+		t_minirt *minirt)
 {
-	t_vector *intersection;
-	int i;
-	float obj_dist;
+	t_vector	*intersection;
+	int			i;
+	float		obj_dist;
 
 	i = 0;
 	while (minirt->scene->objects[i])
 	{
 		intersection = NULL;
 		if (minirt->scene->obj_tags[i] == SPHERE)
-			intersection = intersect_sphere(shadow_ray, *(t_sphere *)minirt->scene->objects[i]);
+			intersection = intersect_sphere(shadow_ray,
+					*(t_sphere *)minirt->scene->objects[i]);
 		else if (minirt->scene->obj_tags[i] == CYLINDER)
-			intersection = intersect_cylinder(shadow_ray, *(t_cylinder *)minirt->scene->objects[i]);
+			intersection = intersect_cylinder(shadow_ray,
+					*(t_cylinder *)minirt->scene->objects[i]);
 		else if (minirt->scene->obj_tags[i] == PLANE)
-			intersection = intersect_plane(shadow_ray, *(t_plane *)minirt->scene->objects[i]);
+			intersection = intersect_plane(shadow_ray,
+					*(t_plane *)minirt->scene->objects[i]);
 		if (intersection)
 		{
 			obj_dist = calculate_distance(shadow_ray.origin, intersection);
@@ -45,11 +61,11 @@ int check_shadow_intersections(t_ray shadow_ray, float light_dist, t_minirt *min
 	return (0);
 }
 
-int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt)
+int	is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt)
 {
-	t_ray shadow_ray;
-	float light_dist;
-	int result;
+	t_ray	shadow_ray;
+	float	light_dist;
+	int		result;
 
 	shadow_ray = create_shadow_ray(point, light);
 	light_dist = calculate_distance(point, light->pos);
@@ -59,12 +75,13 @@ int is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt)
 	return (result);
 }
 
-float check_light_contribution(t_light *light, t_vector point, t_vector *normal, t_minirt *minirt)
+float	check_light_contribution(t_light *light, t_vector point,
+		t_vector *normal, t_minirt *minirt)
 {
-	t_vector *light_dir;
-	t_vector *tmp;
-	float contribution;
-	float intensity;
+	t_vector	*light_dir;
+	t_vector	*tmp;
+	float		contribution;
+	float		intensity;
 
 	if (is_in_shadow(&point, light, minirt))
 		return (0);
@@ -80,18 +97,20 @@ float check_light_contribution(t_light *light, t_vector point, t_vector *normal,
 	return (intensity);
 }
 
-float calculate_illumination(t_vector point, t_vector *normal, t_minirt *minirt)
+float	calculate_illumination(t_vector point, t_vector *normal,
+		t_minirt *minirt)
 {
-	int i;
-	float total_light;
-	float ambient;
+	int		i;
+	float	total_light;
+	float	ambient;
 
 	ambient = minirt->scene->amb_light->intensity;
 	total_light = ambient;
 	i = 0;
 	while (minirt->scene->lights[i])
 	{
-		total_light += check_light_contribution(minirt->scene->lights[i], point, normal, minirt);
+		total_light += check_light_contribution(minirt->scene->lights[i], point,
+				normal, minirt);
 		i++;
 	}
 	if (total_light > 1.0f)

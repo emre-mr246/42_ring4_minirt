@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:12:19 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/18 12:25:22 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 08:46:33 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "mlx.h"
 
-static int get_color(int x, int y, t_minirt *minirt)
+static int	get_color(int x, int y, t_minirt *minirt)
 {
-	t_ray *ray;
-	int color;
+	t_ray	*ray;
+	int		color;
 
 	ray = send_ray_from_cam(x, y, minirt);
 	color = check_intersections(ray, minirt);
@@ -24,12 +24,12 @@ static int get_color(int x, int y, t_minirt *minirt)
 	return (color);
 }
 
-static void fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
+static void	fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 {
-	int x;
-	int y;
-	int pix;
-	int color;
+	int	x;
+	int	y;
+	int	pix;
+	int	color;
 
 	x = 0;
 	while (x < size_x)
@@ -48,7 +48,7 @@ static void fill_image(int size_x, int size_y, t_img *img, t_minirt *minirt)
 	}
 }
 
-int draw(t_minirt *minirt)
+int	draw(t_minirt *minirt)
 {
 	fill_image(minirt->win_width, minirt->win_height, &(minirt->img), minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img.ptr, 0, 0);

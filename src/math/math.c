@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:27:39 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/17 19:24:36 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 08:46:28 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 #include "libft.h"
+#include "minirt.h"
 #include <math.h>
 
-float dot_product(t_vector v, t_vector u)
+float	dot_product(t_vector v, t_vector u)
 {
 	return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
 
-t_vector *cross_product(const t_vector *v, const t_vector *u)
+t_vector	*cross_product(const t_vector *v, const t_vector *u)
 {
-	t_vector *vector;
+	t_vector	*vector;
 
 	if (!v || !u)
 		return (NULL);
@@ -34,10 +34,10 @@ t_vector *cross_product(const t_vector *v, const t_vector *u)
 	return (vector);
 }
 
-t_vector *get_point_on_ray(t_ray ray, float t)
+t_vector	*get_point_on_ray(t_ray ray, float t)
 {
-	t_vector *v;
-	t_vector *td;
+	t_vector	*v;
+	t_vector	*td;
 
 	td = copy_vector(*ray.direction);
 	scale_vector(td, t);
@@ -46,7 +46,7 @@ t_vector *get_point_on_ray(t_ray ray, float t)
 	return (v);
 }
 
-float get_min_x(float x1, float x2)
+float	get_min_x(float x1, float x2)
 {
 	if (x1 < x2 && x1 >= RAY_T_MIN && x1 <= RAY_T_MAX)
 		return (x1);
@@ -55,11 +55,11 @@ float get_min_x(float x1, float x2)
 	return (-1);
 }
 
-float solve_eq(float a, float b, float c)
+float	solve_eq(float a, float b, float c)
 {
-	float disc;
-	float x1;
-	float x2;
+	float	disc;
+	float	x1;
+	float	x2;
 
 	disc = discriminant(a, b, c);
 	if (disc < 0)

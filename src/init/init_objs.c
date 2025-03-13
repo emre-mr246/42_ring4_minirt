@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 #include "libft.h"
+#include "minirt.h"
 #include <math.h>
 
-void init_lights(t_scene *scene)
+void	init_lights(t_scene *scene)
 {
-	int i;
-	int k;
-	int count;
+	int	i;
+	int	k;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -42,9 +42,9 @@ void init_lights(t_scene *scene)
 	scene->lights[k] = NULL;
 }
 
-t_light *init_light(char **arr)
+t_light	*init_light(char **arr)
 {
-	t_light *light;
+	t_light	*light;
 
 	light = (t_light *)ft_calloc(sizeof(t_light), 1);
 	if (!light)
@@ -55,9 +55,9 @@ t_light *init_light(char **arr)
 	return (light);
 }
 
-t_plane *init_plane(char **arr)
+t_plane	*init_plane(char **arr)
 {
-	t_plane *plane;
+	t_plane	*plane;
 
 	plane = (t_plane *)ft_calloc(sizeof(t_plane), 1);
 	if (!plane)
@@ -68,9 +68,9 @@ t_plane *init_plane(char **arr)
 	return (plane);
 }
 
-t_sphere *init_sphere(char **arr)
+t_sphere	*init_sphere(char **arr)
 {
-	t_sphere *sphere;
+	t_sphere	*sphere;
 
 	sphere = (t_sphere *)ft_calloc(sizeof(t_sphere), 1);
 	if (!sphere)
@@ -81,9 +81,9 @@ t_sphere *init_sphere(char **arr)
 	return (sphere);
 }
 
-t_cylinder *init_cylinder(char **arr)
+t_cylinder	*init_cylinder(char **arr)
 {
-	t_cylinder *cylinder;
+	t_cylinder	*cylinder;
 
 	cylinder = (t_cylinder *)ft_calloc(sizeof(t_cylinder), 1);
 	if (!cylinder)

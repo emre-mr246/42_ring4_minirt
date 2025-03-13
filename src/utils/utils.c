@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:00:22 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/18 12:24:37 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 08:46:04 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 #include "libft.h"
-#include <unistd.h>
+#include "minirt.h"
 #include <fcntl.h>
+#include <unistd.h>
 
-int is_whitespace(char c)
+int	is_whitespace(char c)
 {
 	return ((c >= 8 && c <= 13) || c == ' ');
 }
 
-int higher_len(char *str1, char *str2)
+int	higher_len(char *str1, char *str2)
 {
-	int len1;
-	int len2;
+	int	len1;
+	int	len2;
 
 	if (!str1 || !str2)
 		return (-1);
@@ -35,19 +35,21 @@ int higher_len(char *str1, char *str2)
 		return (len2);
 }
 
-int count_elements(char **arr)
+int	count_elements(char **arr)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (arr[i])
 		i++;
 	return (i);
 }
 
-void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), void *ptr)
+void	iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *),
+		void *ptr)
 {
-	char *line;
-	int fd;
+	char	*line;
+	int		fd;
 
 	fd = open(input_file, O_RDONLY, 0644);
 	if (fd == -1)
@@ -55,8 +57,8 @@ void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), vo
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0 ||
-			ft_strncmp(line, "\0", 1) == 0 || ft_strncmp(line, "\t", 1) == 0)
+		if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0
+			|| ft_strncmp(line, "\0", 1) == 0 || ft_strncmp(line, "\t", 1) == 0)
 		{
 			free(line);
 			line = get_next_line(fd);
@@ -73,7 +75,7 @@ void iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *), vo
 	close(fd);
 }
 
-int strs_equal(char *a, char *b)
+int	strs_equal(char *a, char *b)
 {
 	if (ft_strncmp(a, b, higher_len(a, b)) == 0)
 		return (1);

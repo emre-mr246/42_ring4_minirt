@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_objects.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:30 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:30 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 #include "mlx.h"
 #include <math.h>
 
-static float get_object_distance(void *object, int obj_type, t_vector *camera_pos)
+static float	get_object_distance(void *object, int obj_type,
+		t_vector *camera_pos)
 {
 	if (obj_type == SPHERE)
 		return (calculate_distance(camera_pos, ((t_sphere *)object)->origin));
@@ -13,10 +26,10 @@ static float get_object_distance(void *object, int obj_type, t_vector *camera_po
 	return (INFINITY);
 }
 
-static void swap_objects(t_minirt *minirt, int j)
+static void	swap_objects(t_minirt *minirt, int j)
 {
-	void *temp_obj;
-	int temp_tag;
+	void	*temp_obj;
+	int		temp_tag;
 
 	temp_obj = minirt->scene->objects[j];
 	minirt->scene->objects[j] = minirt->scene->objects[j + 1];
@@ -26,13 +39,13 @@ static void swap_objects(t_minirt *minirt, int j)
 	minirt->scene->obj_tags[j + 1] = temp_tag;
 }
 
-void sort_objects_by_distance(t_minirt *minirt)
+void	sort_objects_by_distance(t_minirt *minirt)
 {
-	int i;
-	int j;
-	float dist1;
-	float dist2;
-	t_vector *camera_pos;
+	int			i;
+	int			j;
+	float		dist1;
+	float		dist2;
+	t_vector	*camera_pos;
 
 	camera_pos = minirt->scene->camera->pos;
 	i = 0;
@@ -41,8 +54,10 @@ void sort_objects_by_distance(t_minirt *minirt)
 		j = 0;
 		while (minirt->scene->objects[j + 1])
 		{
-			dist1 = get_object_distance(minirt->scene->objects[j], minirt->scene->obj_tags[j], camera_pos);
-			dist2 = get_object_distance(minirt->scene->objects[j + 1], minirt->scene->obj_tags[j + 1], camera_pos);
+			dist1 = get_object_distance(minirt->scene->objects[j],
+					minirt->scene->obj_tags[j], camera_pos);
+			dist2 = get_object_distance(minirt->scene->objects[j + 1],
+					minirt->scene->obj_tags[j + 1], camera_pos);
 			if (dist1 > dist2)
 				swap_objects(minirt, j);
 			j++;

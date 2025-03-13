@@ -6,17 +6,17 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:58:30 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/08 15:40:53 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 08:46:12 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 #include "libft.h"
+#include "minirt.h"
 #include <math.h>
 
-t_input *init_input()
+t_input	*init_input(void)
 {
-	t_input *input;
+	t_input	*input;
 
 	input = (t_input *)ft_calloc(sizeof(t_input), 1);
 	if (!input)
@@ -24,10 +24,10 @@ t_input *init_input()
 	return (input);
 }
 
-static int count_object(char *line, void *ptr)
+static int	count_object(char *line, void *ptr)
 {
-	int i;
-	t_input *input;
+	int		i;
+	t_input	*input;
 
 	input = (t_input *)ptr;
 	i = 0;
@@ -46,15 +46,16 @@ static int count_object(char *line, void *ptr)
 	return (0);
 }
 
-void count_objects(t_input *input, char *input_file)
+void	count_objects(t_input *input, char *input_file)
 {
 	iter_lines(NULL, input_file, count_object, input);
-	input->obj_count = input->light_count + input->sphere_count + input->cylinder_count + input->plane_count;
+	input->obj_count = input->light_count + input->sphere_count
+		+ input->cylinder_count + input->plane_count;
 }
 
-void parse_input(char *input_file, t_minirt *minirt)
+void	parse_input(char *input_file, t_minirt *minirt)
 {
-	t_input *input;
+	t_input	*input;
 
 	input = init_input();
 	count_objects(input, input_file);
@@ -62,7 +63,8 @@ void parse_input(char *input_file, t_minirt *minirt)
 	iter_lines(minirt, input_file, parse_line, minirt->scene);
 	if (!minirt->scene->camera)
 		ft_exit("No camera", -1, minirt);
-	minirt->scene->viewport->d = (minirt->scene->viewport->width / 2) / tanf((float)minirt->scene->camera->fov / 360 * M_PI);
+	minirt->scene->viewport->d = (minirt->scene->viewport->width / 2)
+		/ tanf((float)minirt->scene->camera->fov / 360 * M_PI);
 	init_lights(minirt->scene);
 	free(input);
 }

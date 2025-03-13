@@ -1,10 +1,11 @@
-#include "minirt.h"
 #include "libft.h"
+#include "minirt.h"
 #include <mlx.h>
 
-static void free_objects(t_scene *scene)
+static void	free_objects(t_scene *scene)
 {
-	int i;
+	int	i;
+
 	if (scene->objects)
 	{
 		i = 0;
@@ -26,7 +27,7 @@ static void free_objects(t_scene *scene)
 		free(scene->obj_tags);
 }
 
-static void free_scene(t_scene *scene)
+static void	free_scene(t_scene *scene)
 {
 	if (scene)
 	{
@@ -47,7 +48,7 @@ static void free_scene(t_scene *scene)
 	}
 }
 
-static void free_img(t_minirt *minirt)
+static void	free_img(t_minirt *minirt)
 {
 	if (minirt && minirt->mlx && minirt->img.ptr)
 	{
@@ -57,10 +58,10 @@ static void free_img(t_minirt *minirt)
 	}
 }
 
-void free_minirt(t_minirt *minirt)
+void	free_minirt(t_minirt *minirt)
 {
 	if (!minirt)
-		return;
+		return ;
 	if (minirt->scene)
 		free_scene(minirt->scene);
 	if (minirt->img.data)
@@ -74,7 +75,7 @@ void free_minirt(t_minirt *minirt)
 	free(minirt);
 }
 
-void free_ray(t_ray *ray)
+void	free_ray(t_ray *ray)
 {
 	if (ray->direction)
 		free(ray->direction);
@@ -84,13 +85,13 @@ void free_ray(t_ray *ray)
 		free(ray);
 }
 
-void free_array(char **arr)
+void	free_array(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!arr)
-		return;
+		return ;
 	while (arr[i])
 	{
 		free(arr[i]);

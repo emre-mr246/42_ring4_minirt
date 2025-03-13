@@ -1,11 +1,11 @@
+#include "libft.h"
 #include "minirt.h"
 #include "mlx.h"
-#include "libft.h"
 
-t_vector *init_vector_str(char *str)
+t_vector	*init_vector_str(char *str)
 {
-	char **split;
-	t_vector *v;
+	char		**split;
+	t_vector	*v;
 
 	if (!str)
 		return (NULL);

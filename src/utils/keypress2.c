@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math3.c                                            :+:      :+:    :+:   */
+/*   keypress2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 08:46:22 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:43 by emgul            ###   ########.fr       */
+/*   Created: 2025/03/13 08:53:23 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:53:44 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	clamp(int number, int min, int max)
-{
-	if (number < min)
-		return (min);
-	if (number > max)
-		return (max);
-	return (number);
-}
+#include "minirt.h"
 
-float	sq(float a)
+void	reset_camera(t_minirt *minirt)
 {
-	return (a * a);
-}
-
-float	discriminant(float a, float b, float c)
-{
-	return (sq(b) - (4 * a * c));
+	minirt->scene->camera->pos->x = 0;
+	minirt->scene->camera->pos->y = 0;
+	minirt->scene->camera->pos->z = 0;
+	minirt->scene->camera->orientation->x = 1;
+	minirt->scene->camera->orientation->y = 0;
+	minirt->scene->camera->orientation->z = 0;
 }

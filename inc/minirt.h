@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:02:00 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/17 19:19:48 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 08:55:25 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,4 +170,5 @@ int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector
 
 t_vector *get_intersection(t_ray *ray, void *object, int obj_type);
 int check_intersection_and_distance(t_ray *ray, t_minirt *minirt, int i, float *distance);
+void	reset_camera(t_minirt *minirt);
 #endif

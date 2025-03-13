@@ -1,7 +1,19 @@
-#include "minirt.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:08 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:09 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_exit(char *err, int exit_code, t_minirt *minirt)
+#include "libft.h"
+#include "minirt.h"
+
+int	ft_exit(char *err, int exit_code, t_minirt *minirt)
 {
 	if (exit_code == 42)
 		free_minirt(minirt);
@@ -14,7 +26,7 @@ int ft_exit(char *err, int exit_code, t_minirt *minirt)
 	exit(exit_code);
 }
 
-int exit_mlx(t_minirt *minirt)
+int	exit_mlx(t_minirt *minirt)
 {
 	free_minirt(minirt);
 	exit(0);

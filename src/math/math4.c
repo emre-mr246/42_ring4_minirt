@@ -1,10 +1,23 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   math4.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:21 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:22 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "minirt.h"
 #include <math.h>
 
-void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vector **up)
+void	calculate_right_up_vectors(t_vector *orientation, t_vector **right,
+		t_vector **up)
 {
-	t_vector *world_up;
+	t_vector	*world_up;
 
 	world_up = init_vector(0, 1, 0);
 	*right = cross_product(orientation, world_up);
@@ -12,9 +25,10 @@ void calculate_right_up_vectors(t_vector *orientation, t_vector **right, t_vecto
 	free(world_up);
 }
 
-t_vector *get_ray_direction(double viewport_x, double viewport_y, t_vector *forward, t_vector right, t_vector up)
+t_vector	*get_ray_direction(double viewport_x, double viewport_y,
+		t_vector *forward, t_vector right, t_vector up)
 {
-	t_vector *dir;
+	t_vector	*dir;
 
 	dir = init_vector(0, 0, 0);
 	if (!dir)
@@ -25,11 +39,12 @@ t_vector *get_ray_direction(double viewport_x, double viewport_y, t_vector *forw
 	return (dir);
 }
 
-void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, double *viewport_x, double *viewport_y)
+void	calculate_viewport_coordinates(int x, int y, t_minirt *minirt,
+		double *viewport_x, double *viewport_y)
 {
-	t_viewport *viewport;
-	double u;
-	double v;
+	t_viewport	*viewport;
+	double		u;
+	double		v;
 
 	viewport = minirt->scene->viewport;
 	u = (double)x / (WIN_W - 1);
@@ -38,21 +53,23 @@ void calculate_viewport_coordinates(int x, int y, t_minirt *minirt, double *view
 	*viewport_y = viewport->height * (v - 0.5);
 }
 
-t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
+t_vector	*calculate_ray_direction(int x, int y, t_minirt *minirt)
 {
-	double viewport_x;
-	double viewport_y;
-	t_vector *right;
-	t_vector *up;
-	t_vector *dir;
+	double		viewport_x;
+	double		viewport_y;
+	t_vector	*right;
+	t_vector	*up;
+	t_vector	*dir;
 
 	if (x < 0 || x >= WIN_W || y < 0 || y >= WIN_H)
 		return (NULL);
 	calculate_viewport_coordinates(x, y, minirt, &viewport_x, &viewport_y);
 	calculate_right_up_vectors(minirt->scene->camera->orientation, &right, &up);
-	dir = get_ray_direction(viewport_x, viewport_y, minirt->scene->camera->orientation, *right, *up);
+	dir = get_ray_direction(viewport_x, viewport_y,
+			minirt->scene->camera->orientation, *right, *up);
 	normalize_vector(dir);
-	if (vector_length(dir) < MIN_RENDER_DISTANCE || vector_length(dir) > MAX_RENDER_DISTANCE)
+	if (vector_length(dir) < MIN_RENDER_DISTANCE
+		|| vector_length(dir) > MAX_RENDER_DISTANCE)
 	{
 		free(dir);
 		dir = NULL;
@@ -62,10 +79,10 @@ t_vector *calculate_ray_direction(int x, int y, t_minirt *minirt)
 	return (dir);
 }
 
-t_ray *send_ray_from_cam(int x, int y, t_minirt *minirt)
+t_ray	*send_ray_from_cam(int x, int y, t_minirt *minirt)
 {
-	t_vector *direction;
-	t_ray *ray;
+	t_vector	*direction;
+	t_ray		*ray;
 
 	direction = calculate_ray_direction(x, y, minirt);
 	if (!direction)

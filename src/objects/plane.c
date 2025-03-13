@@ -1,13 +1,26 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 08:46:16 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 08:46:17 by emgul            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "minirt.h"
 #include "mlx.h"
 
-float calculate_plane_illumination(t_vector offset_point, t_vector *normal, t_minirt *minirt)
+float	calculate_plane_illumination(t_vector offset_point, t_vector *normal,
+		t_minirt *minirt)
 {
-	int i;
-	float light_intensity;
-	float amb_light;
-	t_light *light;
+	int		i;
+	float	light_intensity;
+	float	amb_light;
+	t_light	*light;
 
 	i = 0;
 	light_intensity = 0;
@@ -16,7 +29,8 @@ float calculate_plane_illumination(t_vector offset_point, t_vector *normal, t_mi
 	while (minirt->scene->lights[i])
 	{
 		light = minirt->scene->lights[i];
-		light_intensity += check_light_contribution(light, offset_point, normal, minirt);
+		light_intensity += check_light_contribution(light, offset_point, normal,
+				minirt);
 		i++;
 	}
 	if (light_intensity < amb_light)
@@ -26,12 +40,13 @@ float calculate_plane_illumination(t_vector offset_point, t_vector *normal, t_mi
 	return (light_intensity);
 }
 
-float get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection)
+float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
+		t_vector *intersection)
 {
-	t_vector normal;
-	t_vector offset_point;
-	t_vector *normal_offset;
-	float light_intensity;
+	t_vector	normal;
+	t_vector	offset_point;
+	t_vector	*normal_offset;
+	float		light_intensity;
 
 	normal = *plane->normal;
 	if (dot_product(normal, *ray->direction) > 0)
@@ -41,17 +56,20 @@ float get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt, t_
 	normal_offset = multiply_vector(normal, EPSILON);
 	offset_point = *sum_vector(offset_point, *normal_offset);
 	free(normal_offset);
-	light_intensity = calculate_plane_illumination(offset_point, &normal, minirt);
+	light_intensity = calculate_plane_illumination(offset_point, &normal,
+			minirt);
 	return (light_intensity);
 }
 
-int calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt, t_vector *intersection)
+int	calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
+		t_vector *intersection)
 {
-	t_color base_color;
-	t_color final_color;
-	float light_intensity;
+	t_color	base_color;
+	t_color	final_color;
+	float	light_intensity;
 
-	light_intensity = get_plane_light_intensity(plane, ray, minirt, intersection);
+	light_intensity = get_plane_light_intensity(plane, ray, minirt,
+			intersection);
 	base_color.r = (plane->color >> 16) & 0xFF;
 	base_color.g = (plane->color >> 8) & 0xFF;
 	base_color.b = plane->color & 0xFF;

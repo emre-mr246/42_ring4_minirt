@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:28:30 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/17 16:34:49 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 08:47:02 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
 #include "libft.h"
+#include "minirt.h"
 #include "mlx.h"
 #include <X11/X.h>
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_minirt *minirt;
+	t_minirt	*minirt;
 
 	minirt = NULL;
 	if (ac != 2)
