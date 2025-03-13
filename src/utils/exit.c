@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:08 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:09 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:55:32 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	ft_exit(char *err, int exit_code, t_minirt *minirt)
 {
-	if (exit_code == 42)
+	if (exit_code == 0)
 		free_minirt(minirt);
 	else if (exit_code != 0)
 	{

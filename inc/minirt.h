@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:42:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 10:50:55 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 13:01:12 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int				handle_keypress(int key, t_minirt *minirt);
 // FREE
 void			free_minirt(t_minirt *minirt);
 void			free_camera(t_camera *camera);
-void			free_light(t_light *light);
+void			free_lights(t_scene *scene);
 void			free_sphere(t_sphere *sphere);
 void			free_plane(t_plane *plane);
 void			free_cylinder(t_cylinder *cylinder);

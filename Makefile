@@ -5,7 +5,7 @@ FILES		= main sphere cylinder plane check_intersection check_intersection2 exit 
 
 NAME		= miniRT
 CC			= gcc
-CCFLAGS		= -I ./lib/libft/inc/ -I ./inc/ -I ./lib/minilibx -I ./lib/libft -lXext -lX11 -lm -lbsd -Wall -Wextra -Werror
+CCFLAGS		= -I ./lib/libft/inc/ -I ./inc/ -I ./lib/minilibx -I ./lib/libft -lXext -lX11 -lm -lbsd -Wall -Wextra -Werror -g
 MAKEFLAGS	= --no-print-directory
 RM			= rm -rf
 
@@ -59,7 +59,7 @@ libre:
 	@echo "$(BLUE)-== all object files recreated in libft! ==-$(DEFAULT)"
 
 leak:
-	@make && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) misra.rt
+	@make && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/misra.rt
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:07:32 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:53:21 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:56:05 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	handle_keypress(int key, t_minirt *minirt)
 	if (key == XK_w || key == XK_s || key == XK_a || key == XK_d)
 		move_camera(key, minirt);
 	if (key == XK_Escape)
-		ft_exit(NULL, 42, minirt);
+		ft_exit(NULL, 0, minirt);
 	if (key == XK_space)
 		minirt->scene->camera->pos->y += move_step;
 	if (key == XK_c)

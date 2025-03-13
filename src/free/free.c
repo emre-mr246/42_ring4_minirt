@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:15:01 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 09:15:11 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:59:56 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static void	free_objects(t_scene *scene)
 		i = 0;
 		while (scene->objects[i])
 		{
-			if (scene->obj_tags[i] == LIGHT)
-				free_light(scene->objects[i]);
 			if (scene->obj_tags[i] == PLANE)
 				free_plane(scene->objects[i]);
 			if (scene->obj_tags[i] == SPHERE)
@@ -56,6 +54,7 @@ static void	free_scene(t_scene *scene)
 		if (scene->viewport)
 			free(scene->viewport);
 		free_objects(scene);
+		free_lights(scene);
 		free(scene);
 	}
 }

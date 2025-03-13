@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:16 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 10:36:27 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 13:04:52 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 		t_vector *intersection)
 {
 	t_vector	normal;
-	t_vector	offset_point;
+	t_vector	*offset_point;
 	t_vector	*normal_offset;
 	float		light_intensity;
 
@@ -52,12 +52,12 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	if (dot_product(normal, *ray->direction) > 0)
 		scale_vector(&normal, -1);
 	normalize_vector(&normal);
-	offset_point = *intersection;
 	normal_offset = multiply_vector(normal, EPSILON);
-	offset_point = *sum_vector(offset_point, *normal_offset);
+	offset_point = sum_vector(*intersection, *normal_offset);
 	free(normal_offset);
-	light_intensity = calculate_plane_illumination(offset_point, &normal,
+	light_intensity = calculate_plane_illumination(*offset_point, &normal,
 			minirt);
+	free(offset_point);
 	return (light_intensity);
 }
 

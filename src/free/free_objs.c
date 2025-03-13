@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:28 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:29 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 13:06:41 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ void	free_camera(t_camera *camera)
 	}
 }
 
-void	free_light(t_light *light)
+void	free_lights(t_scene *scene)
 {
-	if (light)
+	int	i;
+
+	i = 0;
+	while (scene->lights[i])
 	{
-		if (light->pos)
-			free(light->pos);
-		free(light);
+		free(scene->lights[i]->pos);
+		free(scene->lights[i]);
+		i++;
 	}
+	free(scene->lights);
 }
 
 void	free_sphere(t_sphere *sphere)
