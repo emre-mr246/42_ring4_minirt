@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:00:22 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:04 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:48:09 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,36 +43,6 @@ int	count_elements(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
-}
-
-void	iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *),
-		void *ptr)
-{
-	char	*line;
-	int		fd;
-
-	fd = open(input_file, O_RDONLY, 0644);
-	if (fd == -1)
-		ft_exit(input_file, -1, minirt);
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0
-			|| ft_strncmp(line, "\0", 1) == 0 || ft_strncmp(line, "\t", 1) == 0)
-		{
-			free(line);
-			line = get_next_line(fd);
-			continue ;
-		}
-		if (f(line, ptr) == -1)
-		{
-			free(line);
-			ft_exit("iter_lines error", -1, minirt);
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
 }
 
 int	strs_equal(char *a, char *b)

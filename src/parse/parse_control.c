@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:57:22 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:14 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 09:13:26 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,4 @@ int	line_checker(char *line, void *ptr)
 	}
 	free_array(split);
 	return (0);
-}
-
-void	input_control(char *input_file)
-{
-	iter_lines(NULL, input_file, line_checker, NULL);
 }

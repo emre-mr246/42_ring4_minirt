@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math3.c                                            :+:      :+:    :+:   */
+/*   parse_control2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 08:46:22 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 09:14:09 by emgul            ###   ########.fr       */
+/*   Created: 2025/03/13 09:12:21 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 09:13:53 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	clamp(int number, int min, int max)
-{
-	if (number < min)
-		return (min);
-	if (number > max)
-		return (max);
-	return (number);
-}
+#include "minirt.h"
+#include <stddef.h>
 
-float	sq(float a)
+void	input_control(char *input_file)
 {
-	return (a * a);
-}
-
-float	discriminant(float a, float b, float c)
-{
-	return (sq(b) - (4 * a * c));
+	iter_lines(NULL, input_file, line_checker, NULL);
 }

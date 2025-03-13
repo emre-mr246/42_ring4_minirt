@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:31 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:31 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:35:46 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,27 @@ t_ray	create_shadow_ray(t_vector *point, t_light *light)
 	return (shadow_ray);
 }
 
-int	check_shadow_intersections(t_ray shadow_ray, float light_dist,
-		t_minirt *minirt)
+int	check_shadow_intersections(t_ray r, float light_dist,
+		t_minirt *rt)
 {
-	t_vector	*intersection;
-	int			i;
+	t_vector	*isec;
 	float		obj_dist;
+	int			i;
 
 	i = 0;
-	while (minirt->scene->objects[i])
+	while (rt->scene->objects[i])
 	{
-		intersection = NULL;
-		if (minirt->scene->obj_tags[i] == SPHERE)
-			intersection = intersect_sphere(shadow_ray,
-					*(t_sphere *)minirt->scene->objects[i]);
-		else if (minirt->scene->obj_tags[i] == CYLINDER)
-			intersection = intersect_cylinder(shadow_ray,
-					*(t_cylinder *)minirt->scene->objects[i]);
-		else if (minirt->scene->obj_tags[i] == PLANE)
-			intersection = intersect_plane(shadow_ray,
-					*(t_plane *)minirt->scene->objects[i]);
-		if (intersection)
+		isec = NULL;
+		if (rt->scene->obj_tags[i] == SPHERE)
+			isec = intersect_sphere(r, *(t_sphere *)rt->scene->objects[i]);
+		else if (rt->scene->obj_tags[i] == CYLINDER)
+			isec = intersect_cylinder(r, *(t_cylinder *)rt->scene->objects[i]);
+		else if (rt->scene->obj_tags[i] == PLANE)
+			isec = intersect_plane(r, *(t_plane *)rt->scene->objects[i]);
+		if (isec)
 		{
-			obj_dist = calculate_distance(shadow_ray.origin, intersection);
-			free(intersection);
+			obj_dist = calculate_distance(r.origin, isec);
+			free(isec);
 			if (obj_dist < light_dist - EPSILON)
 				return (1);
 		}

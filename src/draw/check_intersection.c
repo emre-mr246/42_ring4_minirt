@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:35 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:35 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:36:34 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static int	check_object_intersection(t_ray *ray, void *object, int obj_type,
 		t_minirt *minirt)
 {
 	t_vector	*intersection;
-	int			color;
+	int			clr;
 	float		distance;
 
-	color = 0;
+	clr = 0;
 	intersection = get_intersection(ray, object, obj_type);
 	if (intersection)
 	{
@@ -48,17 +48,14 @@ static int	check_object_intersection(t_ray *ray, void *object, int obj_type,
 		else if (obj_type == PLANE)
 			((t_plane *)object)->distance = distance;
 		if (obj_type == SPHERE)
-			color = calculate_sphere_shade((t_sphere *)object, minirt,
-					intersection);
+			clr = sphere_shade((t_sphere *)object, minirt, intersection);
 		else if (obj_type == CYLINDER)
-			color = calculate_cylinder_shade((t_cylinder *)object, minirt,
-					intersection);
+			clr = cylinder_shade((t_cylinder *)object, minirt, intersection);
 		else if (obj_type == PLANE)
-			color = calculate_plane_shade((t_plane *)object, ray, minirt,
-					intersection);
+			clr = plane_shade((t_plane *)object, ray, minirt, intersection);
 		free(intersection);
 	}
-	return (color);
+	return (clr);
 }
 
 int	check_intersection_and_distance(t_ray *ray, t_minirt *minirt, int i,

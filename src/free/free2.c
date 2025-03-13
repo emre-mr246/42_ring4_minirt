@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math3.c                                            :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 08:46:22 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 09:14:09 by emgul            ###   ########.fr       */
+/*   Created: 2025/03/13 09:15:35 by emgul             #+#    #+#             */
+/*   Updated: 2025/03/13 09:28:25 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	clamp(int number, int min, int max)
-{
-	if (number < min)
-		return (min);
-	if (number > max)
-		return (max);
-	return (number);
-}
+#include <stdlib.h>
 
-float	sq(float a)
+void	free_array(char **arr)
 {
-	return (a * a);
-}
+	int	i;
 
-float	discriminant(float a, float b, float c)
-{
-	return (sq(b) - (4 * a * c));
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	if (arr)
+		free(arr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:30 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/17 19:03:39 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 10:47:20 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,16 @@ t_ray	*init_ray(t_vector o, t_vector dir)
 	return (ray);
 }
 
-t_scene	*init_scene(void)
+static t_scene	*init_scene(void)
 {
 	t_scene	*scene;
 
 	scene = (t_scene *)ft_calloc(sizeof(t_scene), 1);
 	if (!scene)
-		return (NULL);
+		ft_exit("scene_malloc", -1, NULL);
+	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), 10);
+	if (!scene->lights)
+		ft_exit("scene_lights_malloc", -1, NULL);
 	return (scene);
 }
 

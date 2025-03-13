@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:16 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:36:33 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_vector	*calculate_sphere_normal(t_sphere *sp, t_vector *intersection,
 	return (normal);
 }
 
-int	calculate_sphere_shade(t_sphere *sp, t_minirt *minirt,
+int	sphere_shade(t_sphere *sp, t_minirt *minirt,
 		t_vector *intersection)
 {
 	t_vector	*normal;

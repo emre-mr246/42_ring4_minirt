@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:32 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:32 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 09:16:05 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ t_vector	*intersect_sphere(t_ray ray, t_sphere sphere)
 
 t_vector	*intersect_plane(t_ray ray, t_plane plane)
 {
-	float	dDotN;
+	float	d_dot_n;
 	float	t;
 
-	dDotN = dot_product(*ray.direction, *plane.normal);
-	if (dDotN == 0)
+	d_dot_n = dot_product(*ray.direction, *plane.normal);
+	if (d_dot_n == 0)
 		return (NULL);
 	t = (dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin,
-				*plane.normal)) / dDotN;
+				*plane.normal)) / d_dot_n;
 	if (t < RAY_T_MIN || t > RAY_T_MAX)
 		return (NULL);
 	return (get_point_on_ray(ray, t));

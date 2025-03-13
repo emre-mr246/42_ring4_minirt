@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:17 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:18 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:36:30 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static t_vector	*calculate_cylinder_normal(t_cylinder *cy,
 	offset_point->z = intersection->z + normal->z * EPSILON;
 	return (normal);
 }
-int	calculate_cylinder_shade(t_cylinder *cy, t_minirt *minirt,
+
+int	cylinder_shade(t_cylinder *cy, t_minirt *minirt,
 		t_vector *intersection)
 {
 	t_vector	*normal;

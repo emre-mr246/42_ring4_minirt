@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:16 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:17 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:36:27 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	return (light_intensity);
 }
 
-int	calculate_plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
+int	plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
 		t_vector *intersection)
 {
 	t_color	base_color;

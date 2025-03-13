@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:08:16 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:24 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 09:53:55 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ float	vector_length_2d(float a, float b)
 	return (sqrt(a * a + b * b));
 }
 
-float	vector_length(t_vector *v)
+float	vector_len(t_vector *v)
 {
 	return (sqrt(v->x * v->x + v->y * v->y + v->z * v->z));
 }

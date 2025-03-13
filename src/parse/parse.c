@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:58:30 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 08:46:12 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:49:56 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minirt.h"
 #include <math.h>
 
-t_input	*init_input(void)
+static t_input	*init_input(void)
 {
 	t_input	*input;
 
@@ -46,7 +46,7 @@ static int	count_object(char *line, void *ptr)
 	return (0);
 }
 
-void	count_objects(t_input *input, char *input_file)
+static void	count_objects(t_input *input, char *input_file)
 {
 	iter_lines(NULL, input_file, count_object, input);
 	input->obj_count = input->light_count + input->sphere_count
@@ -65,6 +65,5 @@ void	parse_input(char *input_file, t_minirt *minirt)
 		ft_exit("No camera", -1, minirt);
 	minirt->scene->viewport->d = (minirt->scene->viewport->width / 2)
 		/ tanf((float)minirt->scene->camera->fov / 360 * M_PI);
-	init_lights(minirt->scene);
 	free(input);
 }

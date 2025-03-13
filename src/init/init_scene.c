@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:25:11 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/17 19:31:36 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/13 09:26:41 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,6 @@ void	fill_objects(t_scene *scene, char **split)
 		scene->objects[i] = init_cylinder(split);
 		scene->obj_tags[i] = CYLINDER;
 	}
-	if (strs_equal(split[0], "L"))
-	{
-		while (scene->objects[i])
-			i++;
-		scene->objects[i] = init_light(split);
-		scene->obj_tags[i] = LIGHT;
-	}
 }
 
 void	update_viewport_with_fov(t_scene *scene)
@@ -107,6 +100,8 @@ int	parse_line(char *line, void *scene_data)
 		scene->camera = init_camera(split);
 		update_viewport_with_fov(scene);
 	}
+	if (strs_equal(split[0], "L"))
+		init_light(scene, split);
 	fill_objects(scene, split);
 	free_array(split);
 	return (0);

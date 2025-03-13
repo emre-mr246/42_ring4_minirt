@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:24:29 by emgul             #+#    #+#             */
-/*   Updated: 2024/10/03 16:20:30 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 10:29:54 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,23 @@
 #include "minirt.h"
 #include <math.h>
 
-void	init_lights(t_scene *scene)
-{
-	int	i;
-	int	k;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (scene->objects[i])
-	{
-		if (scene->obj_tags[i] == LIGHT)
-			count++;
-		i++;
-	}
-	scene->lights = (t_light **)ft_calloc(sizeof(t_light *), count + 1);
-	if (!scene->lights)
-		return ;
-	i = 0;
-	k = 0;
-	while (scene->objects[i])
-	{
-		if (scene->obj_tags[i] == LIGHT)
-			scene->lights[k++] = (t_light *)scene->objects[i];
-		i++;
-	}
-	scene->lights[k] = NULL;
-}
-
-t_light	*init_light(char **arr)
+void	init_light(t_scene *scene, char **arr)
 {
 	t_light	*light;
+	int		i;
 
+	i = 0;
+	while (scene->lights[i])
+		i++;
+	if (i >= 10)
+		ft_exit("too many lights", -1, NULL);
 	light = (t_light *)ft_calloc(sizeof(t_light), 1);
 	if (!light)
-		return (NULL);
+		ft_exit("light malloc", -1, NULL);
 	light->pos = init_vector_str(arr[1]);
 	light->intensity = fmax(fmin(ft_atof(arr[2]), 0.0), 1.0);
 	light->color = parse_color(arr[3]);
-	return (light);
+	scene->lights[i] = light;
 }
 
 t_plane	*init_plane(char **arr)

@@ -1,7 +1,7 @@
 
 FILES		= main sphere cylinder plane check_intersection check_intersection2 exit \
 	sort_objects color light intersect vector vector2 init init2 utils keypress keypress2 parse ft_split_charset \
-	parse_control init_scene ft_atof init_objs math math2 math3 math4 draw free free_objs \
+	parse_control parse_control2 init_scene ft_atof init_objs math math2 math3 math4 draw free free2 free_objs iter_lines \
 
 NAME		= miniRT
 CC			= gcc
