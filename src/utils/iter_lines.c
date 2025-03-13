@@ -6,19 +6,20 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:48:35 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 12:49:49 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:53:45 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minirt.h"
 #include <fcntl.h>
+#include <unistd.h>
 
 static int	is_valid_line(char *line)
 {
 	return (!(ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0
 			|| ft_strncmp(line, "\0", 1) == 0 || ft_strncmp(line, "\t",
-				higher_len) == 0));
+				1) == 0));
 }
 
 static void	process_line(char *line, int (*f)(char *, void *), void *ptr,
