@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:07:32 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 12:56:05 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/16 15:41:29 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ void	move_camera_sideways(t_minirt *minirt, t_vector *orientation,
 void	rotate_camera(t_minirt *minirt, double y)
 {
 	t_vector	*orientation;
+	double		length;
 
 	orientation = minirt->scene->camera->orientation;
 	orientation->x = orientation->x * cos(y) + orientation->z * sin(y);
 	orientation->z = -orientation->x * sin(y) + orientation->z * cos(y);
+	length = sqrt(orientation->x * orientation->x + orientation->y
+			* orientation->y + orientation->z * orientation->z);
+	orientation->x /= length;
+	orientation->y /= length;
+	orientation->z /= length;
 }
 
 void	move_camera(int key, t_minirt *minirt)

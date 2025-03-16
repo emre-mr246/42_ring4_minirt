@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:25:11 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 09:26:41 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/16 15:37:36 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_amb_light	*init_amb_light(char **arr)
 t_camera	*init_camera(char **arr)
 {
 	t_camera	*camera;
+	double		length;
 
 	camera = (t_camera *)ft_calloc(sizeof(t_camera), 1);
 	if (!camera)
@@ -41,6 +42,12 @@ t_camera	*init_camera(char **arr)
 	camera->orientation->x = fmin(fmax(camera->orientation->x, -1.0), 1.0);
 	camera->orientation->y = fmin(fmax(camera->orientation->y, -1.0), 1.0);
 	camera->orientation->z = fmin(fmax(camera->orientation->z, -1.0), 1.0);
+	length = sqrt(camera->orientation->x * camera->orientation->x
+			+ camera->orientation->y * camera->orientation->y
+			+ camera->orientation->z * camera->orientation->z);
+	camera->orientation->x /= length;
+	camera->orientation->y /= length;
+	camera->orientation->z /= length;
 	camera->fov = clamp(ft_atoi(arr[3]), 0, 180);
 	return (camera);
 }
