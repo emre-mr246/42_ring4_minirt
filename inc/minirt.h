@@ -62,7 +62,7 @@ void			iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *,
 int				strs_equal(char *a, char *b);
 int				parse_line(char *line, void *scene_data);
 float			ft_atof(const char *str);
-t_vector		*init_vector_str(char *str);
+t_vector	*init_vector_str(char *str, float max, float min);
 t_vector		*init_vector(float x, float y, float z);
 void			fill_scene(t_minirt *minirt, t_input *input);
 void			init_light(t_scene *scene, char **arr);

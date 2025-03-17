@@ -53,20 +53,39 @@ int	cylinder_shade(t_cylinder *cy, t_minirt *minirt, t_vector *intersection)
 static int	calculate_cylinder_intersection(t_ray ray, t_cylinder cylinder,
 		float *t1, float *t2)
 {
-	t_vector	vec;
-	float		discriminant_value;
-
-	vec.x = sq(ray.direction->x) + sq(ray.direction->z);
-	vec.y = 2 * (ray.direction->x * (ray.origin->x - cylinder.origin->x)
-			+ ray.direction->z * (ray.origin->z - cylinder.origin->z));
-	vec.z = sq(ray.origin->x - cylinder.origin->x) + sq(ray.origin->z
-			- cylinder.origin->z) - sq(cylinder.radius);
-	discriminant_value = discriminant(vec.x, vec.y, vec.z);
-	if (discriminant_value < 0)
-		return (0);
+	t_vector *CO;
+	t_vector *D_perp;
+	t_vector *CO_perp;
+	t_vector *DVV;
+	t_vector *COVV;
+	t_vector vec;
+    float discriminant_value;
+    
+   	CO = subtract_vector(*ray.origin, *cylinder.origin);
+	DVV = multiply_vector(*cylinder.axis, dot_product(*ray.direction, *cylinder.axis));
+    D_perp = subtract_vector(*ray.direction, *DVV);
+	free(DVV);
+	COVV = multiply_vector(*cylinder.axis, dot_product(*CO, *cylinder.axis));
+    CO_perp = subtract_vector(*CO, *COVV);
+	free(COVV);
+    vec.x = dot_product(*D_perp, *D_perp);
+    vec.y = 2 * dot_product(*D_perp, *CO_perp);
+    vec.z = dot_product(*CO_perp, *CO_perp) - sq(cylinder.radius);
+    discriminant_value = discriminant(vec.x, vec.y, vec.z);
+    if (discriminant_value < 0)
+	{
+        return 0;
+	}
 	*t1 = (-vec.y - sqrt(discriminant_value)) / (2 * vec.x);
 	*t2 = (-vec.y + sqrt(discriminant_value)) / (2 * vec.x);
-	return (1);
+	//BURADA LEAK VAR
+	float y1 = dot_product(*sum_vector(*CO, *multiply_vector(*ray.direction, *t1)), *cylinder.axis);
+	float y2 = dot_product(*sum_vector(*CO, *multiply_vector(*ray.direction, *t2)), *cylinder.axis);
+	if (y1 < 0 || y1 > cylinder.height)
+		*t1 = -1;
+	if (y2 < 0 || y2 > cylinder.height)
+		*t2 = -1;
+    return 1;
 }
 
 t_vector	*intersect_cylinder(t_ray ray, t_cylinder cylinder)

@@ -12,6 +12,7 @@
 
 #include "minirt.h"
 #include <stddef.h>
+#include <unistd.h>
 
 void	input_control(char *input_file)
 {

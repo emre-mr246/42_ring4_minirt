@@ -21,6 +21,11 @@
 # define MAX_RENDER_DIST 10.0f
 # define MIN_RENDER_DIST 0.1f
 
+# define MAX_POS 1000
+# define MIN_POS -1000
+
+# define MAX_RADIUS 1000
+
 # define EPSILON 0.001f
 
 enum			e_objects

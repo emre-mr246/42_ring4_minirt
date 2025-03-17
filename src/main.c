@@ -14,6 +14,7 @@
 #include "minirt.h"
 #include "mlx.h"
 #include <X11/X.h>
+#include <unistd.h>
 
 int	main(int ac, char **av)
 {

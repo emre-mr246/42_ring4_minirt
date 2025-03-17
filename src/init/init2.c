@@ -13,8 +13,9 @@
 #include "libft.h"
 #include "minirt.h"
 #include "mlx.h"
+#include <math.h>
 
-t_vector	*init_vector_str(char *str)
+t_vector	*init_vector_str(char *str, float max, float min)
 {
 	char		**split;
 	t_vector	*v;
@@ -25,9 +26,9 @@ t_vector	*init_vector_str(char *str)
 	if (!v)
 		return (NULL);
 	split = ft_split(str, ',');
-	v->x = ft_atof(split[0]);
-	v->y = ft_atof(split[1]);
-	v->z = ft_atof(split[2]);
+	v->x = fmin(fmax(ft_atof(split[0]), min), max);
+	v->y = fmin(fmax(ft_atof(split[1]), min), max);
+	v->z = fmin(fmax(ft_atof(split[2]), min), max);
 	free_array(split);
 	return (v);
 }

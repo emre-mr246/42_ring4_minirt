@@ -27,7 +27,7 @@ void	init_light(t_scene *scene, char **arr)
 	light = (t_light *)ft_calloc(sizeof(t_light), 1);
 	if (!light)
 		ft_exit("light malloc", -1, NULL);
-	light->pos = init_vector_str(arr[1]);
+	light->pos = init_vector_str(arr[1], 1000.0, -1000.0);
 	light->intensity = fmax(fmin(ft_atof(arr[2]), 0.0), 1.0);
 	light->color = parse_color(arr[3]);
 	scene->lights[i] = light;
@@ -40,8 +40,9 @@ t_plane	*init_plane(char **arr)
 	plane = (t_plane *)ft_calloc(sizeof(t_plane), 1);
 	if (!plane)
 		return (NULL);
-	plane->point = init_vector_str(arr[1]);
-	plane->normal = init_vector_str(arr[2]);
+	plane->point = init_vector_str(arr[1], 1000.0, -1000.0);
+	plane->normal = init_vector_str(arr[2], 1.0, -1.0);
+	normalize_vector(plane->normal);
 	plane->color = parse_color(arr[3]);
 	return (plane);
 }
@@ -53,7 +54,7 @@ t_sphere	*init_sphere(char **arr)
 	sphere = (t_sphere *)ft_calloc(sizeof(t_sphere), 1);
 	if (!sphere)
 		return (NULL);
-	sphere->origin = init_vector_str(arr[1]);
+	sphere->origin = init_vector_str(arr[1], 1000.0, -1000.0);
 	sphere->radius = ft_atof(arr[2]);
 	sphere->color = parse_color(arr[3]);
 	return (sphere);
@@ -66,8 +67,9 @@ t_cylinder	*init_cylinder(char **arr)
 	cylinder = (t_cylinder *)ft_calloc(sizeof(t_cylinder), 1);
 	if (!cylinder)
 		return (NULL);
-	cylinder->origin = init_vector_str(arr[1]);
-	cylinder->axis = init_vector_str(arr[2]);
+	cylinder->origin = init_vector_str(arr[1], 1000.0, -1000.0);
+	cylinder->axis = init_vector_str(arr[2], 1.0, -1.0);
+	normalize_vector(cylinder->axis);
 	cylinder->radius = atof(arr[3]);
 	cylinder->height = atof(arr[4]);
 	cylinder->color = parse_color(arr[5]);

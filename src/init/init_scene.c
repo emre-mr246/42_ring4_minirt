@@ -29,25 +29,19 @@ t_amb_light	*init_amb_light(char **arr)
 t_camera	*init_camera(char **arr)
 {
 	t_camera	*camera;
-	double		length;
 
 	camera = (t_camera *)ft_calloc(sizeof(t_camera), 1);
 	if (!camera)
 		return (NULL);
-	camera->pos = init_vector_str(arr[1]);
-	camera->orientation = init_vector_str(arr[2]);
+	camera->pos = init_vector_str(arr[1], 1000.0, -1000.0);
+	camera->orientation = init_vector_str(arr[2], 1.0, 0.0);
 	if (camera->orientation->x == 0 && camera->orientation->y == 0
 		&& camera->orientation->z == 0)
 		camera->orientation->x = EPSILON;
 	camera->orientation->x = fmin(fmax(camera->orientation->x, -1.0), 1.0);
 	camera->orientation->y = fmin(fmax(camera->orientation->y, -1.0), 1.0);
 	camera->orientation->z = fmin(fmax(camera->orientation->z, -1.0), 1.0);
-	length = sqrt(camera->orientation->x * camera->orientation->x
-			+ camera->orientation->y * camera->orientation->y
-			+ camera->orientation->z * camera->orientation->z);
-	camera->orientation->x /= length;
-	camera->orientation->y /= length;
-	camera->orientation->z /= length;
+	normalize_vector(camera->orientation);
 	camera->fov = clamp(ft_atoi(arr[3]), 0, 180);
 	return (camera);
 }
