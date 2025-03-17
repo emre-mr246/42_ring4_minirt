@@ -6,39 +6,14 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:16 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 13:04:52 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 04:14:05 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minirt.h"
 #include "mlx.h"
-
-float	calculate_plane_illumination(t_vector offset_point, t_vector *normal,
-		t_minirt *minirt)
-{
-	int		i;
-	float	light_intensity;
-	float	amb_light;
-	t_light	*light;
-
-	i = 0;
-	light_intensity = 0;
-	amb_light = minirt->scene->amb_light->intensity;
-	light_intensity = amb_light;
-	while (minirt->scene->lights[i])
-	{
-		light = minirt->scene->lights[i];
-		light_intensity += check_light_contribution(light, offset_point, normal,
-				minirt);
-		i++;
-	}
-	if (light_intensity < amb_light)
-		light_intensity = amb_light;
-	if (light_intensity > 1.0f)
-		light_intensity = 1.0f;
-	return (light_intensity);
-}
+#include <math.h>
 
 float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 		t_vector *intersection)
@@ -55,7 +30,7 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	normal_offset = multiply_vector(normal, EPSILON);
 	offset_point = sum_vector(*intersection, *normal_offset);
 	free(normal_offset);
-	light_intensity = calculate_plane_illumination(*offset_point, &normal,
+	light_intensity = calculate_illumination(*offset_point, &normal,
 			minirt);
 	free(offset_point);
 	return (light_intensity);
@@ -75,4 +50,19 @@ int	plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	base_color.b = plane->color & 0xFF;
 	final_color = apply_intensity(base_color, light_intensity);
 	return (create_rgb(final_color.r, final_color.g, final_color.b));
+}
+
+t_vector	*intersect_plane(t_ray ray, t_plane plane)
+{
+	float	d_dot_n;
+	float	t;
+
+	d_dot_n = dot_product(*ray.direction, *plane.normal);
+	if (d_dot_n == 0)
+		return (NULL);
+	t = (dot_product(*plane.point, *plane.normal) - dot_product(*ray.origin,
+				*plane.normal)) / d_dot_n;
+	if (t < RAY_T_MIN || t > RAY_T_MAX)
+		return (NULL);
+	return (get_point_on_ray(ray, t));
 }

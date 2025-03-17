@@ -6,7 +6,7 @@
 /*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:31 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 10:35:46 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 03:43:30 by emgul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ float	calculate_illumination(t_vector point, t_vector *normal,
 {
 	int		i;
 	float	total_light;
-	float	ambient;
 
-	ambient = minirt->scene->amb_light->intensity;
-	total_light = ambient;
+	total_light = minirt->scene->amb_light->intensity;
 	i = 0;
 	while (minirt->scene->lights[i])
 	{
