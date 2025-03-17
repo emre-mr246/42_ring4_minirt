@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_objs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:24:29 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 10:29:54 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 19:13:00 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minirt.h"
 #include <math.h>
+
+
 
 void	init_light(t_scene *scene, char **arr)
 {

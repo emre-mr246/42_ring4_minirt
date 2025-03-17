@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iter_lines.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:48:35 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/13 12:53:45 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 19:23:41 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,22 @@ static void	process_line(char *line, int (*f)(char *, void *), void *ptr,
 	free(line);
 }
 
+int	is_rt(char *s)
+{
+	int len;
+
+	len = ft_strlen(s);
+	return (s[len - 3] == '.' && s[len - 2] == 'r' && s[len - 1] == 't');
+}
+
 void	iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *, void *),
 		void *ptr)
 {
 	char	*line;
 	int		fd;
 
+	if (!is_rt(input_file))
+		ft_exit("Input file does not end with rt", 1, minirt);
 	fd = open(input_file, O_RDONLY, 0644);
 	if (fd == -1)
 		ft_exit(input_file, -1, minirt);

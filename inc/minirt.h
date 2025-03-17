@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:42:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/17 18:41:37 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/17 18:46:57 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdio.h>
 # include "scene.h"
 
-# define WIN_W 200
-# define WIN_H 200
+# define WIN_W 800
+# define WIN_H 600
 
 typedef struct s_input
 {
