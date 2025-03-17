@@ -29,8 +29,7 @@ t_ray	create_shadow_ray(t_vector *point, t_light *light)
 	return (shadow_ray);
 }
 
-int	check_shadow_intersections(t_ray r, float light_dist,
-		t_minirt *rt)
+int	check_shadow_intersections(t_ray r, float light_dist, t_minirt *rt)
 {
 	t_vector	*isec;
 	float		obj_dist;
@@ -83,7 +82,7 @@ t_color	check_light_contribution(t_light *light, t_vector point,
 	contribution.r = 0;
 	contribution.g = 0;
 	contribution.b = 0;
- 	if (is_in_shadow(&point, light, minirt))
+	if (is_in_shadow(&point, light, minirt))
 		return (contribution);
 	tmp = subtract_vector(*light->pos, point);
 	light_dir = copy_vector(*tmp);
@@ -93,9 +92,12 @@ t_color	check_light_contribution(t_light *light, t_vector point,
 	free(light_dir);
 	if (intensity < 0)
 		intensity = 0;
-	contribution.r = clamp_color_value(((light->color >> 16) & 0xFF) * intensity * light->intensity);
-	contribution.g = clamp_color_value(((light->color >> 8) & 0xFF) * intensity * light->intensity);
-	contribution.b = clamp_color_value(((light->color) & 0xFF) * intensity * light->intensity);
+	contribution.r = clamp_color_value(((light->color >> 16) & 0xFF) * intensity
+			* light->intensity);
+	contribution.g = clamp_color_value(((light->color >> 8) & 0xFF) * intensity
+			* light->intensity);
+	contribution.b = clamp_color_value(((light->color) & 0xFF) * intensity
+			* light->intensity);
 	return (contribution);
 }
 
@@ -104,15 +106,19 @@ t_color	calculate_illumination(t_vector point, t_vector *normal,
 {
 	int		i;
 	t_color	total_light;
-	t_color light_contribution;
+	t_color	light_contribution;
 
-	total_light.r = ((minirt->scene->amb_light->color >> 16) & 0xFF) * minirt->scene->amb_light->intensity;
-	total_light.g = ((minirt->scene->amb_light->color >> 8) & 0xFF) * minirt->scene->amb_light->intensity;
-	total_light.b = (minirt->scene->amb_light->color & 0xFF) * minirt->scene->amb_light->intensity;
+	total_light.r = ((minirt->scene->amb_light->color >> 16) & 0xFF)
+		* minirt->scene->amb_light->intensity;
+	total_light.g = ((minirt->scene->amb_light->color >> 8) & 0xFF)
+		* minirt->scene->amb_light->intensity;
+	total_light.b = (minirt->scene->amb_light->color & 0xFF)
+		* minirt->scene->amb_light->intensity;
 	i = 0;
 	while (minirt->scene->lights[i])
 	{
-		light_contribution = check_light_contribution(minirt->scene->lights[i], point, normal, minirt);
+		light_contribution = check_light_contribution(minirt->scene->lights[i],
+				point, normal, minirt);
 		total_light.r = clamp_color_value(total_light.r + light_contribution.r);
 		total_light.g = clamp_color_value(total_light.g + light_contribution.g);
 		total_light.b = clamp_color_value(total_light.b + light_contribution.b);

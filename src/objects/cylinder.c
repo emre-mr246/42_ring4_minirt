@@ -43,9 +43,12 @@ int	cylinder_shade(t_cylinder *cy, t_minirt *minirt, t_vector *intersection)
 
 	normal = calculate_cylinder_normal(cy, intersection, &offset_point);
 	light_color = calculate_illumination(offset_point, normal, minirt);
-	final_color.r = clamp_color_value(((cy->color >> 16) & 0xFF) * (light_color.r / 255.0f));
-	final_color.g = clamp_color_value(((cy->color >> 8) & 0xFF) * (light_color.g / 255.0f));
-	final_color.b = clamp_color_value((cy->color & 0xFF) * (light_color.b / 255.0f));
+	final_color.r = clamp_color_value(((cy->color >> 16) & 0xFF)
+			* (light_color.r / 255.0f));
+	final_color.g = clamp_color_value(((cy->color >> 8) & 0xFF) * (light_color.g
+				/ 255.0f));
+	final_color.b = clamp_color_value((cy->color & 0xFF) * (light_color.b
+				/ 255.0f));
 	free(normal);
 	return (create_rgb(final_color.r, final_color.g, final_color.b));
 }

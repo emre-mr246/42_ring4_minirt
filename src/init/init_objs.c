@@ -14,8 +14,6 @@
 #include "minirt.h"
 #include <math.h>
 
-
-
 void	init_light(t_scene *scene, char **arr)
 {
 	t_light	*light;

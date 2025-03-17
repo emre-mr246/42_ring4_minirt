@@ -35,7 +35,7 @@ static void	process_line(char *line, int (*f)(char *, void *), void *ptr,
 
 int	is_rt(char *s)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(s);
 	return (s[len - 3] == '.' && s[len - 2] == 'r' && s[len - 1] == 't');
