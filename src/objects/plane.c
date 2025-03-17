@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:16 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/17 04:14:05 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 20:13:56 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "mlx.h"
 #include <math.h>
 
-float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
+t_color	get_plane_light_color(t_plane *plane, t_ray *ray, t_minirt *minirt,
 		t_vector *intersection)
 {
 	t_vector	normal;
 	t_vector	*offset_point;
 	t_vector	*normal_offset;
-	float		light_intensity;
+	t_color		light_color;
 
 	normal = *plane->normal;
 	if (dot_product(normal, *ray->direction) > 0)
@@ -30,9 +30,9 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	normal_offset = multiply_vector(normal, EPSILON);
 	offset_point = sum_vector(*intersection, *normal_offset);
 	free(normal_offset);
-	light_intensity = calculate_illumination(*offset_point, &normal, minirt);
+	light_color = calculate_illumination(*offset_point, &normal, minirt);
 	free(offset_point);
-	return (light_intensity);
+	return (light_color);
 }
 
 int	plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
@@ -40,14 +40,16 @@ int	plane_shade(t_plane *plane, t_ray *ray, t_minirt *minirt,
 {
 	t_color	base_color;
 	t_color	final_color;
-	float	light_intensity;
+	t_color	light_color;
 
-	light_intensity = get_plane_light_intensity(plane, ray, minirt,
+	light_color = get_plane_light_color(plane, ray, minirt,
 			intersection);
 	base_color.r = (plane->color >> 16) & 0xFF;
 	base_color.g = (plane->color >> 8) & 0xFF;
 	base_color.b = plane->color & 0xFF;
-	final_color = apply_intensity(base_color, light_intensity);
+	final_color.r = clamp_color_value(base_color.r * (light_color.r / 255.0f));
+	final_color.g = clamp_color_value(base_color.g * (light_color.g / 255.0f));
+	final_color.b = clamp_color_value(base_color.b * (light_color.b / 255.0f));
 	return (create_rgb(final_color.r, final_color.g, final_color.b));
 }
 

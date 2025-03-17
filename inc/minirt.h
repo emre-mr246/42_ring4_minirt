@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:42:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/17 18:46:57 by mitasci          ###   ########.fr       */
+/*   Updated: 2025/03/17 20:10:38 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ t_color			apply_intensity(t_color color, float intensity);
 float			calculate_light_intensity(t_vector *intersection,
 					t_vector *normal, t_minirt *minirt, t_light *light);
 int				is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt);
-float			check_light_contribution(t_light *light, t_vector offset_point,
+t_color			check_light_contribution(t_light *light, t_vector offset_point,
 					t_vector *normal, t_minirt *minirt);
-float			calculate_illumination(t_vector offset_point, t_vector *normal,
+t_color			calculate_illumination(t_vector offset_point, t_vector *normal,
 					t_minirt *minirt);
 float			vector_len(t_vector *v);
 int				plane_shade(t_plane *pl, t_ray *ray, t_minirt *minirt,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:31 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/17 03:43:30 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 20:08:57 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,43 +72,51 @@ int	is_in_shadow(t_vector *point, t_light *light, t_minirt *minirt)
 	return (result);
 }
 
-float	check_light_contribution(t_light *light, t_vector point,
+t_color	check_light_contribution(t_light *light, t_vector point,
 		t_vector *normal, t_minirt *minirt)
 {
 	t_vector	*light_dir;
 	t_vector	*tmp;
-	float		contribution;
+	t_color		contribution;
 	float		intensity;
 
-	if (is_in_shadow(&point, light, minirt))
-		return (0);
+	contribution.r = 0;
+	contribution.g = 0;
+	contribution.b = 0;
+ 	if (is_in_shadow(&point, light, minirt))
+		return (contribution);
 	tmp = subtract_vector(*light->pos, point);
 	light_dir = copy_vector(*tmp);
 	free(tmp);
 	normalize_vector(light_dir);
-	contribution = dot_product(*normal, *light_dir);
+	intensity = dot_product(*normal, *light_dir);
 	free(light_dir);
-	if (contribution < 0)
-		contribution = 0;
-	intensity = contribution * light->intensity;
-	return (intensity);
+	if (intensity < 0)
+		intensity = 0;
+	contribution.r = clamp_color_value(((light->color >> 16) & 0xFF) * intensity * light->intensity);
+	contribution.g = clamp_color_value(((light->color >> 8) & 0xFF) * intensity * light->intensity);
+	contribution.b = clamp_color_value(((light->color) & 0xFF) * intensity * light->intensity);
+	return (contribution);
 }
 
-float	calculate_illumination(t_vector point, t_vector *normal,
+t_color	calculate_illumination(t_vector point, t_vector *normal,
 		t_minirt *minirt)
 {
 	int		i;
-	float	total_light;
+	t_color	total_light;
+	t_color light_contribution;
 
-	total_light = minirt->scene->amb_light->intensity;
+	total_light.r = ((minirt->scene->amb_light->color >> 16) & 0xFF) * minirt->scene->amb_light->intensity;
+	total_light.g = ((minirt->scene->amb_light->color >> 8) & 0xFF) * minirt->scene->amb_light->intensity;
+	total_light.b = (minirt->scene->amb_light->color & 0xFF) * minirt->scene->amb_light->intensity;
 	i = 0;
 	while (minirt->scene->lights[i])
 	{
-		total_light += check_light_contribution(minirt->scene->lights[i], point,
-				normal, minirt);
+		light_contribution = check_light_contribution(minirt->scene->lights[i], point, normal, minirt);
+		total_light.r = clamp_color_value(total_light.r + light_contribution.r);
+		total_light.g = clamp_color_value(total_light.g + light_contribution.g);
+		total_light.b = clamp_color_value(total_light.b + light_contribution.b);
 		i++;
 	}
-	if (total_light > 1.0f)
-		total_light = 1.0f;
 	return (total_light);
 }

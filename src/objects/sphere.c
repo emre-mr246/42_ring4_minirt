@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 08:46:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/16 23:58:03 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 20:11:03 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ static t_vector	*calculate_sphere_normal(t_sphere *sp, t_vector *intersection,
 int	sphere_shade(t_sphere *sp, t_minirt *minirt, t_vector *intersection)
 {
 	t_vector	*normal;
-	t_color		color;
+	t_color		light_color;
+	t_color		final_color;
 	t_vector	offset_point;
-	float		intensity;
 
 	normal = calculate_sphere_normal(sp, intersection, &offset_point);
-	intensity = calculate_illumination(offset_point, normal, minirt);
-	color.r = clamp_color_value(((sp->color >> 16) & 0xFF) * intensity);
-	color.g = clamp_color_value(((sp->color >> 8) & 0xFF) * intensity);
-	color.b = clamp_color_value((sp->color & 0xFF) * intensity);
+	light_color = calculate_illumination(offset_point, normal, minirt);
+	final_color.r = clamp_color_value(((sp->color >> 16) & 0xFF) * (light_color.r / 255.0f));
+	final_color.g = clamp_color_value(((sp->color >> 8) & 0xFF) * (light_color.g / 255.0f));
+	final_color.b = clamp_color_value((sp->color & 0xFF) * (light_color.b / 255.0f));
 	free(normal);
-	return (create_rgb(color.r, color.g, color.b));
+	return (create_rgb(final_color.r, final_color.g, final_color.b));
 }
 
 t_vector	*intersect_sphere(t_ray ray, t_sphere sphere)
