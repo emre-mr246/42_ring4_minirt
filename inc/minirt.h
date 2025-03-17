@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgul <emgul@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:42:15 by emgul             #+#    #+#             */
-/*   Updated: 2025/03/17 04:18:19 by emgul            ###   ########.fr       */
+/*   Updated: 2025/03/17 18:41:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdio.h>
 # include "scene.h"
 
-# define WIN_W 900
-# define WIN_H 600
+# define WIN_W 200
+# define WIN_H 200
 
 typedef struct s_input
 {
@@ -62,7 +62,7 @@ void			iter_lines(t_minirt *minirt, char *input_file, int (*f)(char *,
 int				strs_equal(char *a, char *b);
 int				parse_line(char *line, void *scene_data);
 float			ft_atof(const char *str);
-t_vector	*init_vector_str(char *str, float max, float min);
+t_vector		*init_vector_str(char *str, float max, float min);
 t_vector		*init_vector(float x, float y, float z);
 void			fill_scene(t_minirt *minirt, t_input *input);
 void			init_light(t_scene *scene, char **arr);

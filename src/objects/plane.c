@@ -30,8 +30,7 @@ float	get_plane_light_intensity(t_plane *plane, t_ray *ray, t_minirt *minirt,
 	normal_offset = multiply_vector(normal, EPSILON);
 	offset_point = sum_vector(*intersection, *normal_offset);
 	free(normal_offset);
-	light_intensity = calculate_illumination(*offset_point, &normal,
-			minirt);
+	light_intensity = calculate_illumination(*offset_point, &normal, minirt);
 	free(offset_point);
 	return (light_intensity);
 }

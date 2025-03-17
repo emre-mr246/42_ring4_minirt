@@ -32,16 +32,11 @@ void	move_camera_sideways(t_minirt *minirt, t_vector *orientation,
 void	rotate_camera(t_minirt *minirt, double y)
 {
 	t_vector	*orientation;
-	double		length;
 
 	orientation = minirt->scene->camera->orientation;
 	orientation->x = orientation->x * cos(y) + orientation->z * sin(y);
 	orientation->z = -orientation->x * sin(y) + orientation->z * cos(y);
-	length = sqrt(orientation->x * orientation->x + orientation->y
-			* orientation->y + orientation->z * orientation->z);
-	orientation->x /= length;
-	orientation->y /= length;
-	orientation->z /= length;
+	normalize_vector(orientation);
 }
 
 void	move_camera(int key, t_minirt *minirt)
