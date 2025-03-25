@@ -20,6 +20,14 @@
 
 This project is a simple 3D ray tracing renderer that creates photorealistic images by simulating light interactions with objects in a scene. Built using C, it explores the fundamentals of computer graphics and mathematical algorithms.
 
+## RaRe Tracer is a Group Project 🙅🏽‍♀️🙅🏽
+
+In the 42 curriculum, there are various group projects that must be completed with a specified number of participants. This requirement helps us develop our collaboration skills in project settings, preparing us to adapt more effectively to future jobs.
+
+Our project is named RaRe Tracer, derived from the last two letters of the names of the project creators, [MısRa](https://github.com/misratasci) and [EmRe](https://github.com/emre-mr246).
+
+Instead of writing our parts separately and then merging the code, we chose to write all the code together. We have equal mastery over the entire code.
+
 ## Image 📸
 
 ![](img/image.png)
